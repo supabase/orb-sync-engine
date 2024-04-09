@@ -1,0 +1,38 @@
+{
+  "name": "orb-sync-engine",
+  "version": "0.0.0",
+  "description": "Sync data from Orb to Postgres.",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "typecheck": "turbo run typecheck"
+  },
+  "author": "Supabase",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.6.0",
+    "@typescript-eslint/parser": "^7.6.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^4.0.0-alpha.8",
+    "turbo": "^1.13.2",
+    "typescript": "^5.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supabase/orb-sync-engine.git"
+  },
+  "keywords": [
+    "postgres",
+    "orb",
+    "billing",
+    "supabase"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "orb-sync-fastify",
+  "version": "0.0.0",
+  "description": "Node.js fastify app to sync Orb data to Postgres.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx --watch ./src/server.ts | pino-pretty",
+    "build": "tsc -p tsconfig.json",
+    "start": "NODE_ENV=production node dist/server.js"
+  },
+  "author": "Supabase",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/autoload": "^5.8.0",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2",
+    "pino": "^8.20.0",
+    "orb-sync-lib": "*"
+  },
+  "devDependencies": {
+    "pino-pretty": "^11.0.0",
+    "tsx": "^4.7.2"
+  }
+}

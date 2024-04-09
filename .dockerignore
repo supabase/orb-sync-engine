@@ -1,0 +1,5 @@
+db
+dist
+node_modules
+.vscode
+docker
