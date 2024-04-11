@@ -62,10 +62,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push Node+Fastify Docker Image
         id: docker_build
         uses: docker/build-push-action@v5
         with:
+          file: {context}/docker/Dockerfile.node-fastify
           push: true
           tags: supabase/orb-sync-engine:latest,supabase/orb-sync-engine:v${{ needs.release.outputs.new-release-version }}
           platforms: linux/amd64,linux/arm64
