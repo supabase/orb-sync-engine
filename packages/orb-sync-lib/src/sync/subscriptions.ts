@@ -1,4 +1,4 @@
-import type { Subscription } from 'orb-billing/resources';
+import type { Subscription } from 'orb-billing/resources/subscriptions';
 import type { PostgresClient } from '../database/postgres';
 import { subscriptionSchema } from '../schemas/subscription';
 

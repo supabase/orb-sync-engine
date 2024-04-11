@@ -1,4 +1,4 @@
-import type { CreditNote } from 'orb-billing/resources';
+import type { CreditNote } from 'orb-billing/resources/credit-notes';
 import type { PostgresClient } from '../database/postgres';
 import { creditNoteSchema } from '../schemas/credit_note';
 

@@ -1,4 +1,4 @@
-import type { Customer } from 'orb-billing/resources';
+import type { Customer } from 'orb-billing/resources/customers/customers';
 import type { PostgresClient } from '../database/postgres';
 import { customerSchema } from '../schemas/customer';
 

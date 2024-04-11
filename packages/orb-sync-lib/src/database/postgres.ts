@@ -1,4 +1,4 @@
-import { Pool, QueryResult } from 'pg';
+import pg from 'pg';
 import { pg as sql } from 'yesql';
 import type { JsonSchema } from '../schemas/types';
 
@@ -8,10 +8,10 @@ type PostgresConfig = {
 };
 
 export class PostgresClient {
-  pool: Pool;
+  pool: pg.Pool;
 
   constructor(private config: PostgresConfig) {
-    this.pool = new Pool({ connectionString: config.databaseUrl });
+    this.pool = new pg.Pool({ connectionString: config.databaseUrl });
   }
 
   async upsertMany<
@@ -19,7 +19,7 @@ export class PostgresClient {
       [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     },
   >(entries: T[], table: string, tableSchema: JsonSchema): Promise<T[]> {
-    const queries: Promise<QueryResult<T>>[] = [];
+    const queries: Promise<pg.QueryResult<T>>[] = [];
 
     entries.forEach((entry) => {
       // Inject the values

@@ -1,4 +1,4 @@
-import type { Invoice } from 'orb-billing/resources';
+import type { Invoice } from 'orb-billing/resources/invoices';
 import type { PostgresClient } from '../database/postgres';
 import { invoiceSchema } from '../schemas/invoice';
 

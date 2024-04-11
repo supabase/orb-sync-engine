@@ -2,7 +2,8 @@
   "name": "orb-sync-node-fastify",
   "version": "0.0.0",
   "description": "Node.js fastify app to sync Orb data to Postgres.",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
     "dev": "tsx --watch ./src/server.ts | pino-pretty",
     "build": "tsc -p tsconfig.json",
