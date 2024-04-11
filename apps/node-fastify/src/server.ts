@@ -6,7 +6,7 @@ import pino from 'pino';
 
 const logger = pino({
   formatters: {
-    level(label) {
+    level(label: string) {
       return { level: label };
     },
   },

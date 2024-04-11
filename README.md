@@ -21,6 +21,7 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 - This will not do an initial load of existing Orb data. You should use CSV loads for this. We might implement this in the future.
 - Backfill of data
 - Entities that are not supported through webhooks like plans and billable metrics
+- `orb-sync-lib` is not yet published as standalone npm package (could be used in serverless functions or anywhere else)
 
 ## Supported Webhooks
 

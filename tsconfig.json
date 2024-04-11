@@ -2,7 +2,6 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
     "preserveConstEnums": true,
     "removeComments": true,
     "sourceMap": true,
@@ -10,13 +9,13 @@
     "lib": ["ES2022", "DOM"],
     "resolveJsonModule": true,
     "useUnknownInCatchVariables": false,
-    "target": "es2022",
-    "moduleResolution": "Node"
+    "module": "CommonJS",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "declaration": true
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "parserOptions": {
-    "ecmaVersion": "2022", // Allows for the parsing of modern ECMAScript features
-    "sourceType": "module" // Allows for the use of imports
-  }
+  "exclude": ["node_modules", "dist", ".turbo"]
 }

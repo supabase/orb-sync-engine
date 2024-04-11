@@ -1,11 +1,11 @@
 import Orb from 'orb-billing';
 import type { HeadersLike } from 'orb-billing/core';
-import type { CreditNoteWebhook, CustomerWebhook, InvoiceWebhook, OrbWebhook, SubscriptionWebhook } from './types.d.ts';
+import type { CreditNoteWebhook, CustomerWebhook, InvoiceWebhook, OrbWebhook, SubscriptionWebhook } from './types';
 import { PostgresClient } from './database/postgres';
-import { syncCustomers } from './sync/customers.js';
-import { syncSubscriptions } from './sync/subscriptions.js';
-import { syncInvoices } from './sync/invoices.js';
-import { syncCreditNotes } from './sync/credit_notes.js';
+import { syncCustomers } from './sync/customers';
+import { syncSubscriptions } from './sync/subscriptions';
+import { syncInvoices } from './sync/invoices';
+import { syncCreditNotes } from './sync/credit_notes';
 
 export type OrbSyncConfig = {
   databaseUrl: string;

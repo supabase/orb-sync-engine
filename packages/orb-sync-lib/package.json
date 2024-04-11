@@ -2,8 +2,9 @@
   "name": "orb-sync-lib",
   "version": "0.0.0",
   "description": "Library for syncing data from Orb to Postgres.",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "commonjs",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint 'src/**'",
