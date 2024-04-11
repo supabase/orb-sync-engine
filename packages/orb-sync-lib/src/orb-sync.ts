@@ -42,7 +42,12 @@ export class OrbSync {
 
     const parsedData = JSON.parse(payload) as OrbWebhook;
     switch (parsedData.type) {
+      // Test event, just ignore it
+      case 'resource_event.test': {
+        break;
+      }
       case 'customer.created':
+      case 'customer.edited':
       case 'customer.credit_balance_depleted':
       case 'customer.credit_balance_dropped': {
         await syncCustomers(this.postgresClient, [(parsedData as CustomerWebhook).customer]);
@@ -54,6 +59,9 @@ export class OrbSync {
       case 'subscription.ended':
       case 'subscription.plan_changed':
       case 'subscription.usage_exceeded':
+      case 'subscription.fixed_fee_quantity_updated':
+      case 'subscription.plan_version_change_scheduled':
+      case 'subscription.plan_version_changed':
       case 'subscription.started': {
         await syncSubscriptions(this.postgresClient, [(parsedData as SubscriptionWebhook).subscription]);
         break;
@@ -63,6 +71,13 @@ export class OrbSync {
       case 'invoice.issued':
       case 'invoice.manually_marked_as_void':
       case 'invoice.payment_failed':
+      case 'invoice.invoice_date_elapsed':
+      case 'invoice.issue_failed':
+      case 'invoice.manually_marked_as_paid':
+      case 'invoice.payment_processing':
+      case 'invoice.sync_failed':
+      case 'invoice.sync_succeded':
+      case 'invoice.undo_mark_as_paid':
       case 'invoice.payment_succeeded': {
         await syncInvoices(this.postgresClient, [(parsedData as InvoiceWebhook).invoice]);
         break;

@@ -23,8 +23,10 @@ export class PostgresClient {
 
     entries.forEach((entry) => {
       // Inject the values
-      const cleansed = this.cleanseArrayField(entry);
-      const prepared = sql(this.constructUpsertSql(this.config.schema, table, tableSchema), {
+      const cleansed = this.cleanseArrayField(entry, tableSchema);
+      const upsertSql = this.constructUpsertSql(this.config.schema, table, tableSchema);
+
+      const prepared = sql(upsertSql, {
         useNullForMissing: true,
       })(cleansed);
 
@@ -62,13 +64,18 @@ export class PostgresClient {
       ;`;
   };
 
-  private cleanseArrayField(obj: {
-    [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  }): {
+  private cleanseArrayField(
+    obj: {
+      [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    },
+    tableSchema: JsonSchema
+  ): {
     [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   } {
     const cleansed = { ...obj };
     Object.keys(cleansed).map((k) => {
+      const definition = tableSchema.properties[k];
+      if (definition && (definition as any).type === 'array') return;
       const data = cleansed[k];
       if (Array.isArray(data)) {
         cleansed[k] = JSON.stringify(data);

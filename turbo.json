@@ -13,6 +13,9 @@
       "inputs": ["src/**/*.ts", "test/**/*.ts"]
     },
     "lint": {},
+    "lint:check": {},
+    "format": {},
+    "format:check": {},
     "dev": {
       "cache": false,
       "persistent": true

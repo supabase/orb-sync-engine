@@ -4,19 +4,31 @@ export type OrbWebhookType =
   | 'customer.created'
   | 'customer.credit_balance_depleted'
   | 'customer.credit_balance_dropped'
+  | 'customer.edited'
   | 'subscription.created'
   | 'subscription.started'
+  | 'subscription.fixed_fee_quantity_updated'
   | 'subscription.ended'
   | 'subscription.plan_changed'
   | 'subscription.usage_exceeded'
   | 'subscription.cost_exceeded'
+  | 'subscription.plan_version_change_scheduled'
+  | 'subscription.plan_version_changed'
+  | 'invoice.invoice_date_elapsed'
+  | 'invoice.issue_failed'
   | 'invoice.issued'
   | 'invoice.payment_failed'
+  | 'invoice.payment_processing'
   | 'invoice.payment_succeeded'
   | 'invoice.edited'
   | 'invoice.manually_marked_as_void'
+  | 'invoice.manually_marked_as_paid'
+  | 'invoice.undo_mark_as_paid'
+  | 'invoice.sync_succeded'
+  | 'invoice.sync_failed'
   | 'credit_note.issued'
-  | 'credit_note.marked_as_void';
+  | 'credit_note.marked_as_void'
+  | 'resource_event.test';
 
 export type OrbWebhook = {
   // Unique to this WebhookEvent resource, and can be used for idempotency (process-once) purposes

@@ -39,6 +39,7 @@ export const invoiceSchema: JsonSchema = {
     subscription_id: { type: 'string' },
     subtotal: { type: 'number' },
     total: { type: 'number' },
+    amount_due: { type: 'number' },
     sync_failed_at: { type: 'string' },
     voided_at: { type: 'string' },
     will_auto_issue: { type: 'boolean' },

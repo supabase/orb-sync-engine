@@ -5,7 +5,7 @@ export const customerSchema: JsonSchema = {
   type: 'object',
   properties: {
     id: { type: 'string' },
-    additional_emails: { type: 'array', items: { type: 'object' } },
+    additional_emails: { type: 'array', items: { type: 'string' } },
     auto_collection: { type: 'boolean' },
     balance: { type: 'number' },
     billing_address: { type: 'object' },

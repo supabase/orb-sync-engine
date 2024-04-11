@@ -7,7 +7,9 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
+    "lint:check": "turbo run lint:check",
     "format": "turbo run format",
+    "format:check": "turbo run format:check",
     "typecheck": "turbo run typecheck"
   },
   "author": "Supabase",
@@ -23,7 +25,7 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^4.0.0-alpha.8",
     "turbo": "^1.13.2",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "repository": {
     "type": "git",
