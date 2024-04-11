@@ -75,7 +75,7 @@ export class PostgresClient {
     const cleansed = { ...obj };
     Object.keys(cleansed).map((k) => {
       const definition = tableSchema.properties[k];
-      if (definition && (definition as any).type === 'array') return;
+      if (definition && (definition as { type: string }).type === 'array') return;
       const data = cleansed[k];
       if (Array.isArray(data)) {
         cleansed[k] = JSON.stringify(data);
