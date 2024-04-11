@@ -10,8 +10,6 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 
 ## How it works
 
-![How it works](./docs/sync-engine-how.png)
-
 - Creates a new schema `orb` in a Postgres database, with tables & columns matching Orb.
 - Exposes a `/webhooks` endpoint that listens to any Orb webhooks.
 - Inserts/updates/deletes changes into the tables whenever there is a change to Orb.
@@ -22,6 +20,7 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 - Backfill of data
 - Entities that are not supported through webhooks like plans and billable metrics
 - `orb-sync-lib` is not yet published as standalone npm package (could be used in serverless functions or anywhere else)
+- Database migration not handled automatically, need to run migrations from `db/migrations` manually for now
 
 ## Supported Webhooks
 
