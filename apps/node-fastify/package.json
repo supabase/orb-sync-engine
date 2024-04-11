@@ -1,5 +1,5 @@
 {
-  "name": "orb-sync-fastify",
+  "name": "orb-sync-node-fastify",
   "version": "0.0.0",
   "description": "Node.js fastify app to sync Orb data to Postgres.",
   "main": "index.js",

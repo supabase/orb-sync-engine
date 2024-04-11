@@ -4,6 +4,7 @@
   "description": "Sync data from Orb to Postgres.",
   "private": true,
   "scripts": {
+    "dev:node-fastify": "turbo run dev --filter=orb-sync-node-fastify",
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
