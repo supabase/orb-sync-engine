@@ -2,6 +2,11 @@
 
 Continuously synchronizes an [Orb](https://www.withorb.com/) account to a Postgres database.
 
+<p align="center">
+<img src="https://github.com/supabase/orb-sync-engine/blob/main/docs/orb-sync-engine-overview--light.svg?raw=true#gh-light-mode-only">
+<img src="https://github.com/supabase/orb-sync-engine/blob/main/docs/orb-sync-engine-overview.svg?raw=true#gh-dark-mode-only">
+</p>
+
 ## Motivation
 
 Sometimes you want to analyze your billing data using SQL. Even more importantly, you want to join your billing data to your product/business data.
