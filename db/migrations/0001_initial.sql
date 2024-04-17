@@ -9,7 +9,7 @@ create table if not exists
         billing_address JSONB,
         shipping_address JSONB,
         created_at timestamp not null,
-        currency varchar(255) not null,
+        currency varchar(255),
         email text,
         email_delivery boolean not null,
         external_customer_id text,
