@@ -56,3 +56,31 @@ export type SubscriptionWebhook = {
 export type CreditNoteWebhook = {
   credit_note: CreditNote;
 } & OrbWebhook;
+
+export type SubscriptionsFetchParams = {
+  limit?: number;
+  createdAtGt?: string | null;
+  createdAtGte?: string | null;
+  createdAtLt?: string | null;
+  createdAtLte?: string | null;
+};
+
+export type InvoicesFetchParams = {
+  limit?: number;
+  createdAtGt?: string | null;
+  createdAtGte?: string | null;
+  createdAtLt?: string | null;
+  createdAtLte?: string | null;
+};
+
+export type CustomersFetchParams = {
+  limit?: number;
+  createdAtGt?: string | null;
+  createdAtGte?: string | null;
+  createdAtLt?: string | null;
+  createdAtLte?: string | null;
+};
+
+export type CreditNotesFetchParams = {
+  limit?: number;
+};

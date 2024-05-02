@@ -3,6 +3,8 @@ import type { FastifyInstance } from 'fastify';
 import type { Server, IncomingMessage, ServerResponse } from 'node:http';
 import { createApp } from './app';
 import pino from 'pino';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import { getConfig } from './utils/config';
 
 const logger = pino({
   formatters: {
@@ -20,11 +22,12 @@ const main = async () => {
     requestIdHeader: 'Request-Id',
   });
 
-  // Init config
-  const port = process.env.PORT ? Number(process.env.PORT) : 8080;
+  app.withTypeProvider<TypeBoxTypeProvider>();
+
+  const config = getConfig();
 
   // Start the server
-  app.listen({ port: Number(port), host: '0.0.0.0' }, (err, address) => {
+  app.listen({ port: config.PORT, host: '0.0.0.0' }, (err, address) => {
     if (err) {
       console.error(err);
       process.exit(1);

@@ -2,7 +2,7 @@ import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import autoload from '@fastify/autoload';
 import path from 'node:path';
 import { OrbSync } from 'orb-sync-lib';
-import assert from 'node:assert';
+import { getConfig } from './utils/config';
 
 export async function createApp(opts: FastifyServerOptions = {}): Promise<FastifyInstance> {
   const app = fastify(opts);
@@ -35,16 +35,13 @@ export async function createApp(opts: FastifyServerOptions = {}): Promise<Fastif
     dir: path.join(__dirname, 'routes'),
   });
 
-  const { DATABASE_URL, ORB_WEBHOOK_SECRET, DATABASE_SCHEMA, ORB_API_KEY } = process.env;
-
-  assert(DATABASE_URL, 'DATABASE_URL is required');
-  assert(ORB_WEBHOOK_SECRET, 'ORB_WEBHOOK_SECRET is required');
+  const config = getConfig();
 
   const orbSync = new OrbSync({
-    databaseUrl: DATABASE_URL,
-    orbWebhookSecret: ORB_WEBHOOK_SECRET,
-    databaseSchema: DATABASE_SCHEMA || 'orb',
-    orbApiKey: ORB_API_KEY,
+    databaseUrl: config.DATABASE_URL,
+    orbWebhookSecret: config.ORB_WEBHOOK_SECRET,
+    databaseSchema: config.DATABASE_SCHEMA,
+    orbApiKey: config.ORB_API_KEY,
   });
 
   app.decorate('orbSync', orbSync);

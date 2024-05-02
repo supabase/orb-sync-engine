@@ -6,7 +6,7 @@ export default async function routes(fastify: FastifyInstance) {
       const headers = request.headers;
       const body: { raw: Buffer } = request.body as { raw: Buffer };
 
-      await fastify.orbSync.sync(body.raw.toString(), headers);
+      await fastify.orbSync.processWebhook(body.raw.toString(), headers);
 
       return reply.send({ received: true });
     },

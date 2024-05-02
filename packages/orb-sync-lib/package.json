@@ -16,7 +16,7 @@
   "author": "Supabase",
   "license": "MIT",
   "dependencies": {
-    "orb-billing": "^2.2.0",
+    "orb-billing": "^2.3.0",
     "pg": "^8.11.5",
     "yesql": "^7.0.0"
   },
