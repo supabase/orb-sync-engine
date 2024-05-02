@@ -1,6 +1,8 @@
+import type Orb from 'orb-billing';
 import type { Subscription } from 'orb-billing/resources/subscriptions';
 import type { PostgresClient } from '../database/postgres';
 import { subscriptionSchema } from '../schemas/subscription';
+import { SubscriptionsFetchParams } from '../types';
 
 const TABLE = 'subscriptions';
 
@@ -14,4 +16,26 @@ export async function syncSubscriptions(postgresClient: PostgresClient, subscrip
     TABLE,
     subscriptionSchema
   );
+}
+
+export async function fetchAndSyncSubscriptions(
+  postgresClient: PostgresClient,
+  orbClient: Orb,
+  params: SubscriptionsFetchParams
+): Promise<number> {
+  const subscriptions = [];
+
+  for await (const invoice of orbClient.subscriptions.list({
+    limit: params.limit || 100,
+    'created_at[gt]': params.createdAtGt,
+    'created_at[gte]': params.createdAtGte,
+    'created_at[lt]': params.createdAtLt,
+    'created_at[lte]': params.createdAtLte,
+  })) {
+    subscriptions.push(invoice);
+  }
+
+  await syncSubscriptions(postgresClient, subscriptions);
+
+  return subscriptions.length;
 }

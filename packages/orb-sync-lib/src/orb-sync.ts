@@ -1,11 +1,21 @@
 import Orb from 'orb-billing';
 import type { HeadersLike } from 'orb-billing/core';
-import type { CreditNoteWebhook, CustomerWebhook, InvoiceWebhook, OrbWebhook, SubscriptionWebhook } from './types';
+import type {
+  CreditNoteWebhook,
+  CreditNotesFetchParams,
+  CustomerWebhook,
+  CustomersFetchParams,
+  InvoiceWebhook,
+  InvoicesFetchParams,
+  OrbWebhook,
+  SubscriptionWebhook,
+  SubscriptionsFetchParams,
+} from './types';
 import { PostgresClient } from './database/postgres';
-import { syncCustomers } from './sync/customers';
-import { syncSubscriptions } from './sync/subscriptions';
-import { syncInvoices } from './sync/invoices';
-import { syncCreditNotes } from './sync/credit_notes';
+import { fetchAndSyncCustomers, syncCustomers } from './sync/customers';
+import { fetchAndSyncSubscriptions, syncSubscriptions } from './sync/subscriptions';
+import { fetchAndSyncInvoices, syncInvoices } from './sync/invoices';
+import { fetchAndSyncCreditNotes, syncCreditNotes } from './sync/credit_notes';
 
 export type OrbSyncConfig = {
   databaseUrl: string;
@@ -35,7 +45,27 @@ export class OrbSync {
     });
   }
 
-  async sync(payload: string, headers: HeadersLike | undefined) {
+  async sync(
+    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions',
+    params: InvoicesFetchParams | CustomersFetchParams | CreditNotesFetchParams | SubscriptionsFetchParams
+  ): Promise<number> {
+    switch (entity) {
+      case 'invoices': {
+        return fetchAndSyncInvoices(this.postgresClient, this.orb, params as InvoicesFetchParams);
+      }
+      case 'credit_notes': {
+        return fetchAndSyncCreditNotes(this.postgresClient, this.orb, params as CreditNotesFetchParams);
+      }
+      case 'customers': {
+        return fetchAndSyncCustomers(this.postgresClient, this.orb, params as CustomersFetchParams);
+      }
+      case 'subscriptions': {
+        return fetchAndSyncSubscriptions(this.postgresClient, this.orb, params as SubscriptionsFetchParams);
+      }
+    }
+  }
+
+  async processWebhook(payload: string, headers: HeadersLike | undefined) {
     if (this.config.verifyWebhookSignature ?? true) {
       this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecret);
     }

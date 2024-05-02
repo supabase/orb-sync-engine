@@ -19,6 +19,8 @@ export class PostgresClient {
       [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     },
   >(entries: T[], table: string, tableSchema: JsonSchema): Promise<T[]> {
+    if (!entries.length) return [];
+
     const queries: Promise<pg.QueryResult<T>>[] = [];
 
     entries.forEach((entry) => {
