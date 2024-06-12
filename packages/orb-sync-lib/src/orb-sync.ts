@@ -92,6 +92,7 @@ export class OrbSync {
       case 'subscription.fixed_fee_quantity_updated':
       case 'subscription.plan_version_change_scheduled':
       case 'subscription.plan_version_changed':
+      case 'subscription.edited':
       case 'subscription.started': {
         await syncSubscriptions(this.postgresClient, [(parsedData as SubscriptionWebhook).subscription]);
         break;
