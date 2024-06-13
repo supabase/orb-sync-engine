@@ -36,6 +36,7 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 - [x] subscription.created
 - [x] subscription.started
 - [x] subscription.fixed_fee_quantity_updated
+- [x] subscription.edited
 - [x] subscription.ended
 - [x] subscription.plan_changed
 - [x] subscription.usage_exceeded

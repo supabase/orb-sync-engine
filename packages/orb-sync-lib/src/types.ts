@@ -7,6 +7,7 @@ export type OrbWebhookType =
   | 'customer.edited'
   | 'subscription.created'
   | 'subscription.started'
+  | 'subscription.edited'
   | 'subscription.fixed_fee_quantity_updated'
   | 'subscription.ended'
   | 'subscription.plan_changed'
