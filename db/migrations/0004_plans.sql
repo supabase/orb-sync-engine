@@ -28,8 +28,6 @@ create table if not exists
         updated_at timestamptz default timezone ('utc'::text, now()) not null
     );
 
-alter table orb.plans
-add updated_at timestamptz default timezone ('utc'::text, now()) not null;
 
 create trigger handle_updated_at before
 update on orb.plans for each row
