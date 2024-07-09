@@ -8,6 +8,7 @@ import type {
   InvoiceWebhook,
   InvoicesFetchParams,
   OrbWebhook,
+  PlansFetchParams,
   SubscriptionWebhook,
   SubscriptionsFetchParams,
 } from './types';
@@ -16,6 +17,7 @@ import { fetchAndSyncCustomers, syncCustomers } from './sync/customers';
 import { fetchAndSyncSubscriptions, syncSubscriptions } from './sync/subscriptions';
 import { fetchAndSyncInvoices, syncInvoices } from './sync/invoices';
 import { fetchAndSyncCreditNotes, syncCreditNotes } from './sync/credit_notes';
+import { fetchAndSyncPlans } from './sync/plans';
 
 export type OrbSyncConfig = {
   databaseUrl: string;
@@ -46,8 +48,13 @@ export class OrbSync {
   }
 
   async sync(
-    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions',
-    params: InvoicesFetchParams | CustomersFetchParams | CreditNotesFetchParams | SubscriptionsFetchParams
+    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans',
+    params:
+      | InvoicesFetchParams
+      | CustomersFetchParams
+      | CreditNotesFetchParams
+      | SubscriptionsFetchParams
+      | PlansFetchParams
   ): Promise<number> {
     switch (entity) {
       case 'invoices': {
@@ -61,6 +68,9 @@ export class OrbSync {
       }
       case 'subscriptions': {
         return fetchAndSyncSubscriptions(this.postgresClient, this.orb, params as SubscriptionsFetchParams);
+      }
+      case 'plans': {
+        return fetchAndSyncPlans(this.postgresClient, this.orb, params as PlansFetchParams);
       }
     }
   }

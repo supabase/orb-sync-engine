@@ -1,0 +1,32 @@
+import type { JsonSchema } from './types';
+
+export const planSchema: JsonSchema = {
+  $id: 'planSchema',
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    name: { type: 'string' },
+    description: { type: 'string' },
+    maximum_amount: { type: 'string' },
+    minimum_amount: { type: 'string' },
+    created_at: { type: 'string' },
+    status: { type: 'string' },
+    maximum: { type: 'object' },
+    minimum: { type: 'object' },
+    discount: { type: 'object' },
+    product: { type: 'object' },
+    version: { type: 'number' },
+    trial_config: { type: 'object' },
+    plan_phases: { type: 'object' },
+    base_plan: { type: 'object' },
+    base_plan_id: { type: 'string' },
+    external_plan_id: { type: 'string' },
+    currency: { type: 'string' },
+    invoicing_currency: { type: 'string' },
+    net_terms: { type: 'number' },
+    default_invoice_memo: { type: 'string' },
+    prices: { type: 'object' },
+    metadata: { type: 'object' },
+  },
+  required: ['id'],
+} as const;
