@@ -82,6 +82,14 @@ export type CustomersFetchParams = {
   createdAtLte?: string | null;
 };
 
+export type PlansFetchParams = {
+  limit?: number;
+  createdAtGt?: string | null;
+  createdAtGte?: string | null;
+  createdAtLt?: string | null;
+  createdAtLte?: string | null;
+};
+
 export type CreditNotesFetchParams = {
   limit?: number;
 };

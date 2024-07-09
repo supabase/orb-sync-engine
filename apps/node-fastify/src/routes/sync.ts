@@ -78,6 +78,30 @@ const SchemaRequestParamsSyncInvoices = Type.Object({
   ),
 });
 
+const SchemaRequestParamsSyncPlans = Type.Object({
+  limit: Type.Optional(Type.Number({ minimum: 1, maximum: 100 })),
+  createdAtGt: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+  createdAtGte: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+  createdAtLt: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+  createdAtLte: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+});
+
 export default async function routes(fastify: FastifyInstance) {
   fastify.post<{
     Querystring: Static<typeof SchemaRequestParamsSyncCreditNotes>;
@@ -150,6 +174,28 @@ export default async function routes(fastify: FastifyInstance) {
       const query = request.query;
 
       const count = await fastify.orbSync.sync('invoices', {
+        limit: query.limit,
+        createdAtGt: query.createdAtGt,
+        createdAtGte: query.createdAtGte,
+        createdAtLt: query.createdAtLt,
+        createdAtLte: query.createdAtLte,
+      });
+
+      return reply.send({ count });
+    },
+  });
+
+  fastify.post<{
+    Querystring: Static<typeof SchemaRequestParamsSyncPlans>;
+  }>('/sync/plans', {
+    preHandler: [verifyApiKey],
+    schema: {
+      querystring: SchemaRequestParamsSyncPlans,
+    },
+    handler: async (request, reply) => {
+      const query = request.query;
+
+      const count = await fastify.orbSync.sync('plans', {
         limit: query.limit,
         createdAtGt: query.createdAtGt,
         createdAtGte: query.createdAtGte,
