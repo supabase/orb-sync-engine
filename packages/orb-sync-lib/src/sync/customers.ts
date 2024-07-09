@@ -31,3 +31,9 @@ export async function fetchAndSyncCustomers(
 
   return customers.length;
 }
+
+export async function fetchAndSyncCustomer(postgresClient: PostgresClient, orbClient: Orb, customerId: string) {
+  const customer = await orbClient.customers.fetch(customerId);
+
+  await syncCustomers(postgresClient, [customer]);
+}

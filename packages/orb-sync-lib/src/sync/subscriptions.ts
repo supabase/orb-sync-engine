@@ -39,3 +39,9 @@ export async function fetchAndSyncSubscriptions(
 
   return subscriptions.length;
 }
+
+export async function fetchAndSyncSubscription(postgresClient: PostgresClient, orbClient: Orb, subscriptionId: string) {
+  const subscription = await orbClient.subscriptions.fetch(subscriptionId);
+
+  await syncSubscriptions(postgresClient, [subscription]);
+}

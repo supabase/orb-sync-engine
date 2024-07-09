@@ -39,3 +39,9 @@ export async function fetchAndSyncInvoices(
 
   return invoices.length;
 }
+
+export async function fetchAndSyncInvoice(postgresClient: PostgresClient, orbClient: Orb, invoiceId: string) {
+  const invoice = await orbClient.invoices.fetch(invoiceId);
+
+  await syncInvoices(postgresClient, [invoice]);
+}
