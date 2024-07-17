@@ -32,3 +32,9 @@ export async function fetchAndSyncCreditNotes(
 
   return creditNotes.length;
 }
+
+export async function fetchAndSyncCreditNote(postgresClient: PostgresClient, orbClient: Orb, creditNoteId: string) {
+  const creditNote = await orbClient.creditNotes.fetch(creditNoteId);
+
+  await syncCreditNotes(postgresClient, [creditNote]);
+}

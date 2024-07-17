@@ -31,3 +31,9 @@ export async function fetchAndSyncPlans(
 
   return plans.length;
 }
+
+export async function fetchAndSyncPlan(postgresClient: PostgresClient, orbClient: Orb, planId: string) {
+  const plan = await orbClient.plans.fetch(planId);
+
+  await syncPlans(postgresClient, [plan]);
+}

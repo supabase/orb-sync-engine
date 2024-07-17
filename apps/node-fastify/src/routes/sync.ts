@@ -120,6 +120,22 @@ export default async function routes(fastify: FastifyInstance) {
   });
 
   fastify.post<{
+    Params: { id: string };
+  }>('/sync/credit_notes/:id', {
+    preHandler: [verifyApiKey],
+    schema: {
+      params: Type.Object({
+        id: Type.String(),
+      }),
+    },
+    handler: async (request, reply) => {
+      await fastify.orbSync.syncSingleEntity('credit_notes', request.params.id);
+
+      return reply.status(204).send();
+    },
+  });
+
+  fastify.post<{
     Querystring: Static<typeof SchemaRequestParamsSyncCustomers>;
   }>('/sync/customers', {
     preHandler: [verifyApiKey],
@@ -138,6 +154,22 @@ export default async function routes(fastify: FastifyInstance) {
       });
 
       return reply.send({ count });
+    },
+  });
+
+  fastify.post<{
+    Params: { id: string };
+  }>('/sync/customers/:id', {
+    preHandler: [verifyApiKey],
+    schema: {
+      params: Type.Object({
+        id: Type.String(),
+      }),
+    },
+    handler: async (request, reply) => {
+      await fastify.orbSync.syncSingleEntity('customers', request.params.id);
+
+      return reply.status(204).send();
     },
   });
 
@@ -164,6 +196,22 @@ export default async function routes(fastify: FastifyInstance) {
   });
 
   fastify.post<{
+    Params: { id: string };
+  }>('/sync/subscriptions/:id', {
+    preHandler: [verifyApiKey],
+    schema: {
+      params: Type.Object({
+        id: Type.String(),
+      }),
+    },
+    handler: async (request, reply) => {
+      await fastify.orbSync.syncSingleEntity('subscriptions', request.params.id);
+
+      return reply.status(204).send();
+    },
+  });
+
+  fastify.post<{
     Querystring: Static<typeof SchemaRequestParamsSyncInvoices>;
   }>('/sync/invoices', {
     preHandler: [verifyApiKey],
@@ -186,6 +234,22 @@ export default async function routes(fastify: FastifyInstance) {
   });
 
   fastify.post<{
+    Params: { id: string };
+  }>('/sync/invoices/:id', {
+    preHandler: [verifyApiKey],
+    schema: {
+      params: Type.Object({
+        id: Type.String(),
+      }),
+    },
+    handler: async (request, reply) => {
+      await fastify.orbSync.syncSingleEntity('invoices', request.params.id);
+
+      return reply.status(204).send();
+    },
+  });
+
+  fastify.post<{
     Querystring: Static<typeof SchemaRequestParamsSyncPlans>;
   }>('/sync/plans', {
     preHandler: [verifyApiKey],
@@ -204,6 +268,22 @@ export default async function routes(fastify: FastifyInstance) {
       });
 
       return reply.send({ count });
+    },
+  });
+
+  fastify.post<{
+    Params: { id: string };
+  }>('/sync/plans/:id', {
+    preHandler: [verifyApiKey],
+    schema: {
+      params: Type.Object({
+        id: Type.String(),
+      }),
+    },
+    handler: async (request, reply) => {
+      await fastify.orbSync.syncSingleEntity('plans', request.params.id);
+
+      return reply.status(204).send();
     },
   });
 }

@@ -13,11 +13,11 @@ import type {
   SubscriptionsFetchParams,
 } from './types';
 import { PostgresClient } from './database/postgres';
-import { fetchAndSyncCustomers, syncCustomers } from './sync/customers';
-import { fetchAndSyncSubscriptions, syncSubscriptions } from './sync/subscriptions';
-import { fetchAndSyncInvoices, syncInvoices } from './sync/invoices';
-import { fetchAndSyncCreditNotes, syncCreditNotes } from './sync/credit_notes';
-import { fetchAndSyncPlans } from './sync/plans';
+import { fetchAndSyncCustomer, fetchAndSyncCustomers, syncCustomers } from './sync/customers';
+import { fetchAndSyncSubscription, fetchAndSyncSubscriptions, syncSubscriptions } from './sync/subscriptions';
+import { fetchAndSyncInvoice, fetchAndSyncInvoices, syncInvoices } from './sync/invoices';
+import { fetchAndSyncCreditNote, fetchAndSyncCreditNotes, syncCreditNotes } from './sync/credit_notes';
+import { fetchAndSyncPlan, fetchAndSyncPlans } from './sync/plans';
 
 export type OrbSyncConfig = {
   databaseUrl: string;
@@ -132,6 +132,35 @@ export class OrbSync {
 
       default: {
         throw new Error(`Unsupported webhook event type: ${parsedData.type}`);
+      }
+    }
+  }
+
+  async syncSingleEntity(entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans', id: string) {
+    switch (entity) {
+      case 'invoices': {
+        await fetchAndSyncInvoice(this.postgresClient, this.orb, id);
+        break;
+      }
+
+      case 'credit_notes': {
+        await fetchAndSyncCreditNote(this.postgresClient, this.orb, id);
+        break;
+      }
+
+      case 'customers': {
+        await fetchAndSyncCustomer(this.postgresClient, this.orb, id);
+        break;
+      }
+
+      case 'subscriptions': {
+        await fetchAndSyncSubscription(this.postgresClient, this.orb, id);
+        break;
+      }
+
+      case 'plans': {
+        await fetchAndSyncPlan(this.postgresClient, this.orb, id);
+        break;
       }
     }
   }
