@@ -22,10 +22,10 @@
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "orb-sync-lib": "*",
-    "pino": "^9.2.0"
+    "pino": "^9.3.2"
   },
   "devDependencies": {
-    "pino-pretty": "^11.2.1",
-    "tsx": "^4.16.2"
+    "pino-pretty": "^11.2.2",
+    "tsx": "^4.16.4"
   }
 }
