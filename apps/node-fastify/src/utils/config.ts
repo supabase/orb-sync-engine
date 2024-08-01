@@ -9,16 +9,16 @@ type configType = {
   PORT: number;
 
   /** Postgres database URL including auth and search path */
-  DATABASE_URL: string
+  DATABASE_URL: string;
 
   /** Secret to validate signatures of Orb webhooks */
-  ORB_WEBHOOK_SECRET: string
+  ORB_WEBHOOK_SECRET: string;
 
   /** Defaults to Orb */
-  DATABASE_SCHEMA: string
+  DATABASE_SCHEMA: string;
 
   /** Access the Orb API */
-  ORB_API_KEY?: string
+  ORB_API_KEY?: string;
 };
 
 function getConfigFromEnv(key: string, defaultValue?: string): string {
