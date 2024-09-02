@@ -21,22 +21,28 @@ export class PostgresClient {
   >(entries: T[], table: string, tableSchema: JsonSchema): Promise<T[]> {
     if (!entries.length) return [];
 
-    const queries: Promise<pg.QueryResult<T>>[] = [];
+    // Max 5 in parallel to avoid exhausting connection pool
+    const chunkSize = 5;
+    const results: pg.QueryResult<T>[] = [];
 
-    entries.forEach((entry) => {
-      // Inject the values
-      const cleansed = this.cleanseArrayField(entry, tableSchema);
-      const upsertSql = this.constructUpsertSql(this.config.schema, table, tableSchema);
+    for (let i = 0; i < entries.length; i += chunkSize) {
+      const chunk = entries.slice(i, i + chunkSize);
 
-      const prepared = sql(upsertSql, {
-        useNullForMissing: true,
-      })(cleansed);
+      const queries: Promise<pg.QueryResult<T>>[] = [];
+      chunk.forEach((entry) => {
+        // Inject the values
+        const cleansed = this.cleanseArrayField(entry, tableSchema);
+        const upsertSql = this.constructUpsertSql(this.config.schema, table, tableSchema);
 
-      queries.push(this.pool.query(prepared.text, prepared.values));
-    });
+        const prepared = sql(upsertSql, {
+          useNullForMissing: true,
+        })(cleansed);
 
-    // Run it
-    const results = await Promise.all(queries);
+        queries.push(this.pool.query(prepared.text, prepared.values));
+      });
+
+      results.push(...(await Promise.all(queries)));
+    }
 
     return results.flatMap((it) => it.rows);
   }
