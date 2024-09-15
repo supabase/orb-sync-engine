@@ -2,18 +2,9 @@ import 'dotenv/config';
 import type { FastifyInstance } from 'fastify';
 import type { Server, IncomingMessage, ServerResponse } from 'node:http';
 import { createApp } from './app';
-import pino from 'pino';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import { getConfig } from './utils/config';
-
-const logger = pino({
-  formatters: {
-    level(label: string) {
-      return { level: label };
-    },
-  },
-  timestamp: pino.stdTimeFunctions.isoTime,
-});
+import { logger } from './utils/logger';
 
 const main = async () => {
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = await createApp({

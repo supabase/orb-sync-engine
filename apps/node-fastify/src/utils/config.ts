@@ -19,6 +19,9 @@ type configType = {
 
   /** Access the Orb API */
   ORB_API_KEY?: string;
+
+  /** Toggles a CRON job to refresh stale subscriptions against the Orb API */
+  CRON_REFRESH_STALE_SUBSCRIPTIONS: boolean;
 };
 
 function getConfigFromEnv(key: string, defaultValue?: string): string {
@@ -40,6 +43,7 @@ export function getConfig(): configType {
     DATABASE_URL: getConfigFromEnv('DATABASE_URL'),
     ORB_WEBHOOK_SECRET: getConfigFromEnv('ORB_WEBHOOK_SECRET'),
     PORT: Number(getConfigFromEnv('PORT', '8080')),
+    CRON_REFRESH_STALE_SUBSCRIPTIONS: getConfigFromEnv('CRON_REFRESH_STALE_SUBSCRIPTIONS', 'false') === 'true',
   };
 
   assert(!Number.isNaN(config.PORT), 'PORT must be a number');

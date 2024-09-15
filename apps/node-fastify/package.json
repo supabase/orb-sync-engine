@@ -21,10 +21,12 @@
     "@fastify/type-provider-typebox": "^4.1.0",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
+    "node-cron": "^3.0.3",
     "orb-sync-lib": "*",
-    "pino": "^9.3.2"
+    "pino": "^9.4.0"
   },
   "devDependencies": {
+    "@types/node-cron": "^3.0.11",
     "pino-pretty": "^11.2.2",
     "tsx": "^4.19.0"
   }

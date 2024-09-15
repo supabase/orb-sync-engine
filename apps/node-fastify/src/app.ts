@@ -3,6 +3,8 @@ import autoload from '@fastify/autoload';
 import path from 'node:path';
 import { OrbSync } from 'orb-sync-lib';
 import { getConfig } from './utils/config';
+import nodeCron from 'node-cron';
+import { refreshStaleSubscriptions } from './crons/refresh-stale-subscriptions';
 
 export async function createApp(opts: FastifyServerOptions = {}): Promise<FastifyInstance> {
   const app = fastify(opts);
@@ -45,6 +47,16 @@ export async function createApp(opts: FastifyServerOptions = {}): Promise<Fastif
   });
 
   app.decorate('orbSync', orbSync);
+
+  if (config.CRON_REFRESH_STALE_SUBSCRIPTIONS) {
+    nodeCron.schedule('*/15 * * * *', async () => {
+      try {
+        await refreshStaleSubscriptions(orbSync);
+      } catch (err) {
+        throw new Error('Error while refreshing stale subscriptions', { cause: err });
+      }
+    });
+  }
 
   await app.ready();
 

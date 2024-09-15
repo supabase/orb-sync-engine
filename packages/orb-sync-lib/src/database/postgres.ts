@@ -23,18 +23,16 @@ export class PostgresClient {
 
     // Max 5 in parallel to avoid exhausting connection pool
     const chunkSize = 5;
+    const sqlQuery = this.constructUpsertSql(this.config.schema, table, tableSchema);
     const results: pg.QueryResult<T>[] = [];
 
     for (let i = 0; i < entries.length; i += chunkSize) {
-      const chunk = entries.slice(i, i + chunkSize);
-
       const queries: Promise<pg.QueryResult<T>>[] = [];
+      const chunk = entries.slice(i, i + chunkSize);
       chunk.forEach((entry) => {
         // Inject the values
         const cleansed = this.cleanseArrayField(entry, tableSchema);
-        const upsertSql = this.constructUpsertSql(this.config.schema, table, tableSchema);
-
-        const prepared = sql(upsertSql, {
+        const prepared = sql(sqlQuery, {
           useNullForMissing: true,
         })(cleansed);
 
@@ -47,29 +45,72 @@ export class PostgresClient {
     return results.flatMap((it) => it.rows);
   }
 
+  async updateMany<
+    T extends {
+      [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    },
+  >(entries: T[], table: string, tableSchema: JsonSchema): Promise<T[]> {
+    if (!entries.length) return [];
+
+    // Max 5 in parallel to avoid exhausting connection pool
+    const chunkSize = 5;
+    const results: pg.QueryResult<T>[] = [];
+
+    for (let i = 0; i < entries.length; i += chunkSize) {
+      const queries: Promise<pg.QueryResult<T>>[] = [];
+      const chunk = entries.slice(i, i + chunkSize);
+      chunk.forEach((entry) => {
+        // Inject the values
+        const cleansed = this.cleanseArrayField(entry, tableSchema);
+        const sqlQuery = this.constructUpdateSql(this.config.schema, table, Object.keys(entry));
+        const prepared = sql(sqlQuery, {
+          useNullForMissing: true,
+        })(cleansed);
+
+        queries.push(this.pool.query(prepared.text, prepared.values));
+      });
+
+      results.push(...(await Promise.all(queries)));
+    }
+
+    return results.flatMap((it) => it.rows);
+  }
+
+  async selectMany<T>(sqlQuery: string, args: Record<string, string | number | boolean>): Promise<T[]> {
+    const prepared = sql(sqlQuery, {
+      useNullForMissing: true,
+    })(args);
+
+    const results = await this.pool.query(prepared.text, prepared.values);
+
+    return results.rows as T[];
+  }
+
   private constructUpsertSql = (schema: string, table: string, tableSchema: JsonSchema): string => {
     const conflict = 'id';
-    const properties = tableSchema.properties;
+    const properties = Object.keys(tableSchema.properties);
 
     return `
       insert into "${schema}"."${table}" (
-        ${Object.keys(properties)
-          .map((x) => `"${x}"`)
-          .join(',')}
+        ${properties.map((x) => `"${x}"`).join(',')}
       )
       values (
-        ${Object.keys(properties)
-          .map((x) => `:${x}`)
-          .join(',')}
+        ${properties.map((x) => `:${x}`).join(',')}
       )
       on conflict (
         ${conflict}
       )
       do update set 
-        ${Object.keys(properties)
-          .map((x) => `"${x}" = :${x}`)
-          .join(',')}
+        ${properties.map((x) => `"${x}" = :${x}`).join(',')}
       ;`;
+  };
+
+  private constructUpdateSql = (schema: string, table: string, properties: string[]): string => {
+    return `
+      update "${schema}"."${table}"
+      set (${properties.map((x) => `"${x}"`).join(',')}) =
+      (${properties.map((x) => `:${x}`).join(',')})
+      where id = :id`;
   };
 
   private cleanseArrayField(

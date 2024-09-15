@@ -14,14 +14,26 @@ export async function syncSubscriptions(postgresClient: PostgresClient, subscrip
       plan_id: subscription.plan.id,
     })),
     TABLE,
-    subscriptionSchema
+    subscriptionSchema,
+  );
+}
+
+export async function syncCurrentBillingCycle(postgresClient: PostgresClient, subscriptions: Subscription[]) {
+  return postgresClient.updateMany(
+    subscriptions.map((subscription) => ({
+      id: subscription.id,
+      current_billing_period_start_date: subscription.current_billing_period_start_date,
+      current_billing_period_end_date: subscription.current_billing_period_end_date,
+    })),
+    TABLE,
+    subscriptionSchema,
   );
 }
 
 export async function fetchAndSyncSubscriptions(
   postgresClient: PostgresClient,
   orbClient: Orb,
-  params: SubscriptionsFetchParams
+  params: SubscriptionsFetchParams,
 ): Promise<number> {
   const subscriptions = [];
 

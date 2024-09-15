@@ -1,20 +1,25 @@
 import Orb from 'orb-billing';
 import type { HeadersLike } from 'orb-billing/core';
 import type {
-  CreditNoteWebhook,
   CreditNotesFetchParams,
-  CustomerWebhook,
+  CreditNoteWebhook,
   CustomersFetchParams,
-  InvoiceWebhook,
+  CustomerWebhook,
   InvoicesFetchParams,
+  InvoiceWebhook,
   OrbWebhook,
   PlansFetchParams,
-  SubscriptionWebhook,
   SubscriptionsFetchParams,
+  SubscriptionWebhook,
 } from './types';
 import { PostgresClient } from './database/postgres';
 import { fetchAndSyncCustomer, fetchAndSyncCustomers, syncCustomers } from './sync/customers';
-import { fetchAndSyncSubscription, fetchAndSyncSubscriptions, syncSubscriptions } from './sync/subscriptions';
+import {
+  fetchAndSyncSubscription,
+  fetchAndSyncSubscriptions,
+  syncCurrentBillingCycle,
+  syncSubscriptions,
+} from './sync/subscriptions';
 import { fetchAndSyncInvoice, fetchAndSyncInvoices, syncInvoices } from './sync/invoices';
 import { fetchAndSyncCreditNote, fetchAndSyncCreditNotes, syncCreditNotes } from './sync/credit_notes';
 import { fetchAndSyncPlan, fetchAndSyncPlans } from './sync/plans';
@@ -36,8 +41,8 @@ export type OrbSyncConfig = {
 };
 
 export class OrbSync {
-  private orb: Orb;
-  private postgresClient: PostgresClient;
+  orb: Orb;
+  postgresClient: PostgresClient;
 
   constructor(private config: OrbSyncConfig) {
     this.orb = new Orb({ apiKey: config.orbApiKey, webhookSecret: config.orbWebhookSecret });
@@ -54,7 +59,7 @@ export class OrbSync {
       | CustomersFetchParams
       | CreditNotesFetchParams
       | SubscriptionsFetchParams
-      | PlansFetchParams
+      | PlansFetchParams,
   ): Promise<number> {
     switch (entity) {
       case 'invoices': {
@@ -73,6 +78,10 @@ export class OrbSync {
         return fetchAndSyncPlans(this.postgresClient, this.orb, params as PlansFetchParams);
       }
     }
+  }
+
+  async syncCurrentBillingCycle(items: Orb.Subscription[]): Promise<void> {
+    await syncCurrentBillingCycle(this.postgresClient, items);
   }
 
   async processWebhook(payload: string, headers: HeadersLike | undefined) {
