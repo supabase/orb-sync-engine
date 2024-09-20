@@ -43,7 +43,6 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 - [x] subscription.cost_exceeded
 - [x] subscription.plan_version_change_scheduled
 - [x] subscription.plan_version_changed
-- [x] invoice.invoice_date_elapsed
 - [x] invoice.issue_failed
 - [x] invoice.issued
 - [x] invoice.payment_failed
