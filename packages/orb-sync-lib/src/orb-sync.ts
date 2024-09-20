@@ -1,16 +1,16 @@
 import Orb from 'orb-billing';
 import type { HeadersLike } from 'orb-billing/core';
 import type {
-  CreditNoteWebhook,
   CreditNotesFetchParams,
-  CustomerWebhook,
+  CreditNoteWebhook,
   CustomersFetchParams,
-  InvoiceWebhook,
+  CustomerWebhook,
   InvoicesFetchParams,
+  InvoiceWebhook,
   OrbWebhook,
   PlansFetchParams,
-  SubscriptionWebhook,
   SubscriptionsFetchParams,
+  SubscriptionWebhook,
 } from './types';
 import { PostgresClient } from './database/postgres';
 import { fetchAndSyncCustomer, fetchAndSyncCustomers, syncCustomers } from './sync/customers';
@@ -54,7 +54,7 @@ export class OrbSync {
       | CustomersFetchParams
       | CreditNotesFetchParams
       | SubscriptionsFetchParams
-      | PlansFetchParams
+      | PlansFetchParams,
   ): Promise<number> {
     switch (entity) {
       case 'invoices': {
@@ -107,12 +107,15 @@ export class OrbSync {
         await syncSubscriptions(this.postgresClient, [(parsedData as SubscriptionWebhook).subscription]);
         break;
       }
-
+      case 'invoice.invoice_date_elapsed': {
+        // Is being ignored because from 2024-09-20 the webhook payload only contains a "minified" version of the invoice resource.
+        // We don't want to override invoice data with a minified version.
+        break;
+      }
       case 'invoice.edited':
       case 'invoice.issued':
       case 'invoice.manually_marked_as_void':
       case 'invoice.payment_failed':
-      case 'invoice.invoice_date_elapsed':
       case 'invoice.issue_failed':
       case 'invoice.manually_marked_as_paid':
       case 'invoice.payment_processing':
