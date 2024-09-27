@@ -24,8 +24,12 @@ export async function fetchAndSyncCreditNotes(
 ): Promise<number> {
   const creditNotes = [];
 
-  for await (const creditNote of orbClient.creditNotes.list({ limit: params.limit || 100 })) {
-    creditNotes.push(creditNote);
+  let creditNotesPage = await orbClient.creditNotes.list({ limit: params.limit || 100 });
+  creditNotes.push(...creditNotesPage.data);
+
+  while (creditNotesPage.hasNextPage()) {
+    creditNotesPage = await creditNotesPage.getNextPage();
+    creditNotes.push(...creditNotesPage.data);
   }
 
   await syncCreditNotes(postgresClient, creditNotes);

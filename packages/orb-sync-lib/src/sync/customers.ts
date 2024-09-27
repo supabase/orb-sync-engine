@@ -17,14 +17,18 @@ export async function fetchAndSyncCustomers(
 ): Promise<number> {
   const customers = [];
 
-  for await (const customer of orbClient.customers.list({
+  let customersPage = await orbClient.customers.list({
     limit: params.limit || 100,
     'created_at[gt]': params.createdAtGt,
     'created_at[gte]': params.createdAtGte,
     'created_at[lt]': params.createdAtLt,
     'created_at[lte]': params.createdAtLte,
-  })) {
-    customers.push(customer);
+  });
+  customers.push(...customersPage.data);
+
+  while (customersPage.hasNextPage()) {
+    customersPage = await customersPage.getNextPage();
+    customers.push(...customersPage.data);
   }
 
   await syncCustomers(postgresClient, customers);
