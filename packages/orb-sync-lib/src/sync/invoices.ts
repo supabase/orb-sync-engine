@@ -25,14 +25,18 @@ export async function fetchAndSyncInvoices(
 ): Promise<number> {
   const invoices = [];
 
-  for await (const invoice of orbClient.invoices.list({
+  let invoicesPage = await orbClient.invoices.list({
     limit: params.limit || 100,
     'invoice_date[gt]': params.createdAtGt,
     'invoice_date[gte]': params.createdAtGte,
     'invoice_date[lt]': params.createdAtLt,
     'invoice_date[lte]': params.createdAtLte,
-  })) {
-    invoices.push(invoice);
+  });
+  invoices.push(...invoicesPage.data);
+
+  while (invoicesPage.hasNextPage()) {
+    invoicesPage = await invoicesPage.getNextPage();
+    invoices.push(...invoicesPage.data);
   }
 
   await syncInvoices(postgresClient, invoices);
