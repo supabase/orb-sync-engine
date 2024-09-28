@@ -17,11 +17,11 @@
   "license": "MIT",
   "dependencies": {
     "orb-billing": "^4.24.0",
-    "pg": "^8.12.0",
+    "pg": "^8.13.0",
     "yesql": "^7.0.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.11.8",
+    "@types/pg": "^8.11.10",
     "@types/yesql": "^4.1.4"
   }
 }
