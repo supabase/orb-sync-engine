@@ -5,6 +5,7 @@ import { invoiceSchema } from '../schemas/invoice';
 import { InvoicesFetchParams } from '../types';
 
 const TABLE = 'invoices';
+const TIMER_LOGGING_LABEL = 'fetch-invoices';
 
 export async function syncInvoices(postgresClient: PostgresClient, invoices: Invoice[]) {
   return postgresClient.upsertMany(
@@ -23,8 +24,9 @@ export async function fetchAndSyncInvoices(
   orbClient: Orb,
   params: InvoicesFetchParams
 ): Promise<number> {
-  const invoices = [];
+  let numberOfInvoices = 0;
 
+  console.time(TIMER_LOGGING_LABEL);
   let invoicesPage = await orbClient.invoices.list({
     limit: params.limit || 100,
     'invoice_date[gt]': params.createdAtGt,
@@ -32,16 +34,23 @@ export async function fetchAndSyncInvoices(
     'invoice_date[lt]': params.createdAtLt,
     'invoice_date[lte]': params.createdAtLte,
   });
-  invoices.push(...invoicesPage.data);
+  console.timeEnd(TIMER_LOGGING_LABEL);
+
+  numberOfInvoices += invoicesPage.data.length;
+
+  await syncInvoices(postgresClient, invoicesPage.data);
 
   while (invoicesPage.hasNextPage()) {
+    console.time(TIMER_LOGGING_LABEL);
     invoicesPage = await invoicesPage.getNextPage();
-    invoices.push(...invoicesPage.data);
+    console.timeEnd(TIMER_LOGGING_LABEL);
+
+    numberOfInvoices += invoicesPage.data.length;
+
+    await syncInvoices(postgresClient, invoicesPage.data);
   }
 
-  await syncInvoices(postgresClient, invoices);
-
-  return invoices.length;
+  return numberOfInvoices;
 }
 
 export async function fetchAndSyncInvoice(postgresClient: PostgresClient, orbClient: Orb, invoiceId: string) {

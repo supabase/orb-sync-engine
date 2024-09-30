@@ -5,6 +5,7 @@ import { customerSchema } from '../schemas/customer';
 import { CustomersFetchParams } from '../types';
 
 const TABLE = 'customers';
+const TIMER_LOGGING_LABEL = 'fetch-customers';
 
 export async function syncCustomers(postgresClient: PostgresClient, customers: Customer[]) {
   return postgresClient.upsertMany(customers, TABLE, customerSchema);
@@ -15,8 +16,9 @@ export async function fetchAndSyncCustomers(
   orbClient: Orb,
   params: CustomersFetchParams
 ): Promise<number> {
-  const customers = [];
+  let numberOfCustomers = 0;
 
+  console.time(TIMER_LOGGING_LABEL);
   let customersPage = await orbClient.customers.list({
     limit: params.limit || 100,
     'created_at[gt]': params.createdAtGt,
@@ -24,16 +26,23 @@ export async function fetchAndSyncCustomers(
     'created_at[lt]': params.createdAtLt,
     'created_at[lte]': params.createdAtLte,
   });
-  customers.push(...customersPage.data);
+  console.timeEnd(TIMER_LOGGING_LABEL);
+
+  numberOfCustomers += customersPage.data.length;
+
+  await syncCustomers(postgresClient, customersPage.data);
 
   while (customersPage.hasNextPage()) {
+    console.time(TIMER_LOGGING_LABEL);
     customersPage = await customersPage.getNextPage();
-    customers.push(...customersPage.data);
+    console.timeEnd(TIMER_LOGGING_LABEL);
+
+    numberOfCustomers += customersPage.data.length;
+
+    await syncCustomers(postgresClient, customersPage.data);
   }
 
-  await syncCustomers(postgresClient, customers);
-
-  return customers.length;
+  return numberOfCustomers;
 }
 
 export async function fetchAndSyncCustomer(postgresClient: PostgresClient, orbClient: Orb, customerId: string) {
