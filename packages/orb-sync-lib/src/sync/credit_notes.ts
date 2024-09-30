@@ -5,6 +5,7 @@ import type Orb from 'orb-billing';
 import { CreditNotesFetchParams } from '../types';
 
 const TABLE = 'credit_notes';
+const TIMER_LOGGING_LABEL = 'fetch-credit-notes';
 
 export async function syncCreditNotes(postgresClient: PostgresClient, creditNotes: CreditNote[]) {
   return postgresClient.upsertMany(
@@ -22,19 +23,27 @@ export async function fetchAndSyncCreditNotes(
   orbClient: Orb,
   params: CreditNotesFetchParams
 ): Promise<number> {
-  const creditNotes = [];
+  let numberOfCreditNotes = 0;
 
+  console.time(TIMER_LOGGING_LABEL);
   let creditNotesPage = await orbClient.creditNotes.list({ limit: params.limit || 100 });
-  creditNotes.push(...creditNotesPage.data);
+  console.timeEnd(TIMER_LOGGING_LABEL);
+
+  numberOfCreditNotes += creditNotesPage.data.length;
+
+  await syncCreditNotes(postgresClient, creditNotesPage.data);
 
   while (creditNotesPage.hasNextPage()) {
+    console.time(TIMER_LOGGING_LABEL);
     creditNotesPage = await creditNotesPage.getNextPage();
-    creditNotes.push(...creditNotesPage.data);
+    console.timeEnd(TIMER_LOGGING_LABEL);
+
+    numberOfCreditNotes += creditNotesPage.data.length;
+
+    await syncCreditNotes(postgresClient, creditNotesPage.data);
   }
 
-  await syncCreditNotes(postgresClient, creditNotes);
-
-  return creditNotes.length;
+  return numberOfCreditNotes;
 }
 
 export async function fetchAndSyncCreditNote(postgresClient: PostgresClient, orbClient: Orb, creditNoteId: string) {

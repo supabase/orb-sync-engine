@@ -1,6 +1,7 @@
 import pg from 'pg';
 import { pg as sql } from 'yesql';
 import type { JsonSchema } from '../schemas/types';
+import { randomUUID } from 'node:crypto';
 
 type PostgresConfig = {
   databaseUrl: string;
@@ -25,6 +26,8 @@ export class PostgresClient {
     const chunkSize = 5;
     const results: pg.QueryResult<T>[] = [];
 
+    const timerLoggingLabel = `upsert-many-${randomUUID()}`;
+    console.time(timerLoggingLabel);
     for (let i = 0; i < entries.length; i += chunkSize) {
       const chunk = entries.slice(i, i + chunkSize);
 
@@ -43,6 +46,7 @@ export class PostgresClient {
 
       results.push(...(await Promise.all(queries)));
     }
+    console.timeEnd(timerLoggingLabel);
 
     return results.flatMap((it) => it.rows);
   }
