@@ -31,3 +31,14 @@ export const subscriptionSchema: JsonSchema = {
   },
   required: ['id'],
 } as const;
+
+export const updateSubscriptionBillingCycleSchema: JsonSchema = {
+  $id: 'updateSubscriptionBillingCycleSchema',
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    current_billing_period_end_date: { type: 'string' },
+    current_billing_period_start_date: { type: 'string' },
+  },
+  required: ['id', 'current_billing_period_end_date', 'current_billing_period_start_date'],
+} as const;

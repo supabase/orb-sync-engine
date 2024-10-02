@@ -36,7 +36,7 @@ export async function refreshStaleSubscriptions(orbSync: OrbSync) {
       limit: chunkSize,
     });
 
-    await orbSync.syncCurrentBillingCycle(subscriptions.data);
+    //await orbSync.syncCurrentBillingCycle(subscriptions.data);
   }
 
   logger.info(`Done refreshing stale subscriptions`);

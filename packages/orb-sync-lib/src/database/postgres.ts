@@ -62,7 +62,7 @@ export class PostgresClient {
       chunk.forEach((entry) => {
         // Inject the values
         const cleansed = this.cleanseArrayField(entry, tableSchema);
-        const sqlQuery = this.constructUpdateSql(this.config.schema, table, Object.keys(entry));
+        const sqlQuery = this.constructUpdateSql(this.config.schema, table, tableSchema);
         const prepared = sql(sqlQuery, {
           useNullForMissing: true,
         })(cleansed);
@@ -105,7 +105,9 @@ export class PostgresClient {
       ;`;
   };
 
-  private constructUpdateSql = (schema: string, table: string, properties: string[]): string => {
+  private constructUpdateSql = (schema: string, table: string, tableSchema: JsonSchema): string => {
+    const properties = Object.keys(tableSchema.properties);
+
     return `
       update "${schema}"."${table}"
       set (${properties.map((x) => `"${x}"`).join(',')}) =
