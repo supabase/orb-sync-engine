@@ -5,6 +5,7 @@ import { OrbSync } from 'orb-sync-lib';
 import { getConfig } from './utils/config';
 import nodeCron from 'node-cron';
 import { refreshStaleSubscriptions } from './crons/refresh-stale-subscriptions';
+import { logger } from './utils/logger';
 
 export async function createApp(opts: FastifyServerOptions = {}): Promise<FastifyInstance> {
   const app = fastify(opts);
@@ -53,7 +54,7 @@ export async function createApp(opts: FastifyServerOptions = {}): Promise<Fastif
       try {
         await refreshStaleSubscriptions(orbSync);
       } catch (err) {
-        throw new Error('Error while refreshing stale subscriptions', { cause: err });
+        logger.error({ cause: err }, 'Error while refreshing stale subscriptions');
       }
     });
   }
