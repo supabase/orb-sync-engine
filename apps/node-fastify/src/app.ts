@@ -42,6 +42,7 @@ export async function createApp(opts: FastifyServerOptions = {}): Promise<Fastif
     orbWebhookSecret: config.ORB_WEBHOOK_SECRET,
     databaseSchema: config.DATABASE_SCHEMA,
     orbApiKey: config.ORB_API_KEY,
+    verifyWebhookSignature: config.VERIFY_WEBHOOK_SIGNATURE,
   });
 
   app.decorate('orbSync', orbSync);

@@ -14,10 +14,16 @@ import type {
 } from './types';
 import { PostgresClient } from './database/postgres';
 import { fetchAndSyncCustomer, fetchAndSyncCustomers, syncCustomers } from './sync/customers';
-import { fetchAndSyncSubscription, fetchAndSyncSubscriptions, syncSubscriptions } from './sync/subscriptions';
+import {
+  fetchAndSyncSubscription,
+  fetchAndSyncSubscriptions,
+  syncSubscriptions,
+  updateBillingCycle,
+} from './sync/subscriptions';
 import { fetchAndSyncInvoice, fetchAndSyncInvoices, syncInvoices } from './sync/invoices';
 import { fetchAndSyncCreditNote, fetchAndSyncCreditNotes, syncCreditNotes } from './sync/credit_notes';
 import { fetchAndSyncPlan, fetchAndSyncPlans } from './sync/plans';
+import { getBillingCycleFromInvoice } from './invoice-utils';
 
 export type OrbSyncConfig = {
   databaseUrl: string;
@@ -54,7 +60,7 @@ export class OrbSync {
       | CustomersFetchParams
       | CreditNotesFetchParams
       | SubscriptionsFetchParams
-      | PlansFetchParams,
+      | PlansFetchParams
   ): Promise<number> {
     switch (entity) {
       case 'invoices': {
@@ -112,8 +118,24 @@ export class OrbSync {
         // We don't want to override invoice data with a minified version.
         break;
       }
+
+      case 'invoice.issued': {
+        const invoice = (parsedData as InvoiceWebhook).invoice;
+        await syncInvoices(this.postgresClient, [invoice]);
+
+        const billingCycle = getBillingCycleFromInvoice(invoice);
+        if (billingCycle && invoice.subscription) {
+          await updateBillingCycle(this.postgresClient, {
+            subscriptionId: invoice.subscription.id,
+            billingCycleStart: billingCycle.start,
+            billingCycleEnd: billingCycle.end,
+          });
+        }
+
+        break;
+      }
+
       case 'invoice.edited':
-      case 'invoice.issued':
       case 'invoice.manually_marked_as_void':
       case 'invoice.payment_failed':
       case 'invoice.issue_failed':

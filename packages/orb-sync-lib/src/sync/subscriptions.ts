@@ -58,3 +58,28 @@ export async function fetchAndSyncSubscription(postgresClient: PostgresClient, o
 
   await syncSubscriptions(postgresClient, [subscription]);
 }
+
+export async function updateBillingCycle(
+  postgresClient: PostgresClient,
+  {
+    subscriptionId,
+    billingCycleStart,
+    billingCycleEnd,
+  }: {
+    subscriptionId: string;
+    billingCycleStart: string;
+    billingCycleEnd: string;
+  }
+) {
+  const isBillingCycleStartInThePast = new Date(billingCycleStart) < new Date();
+  const isBillingCycleEndInTheFuture = new Date(billingCycleEnd) > new Date();
+
+  if (!isBillingCycleStartInThePast || !isBillingCycleEndInTheFuture) {
+    console.info(
+      `Billing cycle of subscription ${subscriptionId} is not being updated. start (${billingCycleStart}) / end (${billingCycleEnd}) not suitable`
+    );
+    return;
+  }
+
+  return postgresClient.updateSubscriptionBillingCycle({ subscriptionId, billingCycleStart, billingCycleEnd });
+}
