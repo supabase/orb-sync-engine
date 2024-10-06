@@ -19,6 +19,9 @@ type configType = {
 
   /** Access the Orb API */
   ORB_API_KEY?: string;
+
+  /** Whether to verify the Orb webhook signature */
+  VERIFY_WEBHOOK_SIGNATURE: boolean;
 };
 
 function getConfigFromEnv(key: string, defaultValue?: string): string {
@@ -40,6 +43,7 @@ export function getConfig(): configType {
     DATABASE_URL: getConfigFromEnv('DATABASE_URL'),
     ORB_WEBHOOK_SECRET: getConfigFromEnv('ORB_WEBHOOK_SECRET'),
     PORT: Number(getConfigFromEnv('PORT', '8080')),
+    VERIFY_WEBHOOK_SIGNATURE: getConfigFromEnv('VERIFY_WEBHOOK_SIGNATURE', 'true') === 'true',
   };
 
   assert(!Number.isNaN(config.PORT), 'PORT must be a number');

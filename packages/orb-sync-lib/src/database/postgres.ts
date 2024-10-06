@@ -76,6 +76,39 @@ export class PostgresClient {
       ;`;
   };
 
+  /**
+   * Updates a subscription's billing cycle dates, provided that the current end date is in the past (i.e. the subscription
+   * data in the database being stale).
+   */
+  async updateSubscriptionBillingCycle({
+    subscriptionId,
+    billingCycleStart,
+    billingCycleEnd,
+  }: {
+    subscriptionId: string;
+    billingCycleStart: string;
+    billingCycleEnd: string;
+  }) {
+    const updateSql = `
+      update "${this.config.schema}"."subscriptions"
+      set (current_billing_period_start_date, current_billing_period_end_date) =
+      (:current_billing_period_start_date, :current_billing_period_end_date)
+      where id = :id and current_billing_period_end_date < :now`;
+
+    const prepared = sql(updateSql, {
+      useNullForMissing: true,
+    })({
+      id: subscriptionId,
+      current_billing_period_start_date: billingCycleStart,
+      current_billing_period_end_date: billingCycleEnd,
+      now: new Date().toISOString(),
+    });
+
+    const result = await this.pool.query(prepared.text, prepared.values);
+
+    return result.rows;
+  }
+
   private cleanseArrayField(
     obj: {
       [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
