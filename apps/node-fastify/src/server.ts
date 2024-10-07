@@ -17,7 +17,7 @@ const logger = pino({
 
 const main = async () => {
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = await createApp({
-    logger,
+    loggerInstance: logger,
     disableRequestLogging: true,
     requestIdHeader: 'Request-Id',
   });
