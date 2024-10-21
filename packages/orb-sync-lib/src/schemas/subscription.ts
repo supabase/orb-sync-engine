@@ -28,6 +28,7 @@ export const subscriptionSchema: JsonSchema = {
     start_date: { type: 'string' },
     status: { type: 'string' },
     trial_info: { type: 'object' },
+    adjustment_intervals: { type: 'object' },
   },
   required: ['id'],
 } as const;
