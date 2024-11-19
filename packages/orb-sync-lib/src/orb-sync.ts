@@ -9,7 +9,9 @@ import type {
   InvoiceWebhook,
   OrbWebhook,
   PlansFetchParams,
+  SubscriptionCostExceededWebhook,
   SubscriptionsFetchParams,
+  SubscriptionUsageExceededWebhook,
   SubscriptionWebhook,
 } from './types';
 import { PostgresClient } from './database/postgres';
@@ -24,6 +26,8 @@ import { fetchAndSyncInvoice, fetchAndSyncInvoices, syncInvoices } from './sync/
 import { fetchAndSyncCreditNote, fetchAndSyncCreditNotes, syncCreditNotes } from './sync/credit_notes';
 import { fetchAndSyncPlan, fetchAndSyncPlans } from './sync/plans';
 import { getBillingCycleFromInvoice } from './invoice-utils';
+import { syncSubscriptionUsageExceeded } from './sync/subscription_usage_exceeded';
+import { syncSubscriptionCostExceeded } from './sync/subscription_cost_exceeded';
 
 export type OrbSyncConfig = {
   databaseUrl: string;
@@ -86,6 +90,7 @@ export class OrbSync {
       this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecret);
     }
 
+    
     const parsedData = JSON.parse(payload) as OrbWebhook;
     switch (parsedData.type) {
       // Test event, just ignore it
@@ -101,10 +106,8 @@ export class OrbSync {
       }
 
       case 'subscription.created':
-      case 'subscription.cost_exceeded':
       case 'subscription.ended':
       case 'subscription.plan_changed':
-      case 'subscription.usage_exceeded':
       case 'subscription.fixed_fee_quantity_updated':
       case 'subscription.plan_version_change_scheduled':
       case 'subscription.plan_version_changed':
@@ -113,6 +116,17 @@ export class OrbSync {
         await syncSubscriptions(this.postgresClient, [(parsedData as SubscriptionWebhook).subscription]);
         break;
       }
+
+      case 'subscription.usage_exceeded': {
+        await syncSubscriptionUsageExceeded(this.postgresClient, parsedData as SubscriptionUsageExceededWebhook);
+        break;
+      }
+
+      case 'subscription.cost_exceeded': {
+        await syncSubscriptionCostExceeded(this.postgresClient, parsedData as SubscriptionCostExceededWebhook);
+        break;
+      }
+
       case 'invoice.invoice_date_elapsed': {
         // Is being ignored because from 2024-09-20 the webhook payload only contains a "minified" version of the invoice resource.
         // We don't want to override invoice data with a minified version.
