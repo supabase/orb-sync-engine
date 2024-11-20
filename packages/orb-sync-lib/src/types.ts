@@ -29,7 +29,9 @@ export type OrbWebhookType =
   | 'invoice.sync_failed'
   | 'credit_note.issued'
   | 'credit_note.marked_as_void'
-  | 'resource_event.test';
+  | 'resource_event.test'
+  | 'subscription.usage_exceeded'
+  | 'subscription.cost_exceeded';
 
 export type OrbWebhook = {
   // Unique to this WebhookEvent resource, and can be used for idempotency (process-once) purposes
@@ -93,3 +95,22 @@ export type PlansFetchParams = {
 export type CreditNotesFetchParams = {
   limit?: number;
 };
+
+export type SubscriptionCostExceededWebhook = {
+  subscription: Subscription;
+  properties: {
+    timeframe_start: string;
+    timeframe_end: string;
+    amount_threshold: number;
+  };
+} & OrbWebhook;
+
+export type SubscriptionUsageExceededWebhook = {
+  subscription: Subscription;
+  properties: {
+    billable_metric_id: string;
+    timeframe_start: string;
+    timeframe_end: string;
+    quantity_threshold: number;
+  };
+} & OrbWebhook;

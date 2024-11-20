@@ -6,7 +6,7 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "lib": ["ES2022", "DOM"],
+    "lib": ["ES2023", "DOM"],
     "resolveJsonModule": true,
     "useUnknownInCatchVariables": false,
     "module": "CommonJS",
