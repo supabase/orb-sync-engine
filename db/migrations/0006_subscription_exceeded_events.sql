@@ -7,7 +7,7 @@ create table
         external_customer_id varchar(255),
         timeframe_start timestamp not null,
         timeframe_end timestamp not null,
-        amount_threshold decimal not null,
+        quantity_threshold decimal not null,
         created_at timestamp not null default now()
     );
 
