@@ -11,9 +11,9 @@ create table
         created_at timestamp not null default now()
     );
 
-create index if not exists on orb_subscription_usage_exceeded_subscription_idx on orb.subscription_usage_exceeded (subscription_id);
-create index if not exists on orb_subscription_usage_exceeded_customer_idx on orb.subscription_usage_exceeded (customer_id);
-create index if not exists on orb_subscription_usage_exceeded_external_customer_idx on orb.subscription_usage_exceeded (external_customer_id);
+create index if not exists orb_subscription_usage_exceeded_subscription_idx on orb.subscription_usage_exceeded (subscription_id);
+create index if not exists orb_subscription_usage_exceeded_customer_idx on orb.subscription_usage_exceeded (customer_id);
+create index if not exists orb_subscription_usage_exceeded_external_customer_idx on orb.subscription_usage_exceeded (external_customer_id);
 
 create table
     if not exists orb.subscription_cost_exceeded (

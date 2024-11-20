@@ -11,5 +11,5 @@ export const subscriptionCostExceededSchema: JsonSchema = {
     timeframe_end: { type: 'string' },
     amount_threshold: { type: 'number' },
   },
-  required: ['billable_metric_id', 'timeframe_start', 'timeframe_end', 'amount_threshold', 'subscription'],
+  required: ['customer_id', 'timeframe_start', 'timeframe_end', 'amount_threshold', 'subscription_id'],
 } as const;
