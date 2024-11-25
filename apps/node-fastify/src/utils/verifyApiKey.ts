@@ -8,7 +8,7 @@ export const verifyApiKey = (request: FastifyRequest, reply: FastifyReply, done:
     return reply.code(401).send('Unauthorized');
   }
   const { authorization } = request.headers;
-  if (authorization !== config.API_KEY_SYNC) {
+  if (authorization !== config.API_KEY_SYNC && authorization !== config.API_KEY_SYNC_ALT) {
     return reply.code(401).send('Unauthorized');
   }
   done();

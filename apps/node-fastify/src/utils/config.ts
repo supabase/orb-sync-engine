@@ -5,6 +5,9 @@ type configType = {
   /** Optional, API key to authorize requests against the sync endpoints */
   API_KEY_SYNC?: string;
 
+  /** Alternative API key for the sync endpoints for easier rotation */
+  API_KEY_SYNC_ALT?: string;
+
   /** Port number the API is running on, defaults to 8080 */
   PORT: number;
 
@@ -38,6 +41,7 @@ export function getConfig(): configType {
 
   config = {
     API_KEY_SYNC: getConfigFromEnv('API_KEY_SYNC'),
+    API_KEY_SYNC_ALT: getConfigFromEnv('API_KEY_SYNC_ALT'),
     ORB_API_KEY: getConfigFromEnv('ORB_API_KEY'),
     DATABASE_SCHEMA: getConfigFromEnv('DATABASE_SCHEMA', 'orb'),
     DATABASE_URL: getConfigFromEnv('DATABASE_URL'),
