@@ -17,12 +17,12 @@
   "author": "Supabase",
   "license": "MIT",
   "dependencies": {
-    "@fastify/autoload": "^6.0.2",
-    "@fastify/type-provider-typebox": "^5.0.1",
-    "dotenv": "^16.4.5",
-    "fastify": "^5.1.0",
+    "@fastify/autoload": "^6.0.3",
+    "@fastify/type-provider-typebox": "^5.1.0",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.0",
     "orb-sync-lib": "*",
-    "pino": "^9.5.0"
+    "pino": "^9.6.0"
   },
   "devDependencies": {
     "pino-pretty": "^13.0.0",
