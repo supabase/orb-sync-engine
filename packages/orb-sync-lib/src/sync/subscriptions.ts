@@ -5,7 +5,6 @@ import { subscriptionSchema } from '../schemas/subscription';
 import { SubscriptionsFetchParams } from '../types';
 
 const TABLE = 'subscriptions';
-const TIMER_LOGGING_LABEL = 'fetch-subscriptions';
 
 export async function syncSubscriptions(postgresClient: PostgresClient, subscriptions: Subscription[]) {
   return postgresClient.upsertMany(
@@ -25,8 +24,6 @@ export async function fetchAndSyncSubscriptions(
   params: SubscriptionsFetchParams
 ): Promise<number> {
   let numberOfSubscriptions = 0;
-
-  console.time(TIMER_LOGGING_LABEL);
   let subscriptionsPage = await orbClient.subscriptions.list({
     limit: params.limit || 100,
     'created_at[gt]': params.createdAtGt,
@@ -34,17 +31,13 @@ export async function fetchAndSyncSubscriptions(
     'created_at[lt]': params.createdAtLt,
     'created_at[lte]': params.createdAtLte,
   });
-  console.timeEnd(TIMER_LOGGING_LABEL);
 
   numberOfSubscriptions += subscriptionsPage.data.length;
 
   await syncSubscriptions(postgresClient, subscriptionsPage.data);
 
   while (subscriptionsPage.hasNextPage()) {
-    console.time(TIMER_LOGGING_LABEL);
     subscriptionsPage = await subscriptionsPage.getNextPage();
-    console.timeEnd(TIMER_LOGGING_LABEL);
-
     numberOfSubscriptions += subscriptionsPage.data.length;
 
     await syncSubscriptions(postgresClient, subscriptionsPage.data);

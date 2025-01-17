@@ -5,7 +5,6 @@ import { invoiceSchema } from '../schemas/invoice';
 import { InvoicesFetchParams } from '../types';
 
 const TABLE = 'invoices';
-const TIMER_LOGGING_LABEL = 'fetch-invoices';
 
 export async function syncInvoices(postgresClient: PostgresClient, invoices: Invoice[]) {
   return postgresClient.upsertMany(
@@ -26,7 +25,6 @@ export async function fetchAndSyncInvoices(
 ): Promise<number> {
   let numberOfInvoices = 0;
 
-  console.time(TIMER_LOGGING_LABEL);
   let invoicesPage = await orbClient.invoices.list({
     limit: params.limit || 100,
     'invoice_date[gt]': params.createdAtGt,
@@ -34,17 +32,13 @@ export async function fetchAndSyncInvoices(
     'invoice_date[lt]': params.createdAtLt,
     'invoice_date[lte]': params.createdAtLte,
   });
-  console.timeEnd(TIMER_LOGGING_LABEL);
 
   numberOfInvoices += invoicesPage.data.length;
 
   await syncInvoices(postgresClient, invoicesPage.data);
 
   while (invoicesPage.hasNextPage()) {
-    console.time(TIMER_LOGGING_LABEL);
     invoicesPage = await invoicesPage.getNextPage();
-    console.timeEnd(TIMER_LOGGING_LABEL);
-
     numberOfInvoices += invoicesPage.data.length;
 
     await syncInvoices(postgresClient, invoicesPage.data);
