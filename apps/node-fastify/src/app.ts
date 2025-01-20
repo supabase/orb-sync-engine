@@ -1,11 +1,21 @@
+// Needs to be imported here at the very beginning so that auto-instrumentation works for the imported modules
+import '../instrument.mjs';
+
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import autoload from '@fastify/autoload';
 import path from 'node:path';
 import { OrbSync } from 'orb-sync-lib';
 import { getConfig } from './utils/config';
+import * as Sentry from '@sentry/node';
 
 export async function createApp(opts: FastifyServerOptions = {}): Promise<FastifyInstance> {
   const app = fastify(opts);
+
+  const config = getConfig();
+
+  if (config.SENTRY_DSN) {
+    Sentry.setupFastifyErrorHandler(app);
+  }
 
   /**
    * Add a content parser for Orb webhooks
@@ -34,8 +44,6 @@ export async function createApp(opts: FastifyServerOptions = {}): Promise<Fastif
   await app.register(autoload, {
     dir: path.join(__dirname, 'routes'),
   });
-
-  const config = getConfig();
 
   const orbSync = new OrbSync({
     databaseUrl: config.DATABASE_URL,

@@ -25,6 +25,12 @@ type configType = {
 
   /** Whether to verify the Orb webhook signature */
   VERIFY_WEBHOOK_SIGNATURE: boolean;
+
+  /** Sentry project's Data Source Name. When not specified, no events are sent to Sentry */
+  SENTRY_DSN?: string;
+
+  /** When specified, Sentry-supported tag 'Environment' is set. Defaults to 'development' */
+  SENTRY_ENVIRONMENT?: string;
 };
 
 function getConfigFromEnv(key: string, defaultValue?: string): string {
@@ -48,6 +54,8 @@ export function getConfig(): configType {
     ORB_WEBHOOK_SECRET: getConfigFromEnv('ORB_WEBHOOK_SECRET'),
     PORT: Number(getConfigFromEnv('PORT', '8080')),
     VERIFY_WEBHOOK_SIGNATURE: getConfigFromEnv('VERIFY_WEBHOOK_SIGNATURE', 'true') === 'true',
+    SENTRY_DSN: getConfigFromEnv('SENTRY_DSN'),
+    SENTRY_ENVIRONMENT: getConfigFromEnv('SENTRY_ENVIRONMENT', 'development'),
   };
 
   assert(!Number.isNaN(config.PORT), 'PORT must be a number');

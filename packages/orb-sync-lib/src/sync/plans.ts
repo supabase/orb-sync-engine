@@ -5,7 +5,6 @@ import { PlansFetchParams } from '../types';
 import { planSchema } from '../schemas/plan';
 
 const TABLE = 'plans';
-const TIMER_LOGGING_LABEL = 'fetch-plans';
 
 export async function syncPlans(postgresClient: PostgresClient, plans: Plan[]) {
   return postgresClient.upsertMany(plans, TABLE, planSchema);
@@ -18,7 +17,6 @@ export async function fetchAndSyncPlans(
 ): Promise<number> {
   let numberOfPlans = 0;
 
-  console.time(TIMER_LOGGING_LABEL);
   let plansPage = await orbClient.plans.list({
     limit: params.limit || 100,
     'created_at[gt]': params.createdAtGt,
@@ -26,17 +24,13 @@ export async function fetchAndSyncPlans(
     'created_at[lt]': params.createdAtLt,
     'created_at[lte]': params.createdAtLte,
   });
-  console.timeEnd(TIMER_LOGGING_LABEL);
 
   numberOfPlans += plansPage.data.length;
 
   await syncPlans(postgresClient, plansPage.data);
 
   while (plansPage.hasNextPage()) {
-    console.time(TIMER_LOGGING_LABEL);
     plansPage = await plansPage.getNextPage();
-    console.timeEnd(TIMER_LOGGING_LABEL);
-
     numberOfPlans += plansPage.data.length;
 
     await syncPlans(postgresClient, plansPage.data);
