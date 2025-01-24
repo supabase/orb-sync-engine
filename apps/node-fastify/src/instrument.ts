@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { getConfig } from './src/utils/config';
+import { getConfig } from './utils/config';
 
 const config = getConfig();
 

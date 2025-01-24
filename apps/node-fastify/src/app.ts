@@ -1,5 +1,5 @@
 // Needs to be imported here at the very beginning so that auto-instrumentation works for the imported modules
-import '../instrument.mjs';
+import './instrument';
 
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import autoload from '@fastify/autoload';
