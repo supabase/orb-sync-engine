@@ -23,7 +23,7 @@
     "fastify": "^5.2.0",
     "orb-sync-lib": "*",
     "pino": "^9.6.0",
-    "@sentry/node": "^8.50.0"
+    "@sentry/node": "^9.0.0"
   },
   "devDependencies": {
     "pino-pretty": "^13.0.0",
