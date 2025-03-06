@@ -31,7 +31,8 @@ export type OrbWebhookType =
   | 'credit_note.marked_as_void'
   | 'resource_event.test'
   | 'subscription.usage_exceeded'
-  | 'subscription.cost_exceeded';
+  | 'subscription.cost_exceeded'
+  | 'data_exports.transfer_success';
 
 export type OrbWebhook = {
   // Unique to this WebhookEvent resource, and can be used for idempotency (process-once) purposes

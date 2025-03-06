@@ -90,11 +90,14 @@ export class OrbSync {
       this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecret);
     }
 
-    
     const parsedData = JSON.parse(payload) as OrbWebhook;
     switch (parsedData.type) {
       // Test event, just ignore it
       case 'resource_event.test': {
+        break;
+      }
+      // Data export events, just ignore them
+      case 'data_exports.transfer_success': {
         break;
       }
       case 'customer.created':
