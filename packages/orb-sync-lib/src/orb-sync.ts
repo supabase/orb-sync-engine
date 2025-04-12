@@ -100,6 +100,7 @@ export class OrbSync {
       case 'data_exports.transfer_success': {
         break;
       }
+      case 'customer.balance_transaction_created':
       case 'customer.created':
       case 'customer.edited':
       case 'customer.credit_balance_depleted':
