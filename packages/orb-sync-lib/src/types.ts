@@ -32,7 +32,8 @@ export type OrbWebhookType =
   | 'resource_event.test'
   | 'subscription.usage_exceeded'
   | 'subscription.cost_exceeded'
-  | 'data_exports.transfer_success';
+  | 'data_exports.transfer_success'
+  | 'customer.balance_transaction_created';
 
 export type OrbWebhook = {
   // Unique to this WebhookEvent resource, and can be used for idempotency (process-once) purposes
