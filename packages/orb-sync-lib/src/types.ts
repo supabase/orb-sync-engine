@@ -33,7 +33,8 @@ export type OrbWebhookType =
   | 'subscription.usage_exceeded'
   | 'subscription.cost_exceeded'
   | 'data_exports.transfer_success'
-  | 'customer.balance_transaction_created';
+  | 'customer.balance_transaction_created'
+  | 'billable_metric.edited';
 
 export type OrbWebhook = {
   // Unique to this WebhookEvent resource, and can be used for idempotency (process-once) purposes
@@ -116,3 +117,11 @@ export type SubscriptionUsageExceededWebhook = {
     quantity_threshold: number;
   };
 } & OrbWebhook;
+
+export type BillableMetricsFetchParams = {
+  limit?: number;
+  createdAtGt?: string | null;
+  createdAtGte?: string | null;
+  createdAtLt?: string | null;
+  createdAtLte?: string | null;
+};

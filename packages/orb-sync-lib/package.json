@@ -16,12 +16,12 @@
   "author": "Supabase",
   "license": "MIT",
   "dependencies": {
-    "orb-billing": "^4.33.0",
-    "pg": "^8.13.1",
+    "orb-billing": "^4.72.2",
+    "pg": "^8.15.5",
     "yesql": "^7.0.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.11.10",
+    "@types/pg": "^8.11.14",
     "@types/yesql": "^4.1.4"
   }
 }
