@@ -5,7 +5,7 @@ export const creditNoteSchema: JsonSchema = {
   type: 'object',
   properties: {
     id: { type: 'string' },
-    created_at: { type: 'createad_at' },
+    created_at: { type: 'string' },
     credit_note_number: { type: 'string' },
     credit_note_pdf: { type: 'string' },
     customer_id: { type: 'string' },

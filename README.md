@@ -29,6 +29,7 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 
 ## Supported Webhooks
 
+- [x] billable_metric.edited
 - [x] customer.balance_transaction_created
 - [x] customer.created
 - [x] customer.credit_balance_depleted

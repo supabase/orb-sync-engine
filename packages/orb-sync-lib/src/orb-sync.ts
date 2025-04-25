@@ -1,6 +1,7 @@
 import Orb from 'orb-billing';
 import type { HeadersLike } from 'orb-billing/core';
 import type {
+  BillableMetricsFetchParams,
   CreditNotesFetchParams,
   CreditNoteWebhook,
   CustomersFetchParams,
@@ -28,6 +29,7 @@ import { fetchAndSyncPlan, fetchAndSyncPlans } from './sync/plans';
 import { getBillingCycleFromInvoice } from './invoice-utils';
 import { syncSubscriptionUsageExceeded } from './sync/subscription_usage_exceeded';
 import { syncSubscriptionCostExceeded } from './sync/subscription_cost_exceeded';
+import { fetchAndSyncBillableMetric, fetchAndSyncBillableMetrics } from './sync/billable_metrics';
 
 export type OrbSyncConfig = {
   databaseUrl: string;
@@ -58,13 +60,14 @@ export class OrbSync {
   }
 
   async sync(
-    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans',
+    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans' | 'billable_metrics',
     params:
       | InvoicesFetchParams
       | CustomersFetchParams
       | CreditNotesFetchParams
       | SubscriptionsFetchParams
       | PlansFetchParams
+      | BillableMetricsFetchParams
   ): Promise<number> {
     switch (entity) {
       case 'invoices': {
@@ -81,6 +84,9 @@ export class OrbSync {
       }
       case 'plans': {
         return fetchAndSyncPlans(this.postgresClient, this.orb, params as PlansFetchParams);
+      }
+      case 'billable_metrics': {
+        return fetchAndSyncBillableMetrics(this.postgresClient, this.orb, params as BillableMetricsFetchParams);
       }
     }
   }
@@ -173,13 +179,22 @@ export class OrbSync {
         break;
       }
 
+      case 'billable_metric.edited': {
+        // The billable metric webhook does not contain the ID, so we do a full refresh of all billable metrics
+        await fetchAndSyncBillableMetrics(this.postgresClient, this.orb, { limit: 50 });
+        break;
+      }
+
       default: {
         throw new Error(`Unsupported webhook event type: ${parsedData.type}`);
       }
     }
   }
 
-  async syncSingleEntity(entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans', id: string) {
+  async syncSingleEntity(
+    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans' | 'billable_metrics',
+    id: string
+  ) {
     switch (entity) {
       case 'invoices': {
         await fetchAndSyncInvoice(this.postgresClient, this.orb, id);
@@ -203,6 +218,11 @@ export class OrbSync {
 
       case 'plans': {
         await fetchAndSyncPlan(this.postgresClient, this.orb, id);
+        break;
+      }
+
+      case 'billable_metrics': {
+        await fetchAndSyncBillableMetric(this.postgresClient, this.orb, id);
         break;
       }
     }

@@ -30,6 +30,30 @@ const SchemaRequestParamsSyncCustomers = Type.Object({
   ),
 });
 
+const SchemaRequestParamsSyncBillableMetrics = Type.Object({
+  limit: Type.Optional(Type.Number({ minimum: 1, maximum: 100 })),
+  createdAtGt: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+  createdAtGte: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+  createdAtLt: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+  createdAtLte: Type.Optional(
+    Type.String({
+      format: 'date-time',
+    })
+  ),
+});
+
 const SchemaRequestParamsSyncSubscriptions = Type.Object({
   limit: Type.Optional(Type.Number({ minimum: 1, maximum: 100 })),
   createdAtGt: Type.Optional(
@@ -282,6 +306,44 @@ export default async function routes(fastify: FastifyInstance) {
     },
     handler: async (request, reply) => {
       await fastify.orbSync.syncSingleEntity('plans', request.params.id);
+
+      return reply.status(204).send();
+    },
+  });
+
+  fastify.post<{
+    Querystring: Static<typeof SchemaRequestParamsSyncBillableMetrics>;
+  }>('/sync/billable_metrics', {
+    preHandler: [verifyApiKey],
+    schema: {
+      querystring: SchemaRequestParamsSyncBillableMetrics,
+    },
+    handler: async (request, reply) => {
+      const query = request.query;
+
+      const count = await fastify.orbSync.sync('billable_metrics', {
+        limit: query.limit,
+        createdAtGt: query.createdAtGt,
+        createdAtGte: query.createdAtGte,
+        createdAtLt: query.createdAtLt,
+        createdAtLte: query.createdAtLte,
+      });
+
+      return reply.send({ count });
+    },
+  });
+
+  fastify.post<{
+    Params: { id: string };
+  }>('/sync/billable_metrics/:id', {
+    preHandler: [verifyApiKey],
+    schema: {
+      params: Type.Object({
+        id: Type.String(),
+      }),
+    },
+    handler: async (request, reply) => {
+      await fastify.orbSync.syncSingleEntity('billable_metrics', request.params.id);
 
       return reply.status(204).send();
     },
