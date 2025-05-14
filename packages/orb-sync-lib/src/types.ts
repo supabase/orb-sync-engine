@@ -33,6 +33,7 @@ export type OrbWebhookType =
   | 'subscription.usage_exceeded'
   | 'subscription.cost_exceeded'
   | 'data_exports.transfer_success'
+  | 'data_exports.transfer_error'
   | 'customer.balance_transaction_created'
   | 'billable_metric.edited';
 

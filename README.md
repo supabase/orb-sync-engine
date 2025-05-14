@@ -36,6 +36,7 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 - [x] customer.credit_balance_dropped
 - [x] customer.edited
 - [x] data_exports.transfer_success (ignored) 
+- [x] data_exports.transfer_error (ignored) 
 - [x] subscription.created
 - [x] subscription.started
 - [x] subscription.fixed_fee_quantity_updated

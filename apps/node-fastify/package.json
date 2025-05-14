@@ -22,7 +22,6 @@
     "dotenv": "^16.5.0",
     "fastify": "^5.3.2",
     "orb-sync-lib": "*",
-    "pino": "^9.6.0",
     "@sentry/node": "^9.14.0"
   },
   "devDependencies": {

@@ -7,8 +7,9 @@ import path from 'node:path';
 import { OrbSync } from 'orb-sync-lib';
 import { getConfig } from './utils/config';
 import * as Sentry from '@sentry/node';
+import pino from 'pino';
 
-export async function createApp(opts: FastifyServerOptions = {}): Promise<FastifyInstance> {
+export async function createApp(opts: FastifyServerOptions = {}, logger: pino.Logger): Promise<FastifyInstance> {
   const app = fastify(opts);
 
   const config = getConfig();
@@ -51,6 +52,7 @@ export async function createApp(opts: FastifyServerOptions = {}): Promise<Fastif
     databaseSchema: config.DATABASE_SCHEMA,
     orbApiKey: config.ORB_API_KEY,
     verifyWebhookSignature: config.VERIFY_WEBHOOK_SIGNATURE,
+    logger,
   });
 
   app.decorate('orbSync', orbSync);
