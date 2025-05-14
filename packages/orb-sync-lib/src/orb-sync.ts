@@ -30,6 +30,7 @@ import { getBillingCycleFromInvoice } from './invoice-utils';
 import { syncSubscriptionUsageExceeded } from './sync/subscription_usage_exceeded';
 import { syncSubscriptionCostExceeded } from './sync/subscription_cost_exceeded';
 import { fetchAndSyncBillableMetric, fetchAndSyncBillableMetrics } from './sync/billable_metrics';
+import pino from 'pino';
 
 export type OrbSyncConfig = {
   databaseUrl: string;
@@ -45,6 +46,8 @@ export type OrbSyncConfig = {
 
   /** Control whether webhook signatures should be verified. Defaults to true */
   verifyWebhookSignature?: boolean;
+
+  logger?: pino.Logger;
 };
 
 export class OrbSync {
@@ -103,7 +106,8 @@ export class OrbSync {
         break;
       }
       // Data export events, just ignore them
-      case 'data_exports.transfer_success': {
+      case 'data_exports.transfer_success':
+      case 'data_exports.transfer_error': {
         break;
       }
       case 'customer.balance_transaction_created':
@@ -111,7 +115,11 @@ export class OrbSync {
       case 'customer.edited':
       case 'customer.credit_balance_depleted':
       case 'customer.credit_balance_dropped': {
-        await syncCustomers(this.postgresClient, [(parsedData as CustomerWebhook).customer]);
+        const webhook = parsedData as CustomerWebhook;
+
+        this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for customer ${webhook.customer.id}`);
+
+        await syncCustomers(this.postgresClient, [webhook.customer]);
         break;
       }
 
@@ -123,17 +131,34 @@ export class OrbSync {
       case 'subscription.plan_version_changed':
       case 'subscription.edited':
       case 'subscription.started': {
-        await syncSubscriptions(this.postgresClient, [(parsedData as SubscriptionWebhook).subscription]);
+        const webhook = parsedData as SubscriptionWebhook;
+        this.config.logger?.info(
+          `Received webhook ${webhook.id}: ${webhook.type} for subscription ${webhook.subscription.id}`
+        );
+
+        await syncSubscriptions(this.postgresClient, [webhook.subscription]);
         break;
       }
 
       case 'subscription.usage_exceeded': {
-        await syncSubscriptionUsageExceeded(this.postgresClient, parsedData as SubscriptionUsageExceededWebhook);
+        const webhook = parsedData as SubscriptionUsageExceededWebhook;
+
+        this.config.logger?.info(
+          `Received webhook ${webhook.id}: ${webhook.type} for subscription ${webhook.subscription.id}`
+        );
+
+        await syncSubscriptionUsageExceeded(this.postgresClient, webhook);
         break;
       }
 
       case 'subscription.cost_exceeded': {
-        await syncSubscriptionCostExceeded(this.postgresClient, parsedData as SubscriptionCostExceededWebhook);
+        const webhook = parsedData as SubscriptionCostExceededWebhook;
+
+        this.config.logger?.info(
+          `Received webhook ${webhook.id}: ${webhook.type} for subscription ${webhook.subscription.id}`
+        );
+
+        await syncSubscriptionCostExceeded(this.postgresClient, webhook);
         break;
       }
 
@@ -144,7 +169,10 @@ export class OrbSync {
       }
 
       case 'invoice.issued': {
-        const invoice = (parsedData as InvoiceWebhook).invoice;
+        const webhook = parsedData as InvoiceWebhook;
+        const invoice = webhook.invoice;
+        this.config.logger?.info(`Received webhook ${webhook.id}: ${parsedData.type} for invoice ${invoice.id}`);
+
         await syncInvoices(this.postgresClient, [invoice]);
 
         const billingCycle = getBillingCycleFromInvoice(invoice);
@@ -169,17 +197,28 @@ export class OrbSync {
       case 'invoice.sync_succeded':
       case 'invoice.undo_mark_as_paid':
       case 'invoice.payment_succeeded': {
-        await syncInvoices(this.postgresClient, [(parsedData as InvoiceWebhook).invoice]);
+        const webhook = parsedData as InvoiceWebhook;
+
+        this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for invoice ${webhook.invoice.id}`);
+
+        await syncInvoices(this.postgresClient, [webhook.invoice]);
         break;
       }
 
       case 'credit_note.issued':
       case 'credit_note.marked_as_void': {
-        await syncCreditNotes(this.postgresClient, [(parsedData as CreditNoteWebhook).credit_note]);
+        const webhook = parsedData as CreditNoteWebhook;
+        this.config.logger?.info(
+          `Received webhook ${webhook.id}: ${webhook.type} for credit note ${webhook.credit_note.id}`
+        );
+
+        await syncCreditNotes(this.postgresClient, [webhook.credit_note]);
         break;
       }
 
       case 'billable_metric.edited': {
+        this.config.logger?.info(`Received webhook ${parsedData.id}: ${parsedData.type} for billable metric`);
+
         // The billable metric webhook does not contain the ID, so we do a full refresh of all billable metrics
         await fetchAndSyncBillableMetrics(this.postgresClient, this.orb, { limit: 50 });
         break;

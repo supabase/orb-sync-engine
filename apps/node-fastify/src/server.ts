@@ -16,11 +16,14 @@ const logger = pino({
 });
 
 const main = async () => {
-  const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = await createApp({
-    loggerInstance: logger,
-    disableRequestLogging: true,
-    requestIdHeader: 'Request-Id',
-  });
+  const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = await createApp(
+    {
+      loggerInstance: logger,
+      disableRequestLogging: true,
+      requestIdHeader: 'Request-Id',
+    },
+    logger
+  );
 
   app.withTypeProvider<TypeBoxTypeProvider>();
 
