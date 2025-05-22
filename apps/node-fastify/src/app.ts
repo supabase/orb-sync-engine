@@ -4,7 +4,7 @@ import './instrument';
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import autoload from '@fastify/autoload';
 import path from 'node:path';
-import { OrbSync } from 'orb-sync-lib';
+import { OrbSync } from '@supabase/orb-sync-lib';
 import { getConfig } from './utils/config';
 import * as Sentry from '@sentry/node';
 import pino from 'pino';

@@ -12,6 +12,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=0 /app/apps/node-fastify .
 COPY --from=0 /app/node_modules/ ./node_modules
-COPY --from=0 /app/packages/orb-sync-lib/dist ./node_modules/orb-sync-lib
+COPY --from=0 /app/packages/orb-sync-lib/dist ./node_modules/@supabase/orb-sync-lib
 
 CMD ["npm", "start"]

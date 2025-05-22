@@ -1,4 +1,4 @@
-import { OrbSync } from 'orb-sync-lib';
+import { OrbSync } from '@supabase/orb-sync-lib';
 
 declare module 'fastify' {
   interface FastifyInstance {
