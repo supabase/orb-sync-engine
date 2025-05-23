@@ -11,7 +11,7 @@ export class PostgresClient {
   pool: pg.Pool;
 
   constructor(private config: PostgresConfig) {
-    this.pool = new pg.Pool({ connectionString: config.databaseUrl });
+    this.pool = new pg.Pool({ connectionString: config.databaseUrl, max: 25, keepAlive: true });
   }
 
   async upsertMany<
