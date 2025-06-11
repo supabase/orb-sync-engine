@@ -8,5 +8,5 @@ Sentry.init({
   dsn: config.SENTRY_DSN,
   environment: config.SENTRY_ENVIRONMENT,
   integrations: [Sentry.extraErrorDataIntegration()],
-  tracesSampleRate: 0.1,
+  tracesSampleRate: 0.001,
 });
