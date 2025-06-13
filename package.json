@@ -41,5 +41,5 @@
     "billing",
     "supabase"
   ],
-  "packageManager": "npm@11.4.1"
+  "packageManager": "npm@11.4.2"
 }
