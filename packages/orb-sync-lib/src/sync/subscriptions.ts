@@ -1,5 +1,5 @@
 import type Orb from 'orb-billing';
-import type { Subscription } from 'orb-billing/resources/subscriptions';
+import type { Subscription } from 'orb-billing/resources';
 import type { PostgresClient } from '../database/postgres';
 import { subscriptionSchema } from '../schemas/subscription';
 import { SubscriptionsFetchParams } from '../types';
@@ -11,7 +11,7 @@ export async function syncSubscriptions(postgresClient: PostgresClient, subscrip
     subscriptions.map((subscription) => ({
       ...subscription,
       customer_id: subscription.customer.id,
-      plan_id: subscription.plan.id,
+      plan_id: subscription.plan?.id,
     })),
     TABLE,
     subscriptionSchema

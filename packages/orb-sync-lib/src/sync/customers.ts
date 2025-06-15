@@ -1,5 +1,5 @@
 import type Orb from 'orb-billing';
-import type { Customer } from 'orb-billing/resources/customers/customers';
+import type { Customer } from 'orb-billing/resources';
 import type { PostgresClient } from '../database/postgres';
 import { customerSchema } from '../schemas/customer';
 import { CustomersFetchParams } from '../types';
