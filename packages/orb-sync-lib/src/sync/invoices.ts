@@ -1,8 +1,8 @@
 import type Orb from 'orb-billing';
-import type { Invoice } from 'orb-billing/resources/invoices';
 import type { PostgresClient } from '../database/postgres';
 import { invoiceSchema } from '../schemas/invoice';
 import { InvoicesFetchParams } from '../types';
+import { Invoice } from 'orb-billing/resources';
 
 const TABLE = 'invoices';
 
