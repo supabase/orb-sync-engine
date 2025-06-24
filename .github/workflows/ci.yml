@@ -20,13 +20,13 @@ jobs:
 
       - name: Set up .env file
         run: |
-          touch .env
-          echo DATABASE_URL='postgres://postgres:postgres@127.0.0.1:55431/postgres?sslmode=disable&search_path=orb' >> .env
-          echo ORB_API_KEY=sk_test_ >> .env
-          echo ORB_WEBHOOK_SECRET=whsec_ >> .env
-          echo SCHEMA=orb >> .env
-          echo PORT=8080 >> .env
-          echo API_KEY_SYNC=api_key_test >> .env
+          touch apps/node-fastify/.env
+          echo DATABASE_URL='postgres://postgres:postgres@127.0.0.1:55431/postgres?sslmode=disable&search_path=orb' >> apps/node-fastify/.env
+          echo ORB_API_KEY=sk_test_ >> apps/node-fastify/.env
+          echo ORB_WEBHOOK_SECRET=whsec_ >> apps/node-fastify/.env
+          echo SCHEMA=orb >> apps/node-fastify/.env
+          echo PORT=8080 >> apps/node-fastify/.env
+          echo API_KEY_SYNC=api_key_test >> apps/node-fastify/.env
 
       - name: Install dependencies
         run: |
