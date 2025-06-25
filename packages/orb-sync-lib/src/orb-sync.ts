@@ -62,6 +62,16 @@ export class OrbSync {
     });
   }
 
+  /**
+   * Returns the PostgresClient instance used by this OrbSync instance.
+   * This method provides access to the underlying database client for direct database operations.
+   *
+   * @returns {PostgresClient} The PostgresClient instance
+   */
+  getPostgresClient(): PostgresClient {
+    return this.postgresClient;
+  }
+
   async sync(
     entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans' | 'billable_metrics',
     params:
