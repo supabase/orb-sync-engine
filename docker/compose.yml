@@ -13,3 +13,8 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ../db/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
