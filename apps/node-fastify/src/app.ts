@@ -9,7 +9,11 @@ import { getConfig } from './utils/config';
 import * as Sentry from '@sentry/node';
 import pino from 'pino';
 
-export async function createApp(opts: FastifyServerOptions = {}, logger: pino.Logger): Promise<FastifyInstance> {
+export async function createApp(
+  opts: FastifyServerOptions = {},
+  logger: pino.Logger,
+  orbSyncInstance?: OrbSync
+): Promise<FastifyInstance> {
   const app = fastify(opts);
 
   const config = getConfig();
@@ -41,19 +45,25 @@ export async function createApp(opts: FastifyServerOptions = {}, logger: pino.Lo
 
   /**
    * Expose all routes in './routes'
+   * Use compiled routes in test environment
    */
+  const routesDir =
+    process.env.NODE_ENV === 'test' ? path.join(__dirname, '../dist/routes') : path.join(__dirname, 'routes');
+
   await app.register(autoload, {
-    dir: path.join(__dirname, 'routes'),
+    dir: routesDir,
   });
 
-  const orbSync = new OrbSync({
-    databaseUrl: config.DATABASE_URL,
-    orbWebhookSecret: config.ORB_WEBHOOK_SECRET,
-    databaseSchema: config.DATABASE_SCHEMA,
-    orbApiKey: config.ORB_API_KEY,
-    verifyWebhookSignature: config.VERIFY_WEBHOOK_SIGNATURE,
-    logger,
-  });
+  const orbSync =
+    orbSyncInstance ||
+    new OrbSync({
+      databaseUrl: config.DATABASE_URL,
+      orbWebhookSecret: config.ORB_WEBHOOK_SECRET,
+      databaseSchema: config.DATABASE_SCHEMA,
+      orbApiKey: config.ORB_API_KEY,
+      verifyWebhookSignature: config.VERIFY_WEBHOOK_SIGNATURE,
+      logger,
+    });
 
   app.decorate('orbSync', orbSync);
 
