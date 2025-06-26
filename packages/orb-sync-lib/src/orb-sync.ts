@@ -52,7 +52,7 @@ export type OrbSyncConfig = {
 
 export class OrbSync {
   private orb: Orb;
-  private postgresClient: PostgresClient;
+  postgresClient: PostgresClient;
 
   constructor(private config: OrbSyncConfig) {
     this.orb = new Orb({ apiKey: config.orbApiKey, webhookSecret: config.orbWebhookSecret });
@@ -60,16 +60,6 @@ export class OrbSync {
       databaseUrl: config.databaseUrl,
       schema: config.databaseSchema || 'orb',
     });
-  }
-
-  /**
-   * Returns the PostgresClient instance used by this OrbSync instance.
-   * This method provides access to the underlying database client for direct database operations.
-   *
-   * @returns {PostgresClient} The PostgresClient instance
-   */
-  getPostgresClient(): PostgresClient {
-    return this.postgresClient;
   }
 
   async sync(

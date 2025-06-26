@@ -5,7 +5,7 @@ import pino from 'pino';
 import fs from 'node:fs';
 import { OrbSync, syncInvoices, syncSubscriptions } from 'orb-sync-lib';
 import { createApp } from '../app';
-import { fetchInvoices, fetchBillingCycles, deleteTestData } from './test-utils';
+import { fetchInvoicesFromDatabase, fetchBillingCyclesFromDatabase, deleteTestData } from './test-utils';
 import type { Invoice, Subscription } from 'orb-billing/resources';
 
 describe('POST /webhooks', () => {
@@ -79,13 +79,13 @@ describe('POST /webhooks', () => {
     });
 
     // Verify that the invoice was not created in the database
-    const invoices = await fetchInvoices(orbSync, ['invoice_id']);
+    const invoices = await fetchInvoicesFromDatabase(orbSync.postgresClient, ['invoice_id']);
     expect(invoices).toHaveLength(0);
   });
 
   it('should handle invoice.issued webhook and update the billing cycle dates', async () => {
     let payload = loadWebhookPayload('invoice');
-    const postgresClient = orbSync.getPostgresClient();
+    const postgresClient = orbSync.postgresClient;
 
     // Parse the payload and update billing cycle dates to sensible values
     const webhookData = JSON.parse(payload);
@@ -94,8 +94,8 @@ describe('POST /webhooks', () => {
     const customerId = webhookData.invoice.customer.id;
 
     // As preparation, we delete the existing invoice and subscription if they exist
-    await deleteTestData(orbSync, 'invoices', [invoiceId]);
-    await deleteTestData(orbSync, 'subscriptions', [subscriptionId]);
+    await deleteTestData(orbSync.postgresClient, 'invoices', [invoiceId]);
+    await deleteTestData(orbSync.postgresClient, 'subscriptions', [subscriptionId]);
 
     webhookData.type = 'invoice.issued';
 
@@ -138,11 +138,11 @@ describe('POST /webhooks', () => {
     expect(response.statusCode).toBe(200);
 
     // Verify that the invoice was created in the database
-    const [invoice] = await fetchInvoices(orbSync, [invoiceId]);
+    const [invoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
     expect(invoice).toBeDefined();
 
     // Verify that billing cycle was updated if subscription exists and has a plan line item
-    const billingCycles = await fetchBillingCycles(orbSync, subscriptionId);
+    const billingCycles = await fetchBillingCyclesFromDatabase(orbSync.postgresClient, subscriptionId);
     expect(billingCycles).toHaveLength(1);
     const billingCycle = billingCycles[0];
 
@@ -187,13 +187,13 @@ describe('POST /webhooks', () => {
     const invoiceId = webhookData.invoice.id;
 
     // Delete the invoice from the database if it exists
-    await deleteTestData(orbSync, 'invoices', [invoiceId]);
+    await deleteTestData(orbSync.postgresClient, 'invoices', [invoiceId]);
 
     const response = await sendWebhookRequest(payload);
     expect(response.statusCode).toBe(200);
 
     // Verify that the invoice was created in the database
-    const [invoice] = await fetchInvoices(orbSync, [invoiceId]);
+    const [invoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
     expect(invoice).toBeDefined();
     expect(invoice.invoice_number).toBe(webhookData.invoice.invoice_number);
     expect(invoice.customer_id).toBe(webhookData.invoice.customer.id);
@@ -204,11 +204,11 @@ describe('POST /webhooks', () => {
 
   it('should update an existing invoice when webhook arrives', async () => {
     let payload = loadWebhookPayload('invoice');
-    const postgresClient = orbSync.getPostgresClient();
+    const postgresClient = orbSync.postgresClient;
 
     const webhookData = JSON.parse(payload);
     const invoiceId = webhookData.invoice.id;
-    await deleteTestData(orbSync, 'invoices', [invoiceId]);
+    await deleteTestData(orbSync.postgresClient, 'invoices', [invoiceId]);
 
     webhookData.type = 'invoice.payment_succeeded';
 
@@ -252,7 +252,7 @@ describe('POST /webhooks', () => {
     });
 
     // Verify that the invoice was updated in the database
-    const [invoice] = await fetchInvoices(orbSync, [invoiceId]);
+    const [invoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
     expect(invoice).toBeDefined();
     expect(Number(invoice.total)).toBe(updatedAmount);
     expect(invoice.status).toBe(updatedStatus);
