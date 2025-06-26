@@ -1,4 +1,4 @@
-import pg from 'pg';
+import pg, { QueryResult } from 'pg';
 import { pg as sql } from 'yesql';
 import type { JsonSchema } from '../schemas/types';
 
@@ -103,6 +103,10 @@ export class PostgresClient {
     const result = await this.pool.query(prepared.text, prepared.values);
 
     return result.rows;
+  }
+
+  async query(text: string, params?: string[]): Promise<QueryResult> {
+    return this.pool.query(text, params);
   }
 
   private cleanseArrayField(

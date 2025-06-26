@@ -52,7 +52,7 @@ export type OrbSyncConfig = {
 
 export class OrbSync {
   private orb: Orb;
-  private postgresClient: PostgresClient;
+  postgresClient: PostgresClient;
 
   constructor(private config: OrbSyncConfig) {
     this.orb = new Orb({ apiKey: config.orbApiKey, webhookSecret: config.orbWebhookSecret });

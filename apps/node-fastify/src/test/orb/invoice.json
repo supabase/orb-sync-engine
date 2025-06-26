@@ -1,0 +1,155 @@
+{
+  "id": "TDWJ6DrYJAhm",
+  "created_at": "2025-01-08T08:19:20.763280+00:00",
+  "type": "<invoice.type>",
+  "properties": {
+    "automatically_marked_as_paid": false
+  },
+  "invoice": {
+    "amount_due": "25.00",
+    "auto_collection": {
+      "enabled": true,
+      "next_attempt_at": null,
+      "num_attempts": 1,
+      "previously_attempted_at": "2025-01-08T08:06:21+00:00"
+    },
+    "billing_address": null,
+    "created_at": "2024-11-08T12:07:13+00:00",
+    "credit_notes": [],
+    "currency": "USD",
+    "customer": {
+      "external_customer_id": "test_customer_12345",
+      "id": "aAsPoaKuX9DR4"
+    },
+    "customer_balance_transactions": [],
+    "customer_tax_id": null,
+    "discount": {
+      "applies_to_price_ids": [
+        "3LULTJweU496FVL",
+        "6DCYxjXtDavvagD",
+        "84WaufbVHiusXpv",
+        "AJhqCkQz7iXDsUV",
+        "HsMS8buA2AgeEg",
+        "Nfzp2zMSnVS6iX",
+        "Q7FtwPSEdYf85y",
+        "YjQhN4gxKBzqth",
+        "bV9wPpTUyLz76w",
+        "ht7Ts7PV8VgXSX"
+      ],
+      "discount_type": "percentage",
+      "percentage_discount": 1,
+      "reason": null
+    },
+    "discounts": [
+      {
+        "applies_to_price_ids": [
+          "3LULTJweU496FVL",
+          "6DCYxjXtDavvagD",
+          "84WaufbVHiusXpv",
+          "AJhqCkQz7iXDsUV",
+          "HsMS8buA2AgeEg",
+          "Nfzp2zMSnVS6iX",
+          "Q7FtwPSEdYf85y",
+          "YjQhN4gxKBzqth",
+          "bV9wPpTUyLz76w",
+          "ht7Ts7PV8VgXSX"
+        ],
+        "discount_type": "percentage",
+        "percentage_discount": 1,
+        "reason": null
+      }
+    ],
+    "due_date": "2025-01-08T00:00:00+00:00",
+    "eligible_to_issue_at": null,
+    "id": "hNmWV3yQnGx9v",
+    "invoice_date": "2025-01-08T00:00:00+00:00",
+    "invoice_number": "TEST-2025-001",
+    "invoice_source": "subscription",
+    "issue_failed_at": null,
+    "issued_at": "2025-01-08T08:06:13+00:00",
+    "line_items": [
+      {
+        "amount": "25.00",
+        "discount": null,
+        "end_date": "2025-02-08T00:00:00+00:00",
+        "grouping": null,
+        "id": "YiD4evZC3JgEpy",
+        "maximum": null,
+        "maximum_amount": null,
+        "minimum": null,
+        "minimum_amount": null,
+        "name": "Pro Plan",
+        "price": {
+          "billable_metric": null,
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "created_at": "2024-08-06T03:22:41+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": null,
+          "external_price_id": null,
+          "fixed_price_quantity": 1,
+          "id": "BWRfkfEpuYwPkH",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "KeScqBdczBZcgg",
+            "name": "Pro Plan"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Pro Plan",
+          "plan_phase_order": null,
+          "price_type": "fixed_price",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "25.00"
+          }
+        },
+        "quantity": 1,
+        "start_date": "2025-01-08T00:00:00+00:00",
+        "sub_line_items": [],
+        "subtotal": "25.00",
+        "tax_amounts": []
+      }
+    ],
+    "maximum": null,
+    "maximum_amount": null,
+    "memo": null,
+    "metadata": {},
+    "minimum": null,
+    "minimum_amount": null,
+    "paid_at": "2025-01-08T08:08:54+00:00",
+    "payment_attempts": [
+      {
+        "amount": "25.00",
+        "created_at": "2025-01-08T08:06:21+00:00",
+        "id": "PukGgsjyRtrzZM",
+        "payment_provider": "stripe",
+        "payment_provider_id": "pi_test_1234567890abcdef",
+        "succeeded": true
+      }
+    ],
+    "payment_failed_at": null,
+    "payment_started_at": null,
+    "scheduled_issue_at": null,
+    "shipping_address": null,
+    "status": "paid",
+    "subscription": {
+      "id": "YPwrbnb98khpUy"
+    },
+    "subtotal": "25.00",
+    "sync_failed_at": null,
+    "total": "25.00",
+    "voided_at": null,
+    "will_auto_issue": false
+  }
+}
