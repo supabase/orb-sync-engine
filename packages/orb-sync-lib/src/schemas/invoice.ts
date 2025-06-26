@@ -43,6 +43,7 @@ export const invoiceSchema: JsonSchema = {
     sync_failed_at: { type: 'string' },
     voided_at: { type: 'string' },
     will_auto_issue: { type: 'boolean' },
+    last_synced_at: { type: 'string' },
   },
   required: ['id'],
 } as const;

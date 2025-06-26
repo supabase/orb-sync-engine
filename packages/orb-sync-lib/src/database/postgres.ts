@@ -47,6 +47,51 @@ export class PostgresClient {
     return results.flatMap((it) => it.rows);
   }
 
+  async upsertManyWithTimestampProtection<
+    T extends {
+      [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    },
+  >(
+    entries: T[],
+    table: string,
+    tableSchema: JsonSchema,
+    syncTimestamp: string
+  ): Promise<T[]> {
+    if (!entries.length) return [];
+
+    // Max 5 in parallel to avoid exhausting connection pool
+    const chunkSize = 5;
+    const results: pg.QueryResult<T>[] = [];
+
+    for (let i = 0; i < entries.length; i += chunkSize) {
+      const chunk = entries.slice(i, i + chunkSize);
+
+      const queries: Promise<pg.QueryResult<T>>[] = [];
+      chunk.forEach((entry) => {
+        // Inject the values
+        const cleansed = this.cleanseArrayField(entry, tableSchema);
+        // Add last_synced_at to the cleansed data for SQL parameter binding
+        cleansed.last_synced_at = syncTimestamp;
+        
+        const upsertSql = this.constructUpsertWithTimestampProtectionSql(
+          this.config.schema,
+          table,
+          tableSchema
+        );
+
+        const prepared = sql(upsertSql, {
+          useNullForMissing: true,
+        })(cleansed);
+
+        queries.push(this.pool.query(prepared.text, prepared.values));
+      });
+
+      results.push(...(await Promise.all(queries)));
+    }
+
+    return results.flatMap((it) => it.rows);
+  }
+
   private constructUpsertSql = (schema: string, table: string, tableSchema: JsonSchema): string => {
     const conflict = 'id';
     const properties = tableSchema.properties;
@@ -70,6 +115,35 @@ export class PostgresClient {
           .map((x) => `"${x}" = :${x}`)
           .join(',')}
       ;`;
+  };
+
+  private constructUpsertWithTimestampProtectionSql = (
+    schema: string,
+    table: string,
+    tableSchema: JsonSchema
+  ): string => {
+    const conflict = 'id';
+    const properties = tableSchema.properties;
+
+    return `
+      INSERT INTO "${schema}"."${table}" (
+        ${Object.keys(properties)
+          .map((x) => `"${x}"`)
+          .join(',')}
+      )
+      VALUES (
+        ${Object.keys(properties)
+          .map((x) => `:${x}`)
+          .join(',')}
+      )
+      ON CONFLICT (${conflict}) DO UPDATE SET
+        ${Object.keys(properties)
+          .filter((x) => x !== 'last_synced_at')
+          .map((x) => `"${x}" = EXCLUDED."${x}"`)
+          .join(',')},
+        last_synced_at = :last_synced_at
+      WHERE "${table}"."last_synced_at" IS NULL 
+         OR "${table}"."last_synced_at" < :last_synced_at;`;
   };
 
   /**
