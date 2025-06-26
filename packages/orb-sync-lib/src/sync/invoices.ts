@@ -6,15 +6,19 @@ import { Invoice } from 'orb-billing/resources';
 
 const TABLE = 'invoices';
 
-export async function syncInvoices(postgresClient: PostgresClient, invoices: Invoice[]) {
-  return postgresClient.upsertMany(
+export async function syncInvoices(postgresClient: PostgresClient, invoices: Invoice[], syncTimestamp?: string) {
+  const timestamp = syncTimestamp || new Date().toISOString();
+
+  return postgresClient.upsertManyWithTimestampProtection(
     invoices.map((invoice) => ({
       ...invoice,
       customer_id: invoice.customer.id,
       subscription_id: invoice.subscription?.id,
+      last_synced_at: timestamp,
     })),
     TABLE,
-    invoiceSchema
+    invoiceSchema,
+    timestamp
   );
 }
 

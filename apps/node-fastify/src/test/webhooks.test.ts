@@ -182,6 +182,10 @@ describe('POST /webhooks', () => {
 
     const webhookData = JSON.parse(payload);
     webhookData.type = webhookType;
+    
+    const webhookTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    webhookData.created_at = webhookTimestamp;
+    
     payload = JSON.stringify(webhookData);
 
     const invoiceId = webhookData.invoice.id;
@@ -200,6 +204,10 @@ describe('POST /webhooks', () => {
     expect(invoice.total).toBe(webhookData.invoice.amount_due);
     expect(invoice.currency).toBe(webhookData.invoice.currency);
     expect(invoice.status).toBe(webhookData.invoice.status);
+    
+    // Verify that last_synced_at gets set to the webhook timestamp for new invoices
+    expect(invoice.last_synced_at).toBeDefined();
+    expect(new Date(invoice.last_synced_at).toISOString()).toBe(webhookTimestamp);
   });
 
   it('should update an existing invoice when webhook arrives', async () => {
@@ -229,8 +237,14 @@ describe('POST /webhooks', () => {
       status: initialStatus,
     };
 
-    // Store the initial invoice in the database
-    await syncInvoices(postgresClient, [initialInvoiceData]);
+    // Store the initial invoice in the database with an old timestamp
+    const oldTimestamp = new Date('2025-01-10T10:00:00.000Z').toISOString();
+    await syncInvoices(postgresClient, [initialInvoiceData], oldTimestamp);
+
+    // Verify the initial invoice was created with the old timestamp
+    const [initialInvoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
+    expect(initialInvoice).toBeDefined();
+    expect(new Date(initialInvoice.last_synced_at).toISOString()).toBe(oldTimestamp);
 
     // Now update the webhook data with new values
     const updatedAmount = 1500;
@@ -239,6 +253,10 @@ describe('POST /webhooks', () => {
     webhookData.invoice.total = updatedAmount.toString();
     webhookData.invoice.status = updatedStatus;
     webhookData.invoice.paid_at = new Date().toISOString();
+
+    // Set a newer webhook timestamp that should trigger an update
+    const newWebhookTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    webhookData.created_at = newWebhookTimestamp;
 
     payload = JSON.stringify(webhookData);
 
@@ -252,13 +270,80 @@ describe('POST /webhooks', () => {
     });
 
     // Verify that the invoice was updated in the database
-    const [invoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
-    expect(invoice).toBeDefined();
-    expect(Number(invoice.total)).toBe(updatedAmount);
-    expect(invoice.status).toBe(updatedStatus);
+    const [updatedInvoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
+    expect(updatedInvoice).toBeDefined();
+    expect(Number(updatedInvoice.total)).toBe(updatedAmount);
+    expect(updatedInvoice.status).toBe(updatedStatus);
 
     // Verify that the updated_at timestamp was changed
-    expect(invoice.updated_at).toBeDefined();
-    expect(new Date(invoice.updated_at).getTime()).toBeGreaterThan(new Date(webhookData.invoice.created_at).getTime());
+    expect(updatedInvoice.updated_at).toBeDefined();
+    expect(new Date(updatedInvoice.updated_at).getTime()).toBeGreaterThan(new Date(webhookData.invoice.created_at).getTime());
+    
+    // Verify that last_synced_at was updated to the new webhook timestamp
+    expect(updatedInvoice.last_synced_at).toBeDefined();
+    expect(new Date(updatedInvoice.last_synced_at).toISOString()).toBe(newWebhookTimestamp);
+    
+    // Verify that the new timestamp is newer than the old timestamp
+    expect(new Date(updatedInvoice.last_synced_at).getTime()).toBeGreaterThan(new Date(oldTimestamp).getTime());
+  });
+
+  it('should NOT update invoice when webhook timestamp is older than last_synced_at', async () => {
+    let payload = loadWebhookPayload('invoice');
+    const postgresClient = orbSync.postgresClient;
+
+    const webhookData = JSON.parse(payload);
+    const invoiceId = webhookData.invoice.id;
+    await deleteTestData(orbSync.postgresClient, 'invoices', [invoiceId]);
+
+    webhookData.type = 'invoice.payment_succeeded';
+
+    // Insert an invoice with a "new" timestamp and known values
+    const originalAmount = 2000;
+    const originalStatus = 'paid';
+    webhookData.invoice.amount_due = originalAmount.toString();
+    webhookData.invoice.total = originalAmount.toString();
+    webhookData.invoice.status = originalStatus;
+
+    const newTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    const initialInvoiceData = {
+      ...webhookData.invoice,
+      amount_due: originalAmount.toString(),
+      total: originalAmount.toString(),
+      status: originalStatus,
+    };
+    await syncInvoices(postgresClient, [initialInvoiceData], newTimestamp);
+
+    // Verify the invoice was created with the new timestamp
+    const [initialInvoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
+    expect(initialInvoice).toBeDefined();
+    expect(Number(initialInvoice.total)).toBe(originalAmount);
+    expect(initialInvoice.status).toBe(originalStatus);
+    expect(new Date(initialInvoice.last_synced_at).toISOString()).toBe(newTimestamp);
+
+    // Now attempt to update with an older webhook timestamp and different values
+    const outdatedAmount = 1000;
+    const outdatedStatus = 'pending';
+    webhookData.invoice.amount_due = outdatedAmount.toString();
+    webhookData.invoice.total = outdatedAmount.toString();
+    webhookData.invoice.status = outdatedStatus;
+    webhookData.invoice.paid_at = undefined;
+    const oldWebhookTimestamp = new Date('2025-01-10T10:00:00.000Z').toISOString();
+    webhookData.created_at = oldWebhookTimestamp;
+    payload = JSON.stringify(webhookData);
+
+    // Send the webhook with the outdated data
+    const response = await sendWebhookRequest(payload);
+    expect(response.statusCode).toBe(200);
+    const data = response.json();
+    expect(data).toMatchObject({ received: true });
+
+    // Fetch the invoice again and verify it was NOT updated
+    const [afterWebhookInvoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
+    expect(afterWebhookInvoice).toBeDefined();
+    // Data should remain unchanged
+    expect(Number(afterWebhookInvoice.total)).toBe(originalAmount);
+    expect(afterWebhookInvoice.status).toBe(originalStatus);
+    // last_synced_at should remain the new timestamp
+    expect(new Date(afterWebhookInvoice.last_synced_at).toISOString()).toBe(newTimestamp);
   });
 });

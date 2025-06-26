@@ -11,7 +11,7 @@ export async function fetchInvoicesFromDatabase(postgresClient: PostgresClient, 
 
   const placeholders = invoiceIds.map((_, index) => `$${index + 1}`).join(',');
   const result = await postgresClient.query(
-    `SELECT id, invoice_number, customer_id, total, currency, status, updated_at FROM orb.invoices WHERE id IN (${placeholders})`,
+    `SELECT id, invoice_number, customer_id, total, currency, status, updated_at, last_synced_at FROM orb.invoices WHERE id IN (${placeholders})`,
     invoiceIds
   );
   return result.rows;
