@@ -125,6 +125,9 @@ export class PostgresClient {
     const conflict = 'id';
     const properties = tableSchema.properties;
 
+    // The WHERE clause in ON CONFLICT DO UPDATE only applies to the conflicting row
+    // (the row being updated), not to all rows in the table. PostgreSQL ensures that
+    // the condition is evaluated only for the specific row that conflicts with the INSERT.
     return `
       INSERT INTO "${schema}"."${table}" (
         ${Object.keys(properties)
