@@ -347,7 +347,7 @@ describe('POST /webhooks', () => {
     expect(new Date(afterWebhookInvoice.last_synced_at).toISOString()).toBe(newTimestamp);
   });
 
-  it('should only update the invoice with the matching id when syncing with timestamp protection', async () => {
+  it('should ignore outdated webhook for invoice when last_synced_at is newer, even with multiple invoices', async () => {
     const postgresClient = orbSync.postgresClient;
     let payload = loadWebhookPayload('invoice');
     const webhookData = JSON.parse(payload);
