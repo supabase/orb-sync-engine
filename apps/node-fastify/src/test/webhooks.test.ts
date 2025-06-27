@@ -346,4 +346,62 @@ describe('POST /webhooks', () => {
     // last_synced_at should remain the new timestamp
     expect(new Date(afterWebhookInvoice.last_synced_at).toISOString()).toBe(newTimestamp);
   });
+
+  it('should only update the invoice with the matching id when upserting with timestamp protection', async () => {
+    const postgresClient = orbSync.postgresClient;
+    let payload = loadWebhookPayload('invoice');
+    const webhookData = JSON.parse(payload);
+
+    webhookData.type = 'invoice.payment_succeeded';
+
+    // Prepare two invoices with different ids
+    const invoiceId1 = webhookData.invoice.id;
+    const invoiceId2 = invoiceId1 + '_other';
+
+    // Insert both invoices with different last_synced_at values
+    const webhookInvoice1Timestamp = new Date('2025-01-10T09:30:00.000Z').toISOString(); // This is older than invoice1Timestamp, so it should not update invoice1
+    const invoice1Timestamp = new Date('2025-01-10T10:00:00.000Z').toISOString();
+    const invoice2Timestamp = new Date('2025-01-10T10:30:00.000Z').toISOString();
+
+    // Invoice 1: will be updated
+    const invoiceData1 = {
+      ...webhookData.invoice,
+      id: invoiceId1,
+      amount_due: '1500',
+      total: '1500',
+      status: 'paid',
+    };
+
+    await deleteTestData(postgresClient, 'invoices', [invoiceId1, invoiceId2]);
+    await syncInvoices(postgresClient, [invoiceData1], invoice1Timestamp);
+    await syncInvoices(postgresClient, [invoiceData1], invoice2Timestamp);
+
+    // Now, send a webhook for invoiceId1 with an older timestamp and outdated values
+    webhookData.invoice.id = invoiceId1;
+    webhookData.invoice.amount_due = '1000';
+    webhookData.invoice.total = '1000';
+    webhookData.invoice.status = 'pending';
+    webhookData.created_at = webhookInvoice1Timestamp;
+    payload = JSON.stringify(webhookData);
+
+    const response = await sendWebhookRequest(payload);
+    console.log(response.json());
+    expect(response.statusCode).toBe(200);
+
+    // Fetch both invoices
+    const [updatedInvoice1] = await fetchInvoicesFromDatabase(postgresClient, [invoiceId1]);
+    const [updatedInvoice2] = await fetchInvoicesFromDatabase(postgresClient, [invoiceId2]);
+
+    // Invoice 1 should not be updated
+    expect(updatedInvoice1).toBeDefined();
+    expect(updatedInvoice1.total).toBe('1500');
+    expect(updatedInvoice1.status).toBe('paid');
+    expect(new Date(updatedInvoice1.last_synced_at).toISOString()).toBe(invoice1Timestamp);
+
+    // Invoice 2 should NOT be updated
+    expect(updatedInvoice2).toBeDefined();
+    expect(updatedInvoice2.total).toBe('2000');
+    expect(updatedInvoice2.status).toBe('pending');
+    expect(new Date(updatedInvoice2.last_synced_at).toISOString()).toBe(invoice2Timestamp);
+  });
 });
