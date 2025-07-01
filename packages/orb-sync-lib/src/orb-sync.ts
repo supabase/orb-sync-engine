@@ -173,7 +173,7 @@ export class OrbSync {
         const invoice = webhook.invoice;
         this.config.logger?.info(`Received webhook ${webhook.id}: ${parsedData.type} for invoice ${invoice.id}`);
 
-        await syncInvoices(this.postgresClient, [invoice]);
+        await syncInvoices(this.postgresClient, [invoice], webhook.created_at);
 
         const billingCycle = getBillingCycleFromInvoice(invoice);
         if (billingCycle && invoice.subscription) {
@@ -201,7 +201,7 @@ export class OrbSync {
 
         this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for invoice ${webhook.invoice.id}`);
 
-        await syncInvoices(this.postgresClient, [webhook.invoice]);
+        await syncInvoices(this.postgresClient, [webhook.invoice], webhook.created_at);
         break;
       }
 
