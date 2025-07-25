@@ -20,6 +20,7 @@ export const creditNoteSchema: JsonSchema = {
     total: { type: 'number' },
     type: { type: 'string' },
     voided_at: { type: 'string' },
+    last_synced_at: { type: 'string' },
   },
   required: ['id'],
 } as const;

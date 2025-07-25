@@ -6,15 +6,22 @@ import { SubscriptionsFetchParams } from '../types';
 
 const TABLE = 'subscriptions';
 
-export async function syncSubscriptions(postgresClient: PostgresClient, subscriptions: Subscription[]) {
-  return postgresClient.upsertMany(
+export async function syncSubscriptions(
+  postgresClient: PostgresClient,
+  subscriptions: Subscription[],
+  syncTimestamp?: string
+) {
+  const timestamp = syncTimestamp || new Date().toISOString();
+
+  return postgresClient.upsertManyWithTimestampProtection(
     subscriptions.map((subscription) => ({
       ...subscription,
       customer_id: subscription.customer.id,
       plan_id: subscription.plan?.id,
     })),
     TABLE,
-    subscriptionSchema
+    subscriptionSchema,
+    timestamp
   );
 }
 

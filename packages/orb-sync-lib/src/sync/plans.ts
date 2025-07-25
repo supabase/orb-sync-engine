@@ -6,8 +6,10 @@ import { planSchema } from '../schemas/plan';
 
 const TABLE = 'plans';
 
-export async function syncPlans(postgresClient: PostgresClient, plans: Plan[]) {
-  return postgresClient.upsertMany(plans, TABLE, planSchema);
+export async function syncPlans(postgresClient: PostgresClient, plans: Plan[], syncTimestamp?: string) {
+  const timestamp = syncTimestamp || new Date().toISOString();
+
+  return postgresClient.upsertManyWithTimestampProtection(plans, TABLE, planSchema, timestamp);
 }
 
 export async function fetchAndSyncPlans(

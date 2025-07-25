@@ -5,7 +5,12 @@ import pino from 'pino';
 import fs from 'node:fs';
 import { OrbSync, syncInvoices, syncSubscriptions } from 'orb-sync-lib';
 import { createApp } from '../app';
-import { fetchInvoicesFromDatabase, fetchBillingCyclesFromDatabase, deleteTestData } from './test-utils';
+import {
+  fetchInvoicesFromDatabase,
+  fetchBillingCyclesFromDatabase,
+  deleteTestData,
+  fetchSubscriptionsFromDatabase,
+} from './test-utils';
 import type { Invoice, Subscription } from 'orb-billing/resources';
 
 describe('POST /webhooks', () => {
@@ -182,10 +187,10 @@ describe('POST /webhooks', () => {
 
     const webhookData = JSON.parse(payload);
     webhookData.type = webhookType;
-    
+
     const webhookTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
     webhookData.created_at = webhookTimestamp;
-    
+
     payload = JSON.stringify(webhookData);
 
     const invoiceId = webhookData.invoice.id;
@@ -204,10 +209,46 @@ describe('POST /webhooks', () => {
     expect(invoice.total).toBe(webhookData.invoice.amount_due);
     expect(invoice.currency).toBe(webhookData.invoice.currency);
     expect(invoice.status).toBe(webhookData.invoice.status);
-    
+
     // Verify that last_synced_at gets set to the webhook timestamp for new invoices
     expect(invoice.last_synced_at).toBeDefined();
     expect(new Date(invoice.last_synced_at).toISOString()).toBe(webhookTimestamp);
+  });
+
+  it.each([
+    'subscription.created',
+    'subscription.edited',
+    'subscription.plan_changed',
+    'subscription.started',
+    'subscription.ended',
+  ])('should handle %s webhook and create an subscription', async (webhookType) => {
+    let payload = loadWebhookPayload('subscription');
+
+    const webhookData = JSON.parse(payload);
+    webhookData.type = webhookType;
+
+    const webhookTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    webhookData.created_at = webhookTimestamp;
+
+    payload = JSON.stringify(webhookData);
+
+    const subscriptonId = webhookData.subscription.id;
+
+    // Delete the subscription from the database if it exists
+    await deleteTestData(orbSync.postgresClient, 'subscriptions', [subscriptonId]);
+
+    const response = await sendWebhookRequest(payload);
+    expect(response.statusCode).toBe(200);
+
+    // Verify that the subscription was created in the database
+    const [subscription] = await fetchSubscriptionsFromDatabase(orbSync.postgresClient, [subscriptonId]);
+    expect(subscription).toBeDefined();
+    expect(subscription.status).toBe(webhookData.subscription.status);
+    expect(subscription.id).toBe(webhookData.subscription.id);
+
+    // Verify that last_synced_at gets set to the webhook timestamp for new subscriptions
+    expect(subscription.last_synced_at).toBeDefined();
+    expect(new Date(subscription.last_synced_at).toISOString()).toBe(webhookTimestamp);
   });
 
   it('should update an existing invoice when webhook arrives', async () => {
@@ -277,12 +318,14 @@ describe('POST /webhooks', () => {
 
     // Verify that the updated_at timestamp was changed
     expect(updatedInvoice.updated_at).toBeDefined();
-    expect(new Date(updatedInvoice.updated_at).getTime()).toBeGreaterThan(new Date(webhookData.invoice.created_at).getTime());
-    
+    expect(new Date(updatedInvoice.updated_at).getTime()).toBeGreaterThan(
+      new Date(webhookData.invoice.created_at).getTime()
+    );
+
     // Verify that last_synced_at was updated to the new webhook timestamp
     expect(updatedInvoice.last_synced_at).toBeDefined();
     expect(new Date(updatedInvoice.last_synced_at).toISOString()).toBe(newWebhookTimestamp);
-    
+
     // Verify that the new timestamp is newer than the old timestamp
     expect(new Date(updatedInvoice.last_synced_at).getTime()).toBeGreaterThan(new Date(oldTimestamp).getTime());
   });
@@ -374,7 +417,7 @@ describe('POST /webhooks', () => {
     // Invoice 2 data is irrelevant for this test
     const invoiceData2 = {
       ...webhookData.invoice,
-      id: invoiceId2
+      id: invoiceId2,
     };
 
     await deleteTestData(postgresClient, 'invoices', [invoiceId1, invoiceId2]);
@@ -399,6 +442,5 @@ describe('POST /webhooks', () => {
     expect(updatedInvoice1.total).toBe('1500');
     expect(updatedInvoice1.status).toBe('paid');
     expect(new Date(updatedInvoice1.last_synced_at).toISOString()).toBe(invoice1Timestamp);
-
   });
 });

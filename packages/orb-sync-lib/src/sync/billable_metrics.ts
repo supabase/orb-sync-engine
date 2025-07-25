@@ -6,14 +6,21 @@ import { BillableMetricsFetchParams } from '../types';
 
 const TABLE = 'billable_metrics';
 
-export async function syncBillableMetrics(postgresClient: PostgresClient, billableMetrics: BillableMetric[]) {
-  return postgresClient.upsertMany(
+export async function syncBillableMetrics(
+  postgresClient: PostgresClient,
+  billableMetrics: BillableMetric[],
+  syncTimestamp?: string
+) {
+  const timestamp = syncTimestamp || new Date().toISOString();
+
+  return postgresClient.upsertManyWithTimestampProtection(
     billableMetrics.map((billableMetric) => ({
       ...billableMetric,
       item_id: billableMetric.item.id,
     })),
     TABLE,
-    billableMetricSchema
+    billableMetricSchema,
+    timestamp
   );
 }
 

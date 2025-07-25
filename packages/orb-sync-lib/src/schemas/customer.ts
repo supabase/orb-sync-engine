@@ -24,6 +24,7 @@ export const customerSchema: JsonSchema = {
     timezone: { type: 'string' },
     accounting_sync_configuration: { type: 'object' },
     reporting_configuration: { type: 'object' },
+    last_synced_at: { type: 'string' },
   },
   required: ['id'],
 } as const;

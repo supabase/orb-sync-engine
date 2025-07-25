@@ -119,7 +119,7 @@ export class OrbSync {
 
         this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for customer ${webhook.customer.id}`);
 
-        await syncCustomers(this.postgresClient, [webhook.customer]);
+        await syncCustomers(this.postgresClient, [webhook.customer], webhook.created_at);
         break;
       }
 
@@ -136,7 +136,7 @@ export class OrbSync {
           `Received webhook ${webhook.id}: ${webhook.type} for subscription ${webhook.subscription.id}`
         );
 
-        await syncSubscriptions(this.postgresClient, [webhook.subscription]);
+        await syncSubscriptions(this.postgresClient, [webhook.subscription], webhook.created_at);
         break;
       }
 
@@ -212,7 +212,7 @@ export class OrbSync {
           `Received webhook ${webhook.id}: ${webhook.type} for credit note ${webhook.credit_note.id}`
         );
 
-        await syncCreditNotes(this.postgresClient, [webhook.credit_note]);
+        await syncCreditNotes(this.postgresClient, [webhook.credit_note], webhook.created_at);
         break;
       }
 
