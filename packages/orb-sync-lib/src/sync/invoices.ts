@@ -14,7 +14,6 @@ export async function syncInvoices(postgresClient: PostgresClient, invoices: Inv
       ...invoice,
       customer_id: invoice.customer.id,
       subscription_id: invoice.subscription?.id,
-      last_synced_at: timestamp,
     })),
     TABLE,
     invoiceSchema,

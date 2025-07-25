@@ -27,6 +27,7 @@ export const planSchema: JsonSchema = {
     default_invoice_memo: { type: 'string' },
     prices: { type: 'object' },
     metadata: { type: 'object' },
+    last_synced_at: { type: 'string' },
   },
   required: ['id'],
 } as const;

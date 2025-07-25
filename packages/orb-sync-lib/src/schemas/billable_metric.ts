@@ -10,6 +10,7 @@ export const billableMetricSchema: JsonSchema = {
     status: { type: 'string' },
     item_id: { type: 'string' },
     metadata: { type: 'object' },
+    last_synced_at: { type: 'string' },
   },
   required: ['id'],
 } as const;

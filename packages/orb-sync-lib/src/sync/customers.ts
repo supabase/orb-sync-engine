@@ -6,8 +6,10 @@ import { CustomersFetchParams } from '../types';
 
 const TABLE = 'customers';
 
-export async function syncCustomers(postgresClient: PostgresClient, customers: Customer[]) {
-  return postgresClient.upsertMany(customers, TABLE, customerSchema);
+export async function syncCustomers(postgresClient: PostgresClient, customers: Customer[], syncTimestamp?: string) {
+  const timestamp = syncTimestamp || new Date().toISOString();
+
+  return postgresClient.upsertManyWithTimestampProtection(customers, TABLE, customerSchema, timestamp);
 }
 
 export async function fetchAndSyncCustomers(

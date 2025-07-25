@@ -29,6 +29,7 @@ export const subscriptionSchema: JsonSchema = {
     status: { type: 'string' },
     trial_info: { type: 'object' },
     adjustment_intervals: { type: 'object' },
+    last_synced_at: { type: 'string' },
   },
   required: ['id'],
 } as const;

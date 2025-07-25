@@ -6,14 +6,21 @@ import { CreditNotesFetchParams } from '../types';
 
 const TABLE = 'credit_notes';
 
-export async function syncCreditNotes(postgresClient: PostgresClient, creditNotes: CreditNote[]) {
-  return postgresClient.upsertMany(
+export async function syncCreditNotes(
+  postgresClient: PostgresClient,
+  creditNotes: CreditNote[],
+  syncTimestamp?: string
+) {
+  const timestamp = syncTimestamp || new Date().toISOString();
+
+  return postgresClient.upsertManyWithTimestampProtection(
     creditNotes.map((creditNote) => ({
       ...creditNote,
       customer_id: creditNote.customer.id,
     })),
     TABLE,
-    creditNoteSchema
+    creditNoteSchema,
+    timestamp
   );
 }
 

@@ -1,0 +1,1935 @@
+{
+  "id": "8w6jhXkJyPdxK4",
+  "created_at": "2025-07-24T14:28:16.091558+00:00",
+  "type": "<subscription.type>",
+  "properties": {},
+  "subscription": {
+    "active_plan_phase_order": null,
+    "adjustment_intervals": [
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "XvRPabigmXHQ3G"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "XvRPabigmXHQ3G"
+              ]
+            }
+          ],
+          "id": "aVmJ3fb6UiL6f7",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 50000
+        },
+        "applies_to_price_interval_ids": [
+          "YE3vRoCeJvijpp"
+        ],
+        "end_date": null,
+        "id": "WnhJQjYhDDjfUh",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "65KLrKSJmSydFW"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "65KLrKSJmSydFW"
+              ]
+            }
+          ],
+          "id": "b9Zu3RnTtLYium",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 2000000
+        },
+        "applies_to_price_interval_ids": [
+          "X4XHReAwXsgAdG"
+        ],
+        "end_date": null,
+        "id": "MMFRq3FxH3ssWm",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "aBtakp6YzJRH2v"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "aBtakp6YzJRH2v"
+              ]
+            }
+          ],
+          "id": "CjZ5nJQ9AeASsK",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 50000
+        },
+        "applies_to_price_interval_ids": [
+          "n7cvvHxzugXZpM"
+        ],
+        "end_date": null,
+        "id": "ZiDh2jizFmnP96",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "ch9yfzzn8obWrx"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "ch9yfzzn8obWrx"
+              ]
+            }
+          ],
+          "id": "fg2ayGaLAi7vRZ",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 744
+        },
+        "applies_to_price_interval_ids": [
+          "GfDniw2g3junXn"
+        ],
+        "end_date": null,
+        "id": "diDiu33LnNMwTV",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "dxz4ERVhLqShd9"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "dxz4ERVhLqShd9"
+              ]
+            }
+          ],
+          "id": "gpwA9sWRwUXMWW",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 10000000
+        },
+        "applies_to_price_interval_ids": [
+          "GxuDkZVCYFEsvi"
+        ],
+        "end_date": null,
+        "id": "82ackWLEPcmQyQ",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "ghuJgcr3MPcZrn"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "ghuJgcr3MPcZrn"
+              ]
+            }
+          ],
+          "id": "kcqVctdcedHZ3M",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 200
+        },
+        "applies_to_price_interval_ids": [
+          "mpTCdNnXQYwXV3"
+        ],
+        "end_date": null,
+        "id": "iP2J3nE4sk5yXi",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "8d2Hw2y3rr6q3g"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "8d2Hw2y3rr6q3g"
+              ]
+            }
+          ],
+          "id": "KPFumchSQnTFMK",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 500000
+        },
+        "applies_to_price_interval_ids": [
+          "BiF6EcoDLVNJPh"
+        ],
+        "end_date": null,
+        "id": "9YDY6VzpynciKa",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "SrVP8BKcuTXFbU"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "SrVP8BKcuTXFbU"
+              ]
+            }
+          ],
+          "id": "PvkAhVVzsT3WLT",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 5
+        },
+        "applies_to_price_interval_ids": [
+          "EK4FN3uciBPCJX"
+        ],
+        "end_date": null,
+        "id": "ie6WCvWj6oQyLh",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      },
+      {
+        "adjustment": {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "GUsNqEYQX6tmJw"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "GUsNqEYQX6tmJw"
+              ]
+            }
+          ],
+          "id": "ZqSNCDbgSjgU9E",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 200
+        },
+        "applies_to_price_interval_ids": [
+          "4WmjgMj74UXLVj"
+        ],
+        "end_date": null,
+        "id": "jxZKPugvRsEMZd",
+        "start_date": "2025-07-24T00:00:00+00:00"
+      }
+    ],
+    "auto_collection": true,
+    "billing_cycle_anchor_configuration": {
+      "day": 24,
+      "month": null,
+      "year": null
+    },
+    "billing_cycle_day": 24,
+    "created_at": "2025-07-24T14:28:16+00:00",
+    "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+    "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+    "customer": {
+      "accounting_sync_configuration": {
+        "accounting_providers": [],
+        "excluded": false
+      },
+      "additional_emails": [],
+      "auto_collection": true,
+      "balance": "0.00",
+      "billing_address": null,
+      "created_at": "2025-07-24T14:28:15+00:00",
+      "currency": "USD",
+      "email": "test@test.com",
+      "email_delivery": true,
+      "exempt_from_automated_tax": false,
+      "external_customer_id": "zrmysycxltwhcxipqy",
+      "hierarchy": {
+        "children": [],
+        "parent": null
+      },
+      "id": "AnWeyYeMkUzDGy",
+      "metadata": {
+        "is_local_entity": "true",
+        "supabase_org_slug.0": "zrmysycxltwhcxipqyia"
+      },
+      "name": "test org local",
+      "payment_provider": "stripe_charge",
+      "payment_provider_id": "cus_SjtvA8lSJt4Q",
+      "portal_url": "",
+      "reporting_configuration": null,
+      "shipping_address": null,
+      "tax_id": null,
+      "timezone": "Etc/UTC"
+    },
+    "default_invoice_memo": "For Singapore: GST is applied\nFor other countries: Prices are Net\nSingapore GST No: 202005760H",
+    "discount_intervals": [
+      {
+        "applies_to_price_ids": [
+          "XvRPabigmXHQ3G"
+        ],
+        "applies_to_price_interval_ids": [
+          "YE3vRoCeJvijpp"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "XvRPabigmXHQ3G"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 50000
+      },
+      {
+        "applies_to_price_ids": [
+          "65KLrKSJmSydFW"
+        ],
+        "applies_to_price_interval_ids": [
+          "X4XHReAwXsgAdG"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "65KLrKSJmSydFW"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 2000000
+      },
+      {
+        "applies_to_price_ids": [
+          "aBtakp6YzJRH2v"
+        ],
+        "applies_to_price_interval_ids": [
+          "n7cvvHxzugXZpM"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "aBtakp6YzJRH2v"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 50000
+      },
+      {
+        "applies_to_price_ids": [
+          "ch9yfzzn8obWrx"
+        ],
+        "applies_to_price_interval_ids": [
+          "GfDniw2g3junXn"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "ch9yfzzn8obWrx"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 744
+      },
+      {
+        "applies_to_price_ids": [
+          "dxz4ERVhLqShd9"
+        ],
+        "applies_to_price_interval_ids": [
+          "GxuDkZVCYFEsvi"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "dxz4ERVhLqShd9"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 10000000
+      },
+      {
+        "applies_to_price_ids": [
+          "ghuJgcr3MPcZrn"
+        ],
+        "applies_to_price_interval_ids": [
+          "mpTCdNnXQYwXV3"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "ghuJgcr3MPcZrn"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 200
+      },
+      {
+        "applies_to_price_ids": [
+          "8d2Hw2y3rr6q3g"
+        ],
+        "applies_to_price_interval_ids": [
+          "BiF6EcoDLVNJPh"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "8d2Hw2y3rr6q3g"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 500000
+      },
+      {
+        "applies_to_price_ids": [
+          "SrVP8BKcuTXFbU"
+        ],
+        "applies_to_price_interval_ids": [
+          "EK4FN3uciBPCJX"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "SrVP8BKcuTXFbU"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 5
+      },
+      {
+        "applies_to_price_ids": [
+          "GUsNqEYQX6tmJw"
+        ],
+        "applies_to_price_interval_ids": [
+          "4WmjgMj74UXLVj"
+        ],
+        "discount_type": "usage",
+        "end_date": null,
+        "filters": [
+          {
+            "field": "price_id",
+            "operator": "includes",
+            "values": [
+              "GUsNqEYQX6tmJw"
+            ]
+          }
+        ],
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_discount": 200
+      }
+    ],
+    "end_date": null,
+    "fixed_fee_quantity_schedule": [
+      {
+        "end_date": null,
+        "price_id": "5ChH3qaMaymXyy",
+        "quantity": 1,
+        "start_date": "2025-07-24T00:00:00+00:00"
+      }
+    ],
+    "id": "2YoKnny5GhpaD9",
+    "invoicing_threshold": null,
+    "maximum_intervals": [],
+    "metadata": {
+      "is_local_entity": "true"
+    },
+    "minimum_intervals": [],
+    "name": "Free Plan",
+    "net_terms": 0,
+    "pending_subscription_change": null,
+    "plan": {
+      "adjustments": [
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "aBtakp6YzJRH2v"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "aBtakp6YzJRH2v"
+              ]
+            }
+          ],
+          "id": "CjZ5nJQ9AeASsK",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 50000
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "8d2Hw2y3rr6q3g"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "8d2Hw2y3rr6q3g"
+              ]
+            }
+          ],
+          "id": "KPFumchSQnTFMK",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 500000
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "SrVP8BKcuTXFbU"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "SrVP8BKcuTXFbU"
+              ]
+            }
+          ],
+          "id": "PvkAhVVzsT3WLT",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 5
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "GUsNqEYQX6tmJw"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "GUsNqEYQX6tmJw"
+              ]
+            }
+          ],
+          "id": "ZqSNCDbgSjgU9E",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 200
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "XvRPabigmXHQ3G"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "XvRPabigmXHQ3G"
+              ]
+            }
+          ],
+          "id": "aVmJ3fb6UiL6f7",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 50000
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "65KLrKSJmSydFW"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "65KLrKSJmSydFW"
+              ]
+            }
+          ],
+          "id": "b9Zu3RnTtLYium",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 2000000
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "ch9yfzzn8obWrx"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "ch9yfzzn8obWrx"
+              ]
+            }
+          ],
+          "id": "fg2ayGaLAi7vRZ",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 744
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "dxz4ERVhLqShd9"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "dxz4ERVhLqShd9"
+              ]
+            }
+          ],
+          "id": "gpwA9sWRwUXMWW",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 10000000
+        },
+        {
+          "adjustment_type": "usage_discount",
+          "applies_to_price_ids": [
+            "ghuJgcr3MPcZrn"
+          ],
+          "filters": [
+            {
+              "field": "price_id",
+              "operator": "includes",
+              "values": [
+                "ghuJgcr3MPcZrn"
+              ]
+            }
+          ],
+          "id": "kcqVctdcedHZ3M",
+          "is_invoice_level": false,
+          "plan_phase_order": null,
+          "reason": null,
+          "replaces_adjustment_id": null,
+          "usage_discount": 200
+        }
+      ],
+      "base_plan": null,
+      "base_plan_id": null,
+      "created_at": "2024-04-22T05:15:10+00:00",
+      "currency": "USD",
+      "default_invoice_memo": null,
+      "description": "",
+      "discount": null,
+      "external_plan_id": "plan_fr",
+      "id": "RcUsGzCpjfAxc2",
+      "invoicing_currency": "USD",
+      "maximum": null,
+      "maximum_amount": null,
+      "metadata": {
+        "spend_cap": "true",
+        "tier": "tier_free"
+      },
+      "minimum": null,
+      "minimum_amount": null,
+      "name": "Free Plan",
+      "net_terms": 0,
+      "plan_phases": [],
+      "prices": [
+        {
+          "billable_metric": null,
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": null,
+          "external_price_id": null,
+          "fixed_price_quantity": 1,
+          "id": "5ChH3qaMaymXyy",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "NirBXG9QXmcpVW",
+            "name": "Free Plan"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Free Plan",
+          "plan_phase_order": null,
+          "price_type": "fixed_price",
+          "replaces_price_id": "Q9G2XAMnsp7WnY",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "EgDod6pJMpsb33"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "65KLrKSJmSydFW"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "65KLrKSJmSydFW"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 2000000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "65KLrKSJmSydFW",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "M2m9zuqwrUHXEa",
+            "name": "Realtime Messages"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Realtime Messages",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "Nbz75U3UDgjHR7",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "bzFAdwUXF4vtry"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "8d2Hw2y3rr6q3g"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "8d2Hw2y3rr6q3g"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 500000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "8d2Hw2y3rr6q3g",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "DUxL59FPfcFVyR",
+            "name": "Function Invocations"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Function Invocations",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "WvXpuzPqZvsGCn",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "FncUTfuk2xEaEs"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2025-04-16T06:25:16+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "GUsNqEYQX6tmJw"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "GUsNqEYQX6tmJw"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 200
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "GUsNqEYQX6tmJw",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "RiDfJCCafcVkLs",
+            "name": "Branching Compute Hours"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Branching Compute Hours",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": null,
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "cbUf7qybU2xYAJ"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "SrVP8BKcuTXFbU"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "SrVP8BKcuTXFbU"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 5
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "SrVP8BKcuTXFbU",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "bimLjBrcbfo3UM",
+            "name": "Egress"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Egress GB",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "XUSyBjP7oR9L6E",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "9xJNpyxhQEAGE8"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "XvRPabigmXHQ3G"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "XvRPabigmXHQ3G"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 50000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "XvRPabigmXHQ3G",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "jcfejTeaz2ARqY",
+            "name": "Monthly Active Third-Party Users"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Monthly Active Third-Party Users",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": null,
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "H7tWn6iz4sv7Rg"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "aBtakp6YzJRH2v"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "aBtakp6YzJRH2v"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 50000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "aBtakp6YzJRH2v",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "GKQz3nhELqBE7U",
+            "name": "Monthly Active Users"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Monthly Active Users",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "RrrGU4Fp6dwS8W",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "NVvTV5Khv7yCvU"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "ch9yfzzn8obWrx"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "ch9yfzzn8obWrx"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 744
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "ch9yfzzn8obWrx",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "hNbnqJJfTBRvmT",
+            "name": "Storage size"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Storage Size GB/hr",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "LPyJRhLGsxC8VJ",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "GBghpLk6jDMgJD"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2025-05-28T12:27:35+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "dxz4ERVhLqShd9"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "dxz4ERVhLqShd9"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 10000000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "dxz4ERVhLqShd9",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "aNFXophzkudTNu",
+            "name": "Function CPU milliseconds"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Function CPU milliseconds",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": null,
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        {
+          "billable_metric": {
+            "id": "j8D6dnFSGvfXC2"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "ghuJgcr3MPcZrn"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "ghuJgcr3MPcZrn"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 200
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "ghuJgcr3MPcZrn",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "3H8AhurhyFcZ6B",
+            "name": "Realtime Peak Connections"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Realtime Peak Connections",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "BtdRCehT6Wuk3W",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        }
+      ],
+      "product": {
+        "created_at": "2022-09-14T16:44:00+00:00",
+        "id": "mSKaJHNgpTZgff",
+        "name": "Supabase"
+      },
+      "status": "active",
+      "trial_config": {
+        "trial_period": null,
+        "trial_period_unit": "days"
+      },
+      "version": 12
+    },
+    "price_intervals": [
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "4WmjgMj74UXLVj",
+        "price": {
+          "billable_metric": {
+            "id": "FncUTfuk2xEaEs"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2025-04-16T06:25:16+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "GUsNqEYQX6tmJw"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "GUsNqEYQX6tmJw"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 200
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "GUsNqEYQX6tmJw",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "RiDfJCCafcVkLs",
+            "name": "Branching Compute Hours"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Branching Compute Hours",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": null,
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "EK4FN3uciBPCJX",
+        "price": {
+          "billable_metric": {
+            "id": "cbUf7qybU2xYAJ"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "SrVP8BKcuTXFbU"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "SrVP8BKcuTXFbU"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 5
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "SrVP8BKcuTXFbU",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "bimLjBrcbfo3UM",
+            "name": "Egress"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Egress GB",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "XUSyBjP7oR9L6E",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": [],
+        "id": "EtwYMhAWkjTk5h",
+        "price": {
+          "billable_metric": null,
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": null,
+          "external_price_id": null,
+          "fixed_price_quantity": 1,
+          "id": "5ChH3qaMaymXyy",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "NirBXG9QXmcpVW",
+            "name": "Free Plan"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Free Plan",
+          "plan_phase_order": null,
+          "price_type": "fixed_price",
+          "replaces_price_id": "Q9G2XAMnsp7WnY",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "GxuDkZVCYFEsvi",
+        "price": {
+          "billable_metric": {
+            "id": "GBghpLk6jDMgJD"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2025-05-28T12:27:35+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "dxz4ERVhLqShd9"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "dxz4ERVhLqShd9"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 10000000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "dxz4ERVhLqShd9",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "aNFXophzkudTNu",
+            "name": "Function CPU milliseconds"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Function CPU milliseconds",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": null,
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "BiF6EcoDLVNJPh",
+        "price": {
+          "billable_metric": {
+            "id": "bzFAdwUXF4vtry"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "8d2Hw2y3rr6q3g"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "8d2Hw2y3rr6q3g"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 500000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "8d2Hw2y3rr6q3g",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "DUxL59FPfcFVyR",
+            "name": "Function Invocations"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Function Invocations",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "WvXpuzPqZvsGCn",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "YE3vRoCeJvijpp",
+        "price": {
+          "billable_metric": {
+            "id": "9xJNpyxhQEAGE8"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "XvRPabigmXHQ3G"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "XvRPabigmXHQ3G"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 50000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "XvRPabigmXHQ3G",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "jcfejTeaz2ARqY",
+            "name": "Monthly Active Third-Party Users"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Monthly Active Third-Party Users",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": null,
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "n7cvvHxzugXZpM",
+        "price": {
+          "billable_metric": {
+            "id": "H7tWn6iz4sv7Rg"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "aBtakp6YzJRH2v"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "aBtakp6YzJRH2v"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 50000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "aBtakp6YzJRH2v",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "GKQz3nhELqBE7U",
+            "name": "Monthly Active Users"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Monthly Active Users",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "RrrGU4Fp6dwS8W",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "X4XHReAwXsgAdG",
+        "price": {
+          "billable_metric": {
+            "id": "EgDod6pJMpsb33"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "65KLrKSJmSydFW"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "65KLrKSJmSydFW"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 2000000
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "65KLrKSJmSydFW",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "M2m9zuqwrUHXEa",
+            "name": "Realtime Messages"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Realtime Messages",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "Nbz75U3UDgjHR7",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "mpTCdNnXQYwXV3",
+        "price": {
+          "billable_metric": {
+            "id": "j8D6dnFSGvfXC2"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "ghuJgcr3MPcZrn"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "ghuJgcr3MPcZrn"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 200
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "ghuJgcr3MPcZrn",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "3H8AhurhyFcZ6B",
+            "name": "Realtime Peak Connections"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Realtime Peak Connections",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "BtdRCehT6Wuk3W",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      },
+      {
+        "billing_cycle_day": 24,
+        "current_billing_period_end_date": "2025-08-24T00:00:00+00:00",
+        "current_billing_period_start_date": "2025-07-24T00:00:00+00:00",
+        "end_date": null,
+        "filter": null,
+        "fixed_fee_quantity_transitions": null,
+        "id": "GfDniw2g3junXn",
+        "price": {
+          "billable_metric": {
+            "id": "NVvTV5Khv7yCvU"
+          },
+          "billing_cycle_configuration": {
+            "duration": 1,
+            "duration_unit": "month"
+          },
+          "cadence": "monthly",
+          "conversion_rate": null,
+          "conversion_rate_config": null,
+          "created_at": "2024-08-02T09:28:13+00:00",
+          "credit_allocation": null,
+          "currency": "USD",
+          "dimensional_price_configuration": null,
+          "discount": {
+            "applies_to_price_ids": [
+              "ch9yfzzn8obWrx"
+            ],
+            "discount_type": "usage",
+            "filters": [
+              {
+                "field": "price_id",
+                "operator": "includes",
+                "values": [
+                  "ch9yfzzn8obWrx"
+                ]
+              }
+            ],
+            "reason": null,
+            "usage_discount": 744
+          },
+          "external_price_id": null,
+          "fixed_price_quantity": null,
+          "id": "ch9yfzzn8obWrx",
+          "invoicing_cycle_configuration": null,
+          "item": {
+            "id": "hNbnqJJfTBRvmT",
+            "name": "Storage size"
+          },
+          "maximum": null,
+          "maximum_amount": null,
+          "metadata": {},
+          "minimum": null,
+          "minimum_amount": null,
+          "model_type": "unit",
+          "name": "Storage Size GB/hr",
+          "plan_phase_order": null,
+          "price_type": "usage_price",
+          "replaces_price_id": "LPyJRhLGsxC8VJ",
+          "unit_config": {
+            "scaling_factor": null,
+            "unit_amount": "0.00"
+          }
+        },
+        "start_date": "2025-07-24T00:00:00+00:00",
+        "usage_customer_ids": null
+      }
+    ],
+    "redeemed_coupon": null,
+    "start_date": "2025-07-24T00:00:00+00:00",
+    "status": "active",
+    "trial_info": {
+      "end_date": null
+    }
+  }
+}

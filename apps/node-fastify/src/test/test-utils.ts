@@ -17,6 +17,17 @@ export async function fetchInvoicesFromDatabase(postgresClient: PostgresClient, 
   return result.rows;
 }
 
+export async function fetchSubscriptionsFromDatabase(postgresClient: PostgresClient, subscriptionIds: string[]) {
+  if (subscriptionIds.length === 0) return [];
+
+  const placeholders = subscriptionIds.map((_, index) => `$${index + 1}`).join(',');
+  const result = await postgresClient.query(
+    `SELECT id, status, last_synced_at FROM orb.subscriptions WHERE id IN (${placeholders})`,
+    subscriptionIds
+  );
+  return result.rows;
+}
+
 export async function fetchBillingCyclesFromDatabase(postgresClient: PostgresClient, subscriptionId: string) {
   const result = await postgresClient.query(
     'SELECT id, current_billing_period_start_date, current_billing_period_end_date FROM orb.subscriptions WHERE id = $1',
