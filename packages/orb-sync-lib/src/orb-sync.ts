@@ -110,7 +110,6 @@ export class OrbSync {
       case 'data_exports.transfer_error': {
         break;
       }
-      case 'customer.balance_transaction_created':
       case 'customer.created':
       case 'customer.edited':
       case 'customer.credit_balance_depleted':
@@ -120,6 +119,16 @@ export class OrbSync {
         this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for customer ${webhook.customer.id}`);
 
         await syncCustomers(this.postgresClient, [webhook.customer], webhook.created_at);
+        break;
+      }
+      case 'customer.balance_transaction_created': {
+        const webhook = parsedData as CustomerWebhook;
+
+        // Orb ocassionally sends multiple credit notes with the same timestamp at roughly the same time - this leads to possibly persisting an old customer balance
+        // To prevent this, we will query the Orb customer via API to get the latest state
+        const customer = await this.orb.customers.fetch(webhook.customer.id);
+
+        await syncCustomers(this.postgresClient, [customer], new Date().toISOString());
         break;
       }
 
