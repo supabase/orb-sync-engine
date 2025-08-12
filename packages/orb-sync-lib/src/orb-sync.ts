@@ -110,9 +110,19 @@ export class OrbSync {
       case 'data_exports.transfer_error': {
         break;
       }
+      // Ignore accounting sync webhooks for now in the sync engine, given they just add unnecessary writes/load
+      case 'customer.accounting_sync_failed':
+      case 'customer.accounting_sync_succeeded':
+      case 'credit_note.accounting_sync_failed':
+      case 'credit_note.accounting_sync_succeeded':
+      case 'invoice.accounting_sync_failed':
+      case 'invoice.accounting_sync_succeeded': {
+        break;
+      }
       case 'customer.created':
       case 'customer.edited':
       case 'customer.credit_balance_depleted':
+      case 'customer.credit_balance_recovered':
       case 'customer.credit_balance_dropped': {
         const webhook = parsedData as CustomerWebhook;
 
@@ -131,7 +141,9 @@ export class OrbSync {
         await syncCustomers(this.postgresClient, [customer], new Date().toISOString());
         break;
       }
-
+      case 'subscription.cancellation_scheduled':
+      case 'subscription.cancellation_unscheduled':
+      case 'subscription.plan_change_scheduled':
       case 'subscription.created':
       case 'subscription.ended':
       case 'subscription.plan_changed':
