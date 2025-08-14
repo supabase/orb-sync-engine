@@ -115,6 +115,8 @@ export class OrbSync {
       case 'customer.accounting_sync_succeeded':
       case 'credit_note.accounting_sync_failed':
       case 'credit_note.accounting_sync_succeeded':
+      case 'transaction.accounting_sync_failed':
+      case 'transaction.accounting_sync_succeeded':
       case 'invoice.accounting_sync_failed':
       case 'invoice.accounting_sync_succeeded': {
         break;
@@ -246,7 +248,13 @@ export class OrbSync {
       }
 
       default: {
-        throw new Error(`Unsupported webhook event type: ${parsedData.type}`);
+        const unknownType = parsedData.type as string;
+
+        if (unknownType.endsWith('accounting_sync_succeeded') || unknownType.endsWith('accounting_sync_failed')) {
+          this.config.logger?.warn(`Unknown webhook ${parsedData.id}: ${parsedData.type}`);
+        } else {
+          throw new Error(`Unsupported webhook event type: ${parsedData.type}`);
+        }
       }
     }
   }

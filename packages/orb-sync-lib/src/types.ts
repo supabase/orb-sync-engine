@@ -34,7 +34,6 @@ export type OrbWebhookType =
   | 'subscription.cancellation_scheduled'
   | 'subscription.cancellation_unscheduled'
   | 'subscription.cost_exceeded'
-  | 'subscription.cost_exceeded'
   | 'subscription.created'
   | 'subscription.edited'
   | 'subscription.ended'
@@ -45,7 +44,9 @@ export type OrbWebhookType =
   | 'subscription.plan_version_changed'
   | 'subscription.started'
   | 'subscription.usage_exceeded'
-  | 'subscription.usage_exceeded';
+  | 'transaction.accounting_sync_succeeded'
+  | 'transaction.accounting_sync_failed'
+  ;
 
 export type OrbWebhook = {
   // Unique to this WebhookEvent resource, and can be used for idempotency (process-once) purposes
