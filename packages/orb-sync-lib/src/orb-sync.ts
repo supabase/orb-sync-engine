@@ -115,6 +115,8 @@ export class OrbSync {
       case 'customer.accounting_sync_succeeded':
       case 'credit_note.accounting_sync_failed':
       case 'credit_note.accounting_sync_succeeded':
+      case 'transaction.accounting_sync_succeeded':
+      case 'transaction.accounting_sync_failed':
       case 'invoice.accounting_sync_failed':
       case 'invoice.accounting_sync_succeeded': {
         break;
