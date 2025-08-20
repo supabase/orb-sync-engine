@@ -150,7 +150,6 @@ export class OrbSync {
       case 'subscription.ended':
       case 'subscription.plan_changed':
       case 'subscription.fixed_fee_quantity_updated':
-      case 'subscription.plan_version_change_scheduled':
       case 'subscription.plan_version_changed':
       case 'subscription.edited':
       case 'subscription.started': {
@@ -182,6 +181,17 @@ export class OrbSync {
         );
 
         await syncSubscriptionCostExceeded(this.postgresClient, webhook);
+        break;
+      }
+
+      case 'subscription.plan_version_change_scheduled': {
+        const webhook = parsedData as SubscriptionWebhook;
+
+        this.config.logger?.info(
+          `Received webhook ${webhook.id}: ${webhook.type} for subscription ${webhook.subscription.id} - ${JSON.stringify(webhook.properties)}`
+        );
+
+        // Explicitly ignoring this event, as it does not modify the subscription at that point and causes unnecessary writes
         break;
       }
 
