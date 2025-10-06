@@ -20,7 +20,7 @@
     "apps/*"
   ],
   "dependencies": {
-    "pino": "^9.6.0"
+    "pino": "^10.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.32.1",
