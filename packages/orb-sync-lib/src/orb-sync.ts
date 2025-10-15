@@ -233,6 +233,10 @@ export class OrbSync {
         const webhook = parsedData as InvoiceWebhook;
 
         this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for invoice ${webhook.invoice.id}`);
+        if (webhook.invoice.status === 'draft') {
+          this.config.logger?.info(`Skipping sync for invoice ${webhook.invoice.id} in draft status`);
+          break;
+        }
 
         await syncInvoices(this.postgresClient, [webhook.invoice], webhook.created_at);
         break;
