@@ -33,6 +33,7 @@ export const invoiceSchema: JsonSchema = {
     minimum_amount: { type: 'number' },
     paid_at: { type: 'string' },
     payment_failed_at: { type: 'string' },
+    payment_started_at: { type: 'string' },
     scheduled_issue_at: { type: 'string' },
     shipping_address: { type: 'object' },
     status: { type: 'string' },
