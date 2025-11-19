@@ -136,6 +136,8 @@ export class OrbSync {
       case 'customer.balance_transaction_created': {
         const webhook = parsedData as CustomerWebhook;
 
+        this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for customer ${webhook.customer.id}`);
+
         // Orb ocassionally sends multiple credit notes with the same timestamp at roughly the same time - this leads to possibly persisting an old customer balance
         // To prevent this, we will query the Orb customer via API to get the latest state
         const customer = await this.orb.customers.fetch(webhook.customer.id);
