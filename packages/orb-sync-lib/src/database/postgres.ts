@@ -11,7 +11,12 @@ export class PostgresClient {
   pool: pg.Pool;
 
   constructor(private config: PostgresConfig) {
-    this.pool = new pg.Pool({ connectionString: config.databaseUrl, max: 25, keepAlive: true });
+    this.pool = new pg.Pool({
+      connectionString: config.databaseUrl,
+      max: 25,
+      keepAlive: true,
+      application_name: 'orb-sync-engine',
+    });
   }
 
   async upsertMany<
@@ -51,12 +56,7 @@ export class PostgresClient {
     T extends {
       [Key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     },
-  >(
-    entries: T[],
-    table: string,
-    tableSchema: JsonSchema,
-    syncTimestamp: string
-  ): Promise<T[]> {
+  >(entries: T[], table: string, tableSchema: JsonSchema, syncTimestamp: string): Promise<T[]> {
     if (!entries.length) return [];
 
     // Max 5 in parallel to avoid exhausting connection pool
@@ -72,12 +72,8 @@ export class PostgresClient {
         const cleansed = this.cleanseArrayField(entry, tableSchema);
         // Add last_synced_at to the cleansed data for SQL parameter binding
         cleansed.last_synced_at = syncTimestamp;
-        
-        const upsertSql = this.constructUpsertWithTimestampProtectionSql(
-          this.config.schema,
-          table,
-          tableSchema
-        );
+
+        const upsertSql = this.constructUpsertWithTimestampProtectionSql(this.config.schema, table, tableSchema);
 
         const prepared = sql(upsertSql, {
           useNullForMissing: true,
