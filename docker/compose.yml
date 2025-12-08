@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     container_name: orb-db
-    image: supabase/postgres:15.14.1.057
+    image: supabase/postgres:15.14.1.062
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     restart: unless-stopped
     ports:
