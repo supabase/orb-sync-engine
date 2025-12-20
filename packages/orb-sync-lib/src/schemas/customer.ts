@@ -25,6 +25,9 @@ export const customerSchema: JsonSchema = {
     accounting_sync_configuration: { type: 'object' },
     reporting_configuration: { type: 'object' },
     last_synced_at: { type: 'string' },
+    hierarchy: { type: 'object' },
+    automatic_tax_enabled: { type: 'boolean' },
+    exempt_from_automated_tax: { type: 'boolean' },
   },
   required: ['id'],
 } as const;
