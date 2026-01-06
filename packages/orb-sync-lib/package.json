@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit"
   },
   "author": "Supabase",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "orb-billing": "^5.0.0",
     "pg": "^8.15.5",
