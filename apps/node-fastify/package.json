@@ -16,7 +16,7 @@
     "test": "vitest --run"
   },
   "author": "Supabase",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "@fastify/autoload": "^6.3.0",
     "@fastify/type-provider-typebox": "^6.0.0",
