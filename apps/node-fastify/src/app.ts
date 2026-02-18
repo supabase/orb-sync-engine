@@ -102,6 +102,20 @@ export async function createApp(
       logger,
     });
 
+  // Capture pg pool stats every few seconds
+  if (config.PROMETHEUS_METRICS_ENABLED) {
+    setInterval(() => {
+      const pool = orbSync.postgresClient.pool;
+      const total = pool.totalCount;
+      const idle = pool.idleCount;
+      const waiting = pool.waitingCount;
+
+      prometheus.metrics.pgPoolTotalGauge.set(total);
+      prometheus.metrics.pgPoolIdleGauge.set(idle);
+      prometheus.metrics.pgPoolWaitingGauge.set(waiting);
+    }, 5_000);
+  }
+
   app.decorate('orbSync', orbSync);
 
   await app.ready();
