@@ -3,12 +3,12 @@ import client from 'prom-client';
 // Avoid duplicate metric registration across test runs or multiple app instances
 function getOrCreateCounter(config: { name: string; help: string; labelNames?: string[] }) {
   const existing = client.register.getSingleMetric(config.name);
-  return (existing as client.Counter) ?? new client.Counter(config as any);
+  return (existing as client.Counter) ?? new client.Counter(config);
 }
 
 function getOrCreateHistogram(config: { name: string; help: string; labelNames?: string[]; buckets?: number[] }) {
   const existing = client.register.getSingleMetric(config.name);
-  return (existing as client.Histogram) ?? new client.Histogram(config as any);
+  return (existing as client.Histogram) ?? new client.Histogram(config);
 }
 
 const webhooksProcessedCounter = getOrCreateCounter({
