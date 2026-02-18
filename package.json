@@ -20,16 +20,16 @@
     "apps/*"
   ],
   "dependencies": {
-    "pino": "^10.0.0"
+    "pino": "^10.3.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
     "eslint": "^9.26.0",
-    "eslint-config-prettier": "^10.1.5",
+    "eslint-config-prettier": "^10.1.8",
     "prettier": "^4.0.0-alpha.10",
-    "turbo": "^2.5.3",
-    "typescript": "^5.8.3"
+    "turbo": "^2.8.9",
+    "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",

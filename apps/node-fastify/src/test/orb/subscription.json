@@ -9,16 +9,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "XvRPabigmXHQ3G"
-          ],
+          "applies_to_price_ids": ["XvRPabigmXHQ3G"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "XvRPabigmXHQ3G"
-              ]
+              "values": ["XvRPabigmXHQ3G"]
             }
           ],
           "id": "aVmJ3fb6UiL6f7",
@@ -28,9 +24,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 50000
         },
-        "applies_to_price_interval_ids": [
-          "YE3vRoCeJvijpp"
-        ],
+        "applies_to_price_interval_ids": ["YE3vRoCeJvijpp"],
         "end_date": null,
         "id": "WnhJQjYhDDjfUh",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -38,16 +32,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "65KLrKSJmSydFW"
-          ],
+          "applies_to_price_ids": ["65KLrKSJmSydFW"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "65KLrKSJmSydFW"
-              ]
+              "values": ["65KLrKSJmSydFW"]
             }
           ],
           "id": "b9Zu3RnTtLYium",
@@ -57,9 +47,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 2000000
         },
-        "applies_to_price_interval_ids": [
-          "X4XHReAwXsgAdG"
-        ],
+        "applies_to_price_interval_ids": ["X4XHReAwXsgAdG"],
         "end_date": null,
         "id": "MMFRq3FxH3ssWm",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -67,16 +55,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "aBtakp6YzJRH2v"
-          ],
+          "applies_to_price_ids": ["aBtakp6YzJRH2v"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "aBtakp6YzJRH2v"
-              ]
+              "values": ["aBtakp6YzJRH2v"]
             }
           ],
           "id": "CjZ5nJQ9AeASsK",
@@ -86,9 +70,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 50000
         },
-        "applies_to_price_interval_ids": [
-          "n7cvvHxzugXZpM"
-        ],
+        "applies_to_price_interval_ids": ["n7cvvHxzugXZpM"],
         "end_date": null,
         "id": "ZiDh2jizFmnP96",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -96,16 +78,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "ch9yfzzn8obWrx"
-          ],
+          "applies_to_price_ids": ["ch9yfzzn8obWrx"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "ch9yfzzn8obWrx"
-              ]
+              "values": ["ch9yfzzn8obWrx"]
             }
           ],
           "id": "fg2ayGaLAi7vRZ",
@@ -115,9 +93,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 744
         },
-        "applies_to_price_interval_ids": [
-          "GfDniw2g3junXn"
-        ],
+        "applies_to_price_interval_ids": ["GfDniw2g3junXn"],
         "end_date": null,
         "id": "diDiu33LnNMwTV",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -125,16 +101,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "dxz4ERVhLqShd9"
-          ],
+          "applies_to_price_ids": ["dxz4ERVhLqShd9"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "dxz4ERVhLqShd9"
-              ]
+              "values": ["dxz4ERVhLqShd9"]
             }
           ],
           "id": "gpwA9sWRwUXMWW",
@@ -144,9 +116,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 10000000
         },
-        "applies_to_price_interval_ids": [
-          "GxuDkZVCYFEsvi"
-        ],
+        "applies_to_price_interval_ids": ["GxuDkZVCYFEsvi"],
         "end_date": null,
         "id": "82ackWLEPcmQyQ",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -154,16 +124,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "ghuJgcr3MPcZrn"
-          ],
+          "applies_to_price_ids": ["ghuJgcr3MPcZrn"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "ghuJgcr3MPcZrn"
-              ]
+              "values": ["ghuJgcr3MPcZrn"]
             }
           ],
           "id": "kcqVctdcedHZ3M",
@@ -173,9 +139,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 200
         },
-        "applies_to_price_interval_ids": [
-          "mpTCdNnXQYwXV3"
-        ],
+        "applies_to_price_interval_ids": ["mpTCdNnXQYwXV3"],
         "end_date": null,
         "id": "iP2J3nE4sk5yXi",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -183,16 +147,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "8d2Hw2y3rr6q3g"
-          ],
+          "applies_to_price_ids": ["8d2Hw2y3rr6q3g"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "8d2Hw2y3rr6q3g"
-              ]
+              "values": ["8d2Hw2y3rr6q3g"]
             }
           ],
           "id": "KPFumchSQnTFMK",
@@ -202,9 +162,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 500000
         },
-        "applies_to_price_interval_ids": [
-          "BiF6EcoDLVNJPh"
-        ],
+        "applies_to_price_interval_ids": ["BiF6EcoDLVNJPh"],
         "end_date": null,
         "id": "9YDY6VzpynciKa",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -212,16 +170,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "SrVP8BKcuTXFbU"
-          ],
+          "applies_to_price_ids": ["SrVP8BKcuTXFbU"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "SrVP8BKcuTXFbU"
-              ]
+              "values": ["SrVP8BKcuTXFbU"]
             }
           ],
           "id": "PvkAhVVzsT3WLT",
@@ -231,9 +185,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 5
         },
-        "applies_to_price_interval_ids": [
-          "EK4FN3uciBPCJX"
-        ],
+        "applies_to_price_interval_ids": ["EK4FN3uciBPCJX"],
         "end_date": null,
         "id": "ie6WCvWj6oQyLh",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -241,16 +193,12 @@
       {
         "adjustment": {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "GUsNqEYQX6tmJw"
-          ],
+          "applies_to_price_ids": ["GUsNqEYQX6tmJw"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "GUsNqEYQX6tmJw"
-              ]
+              "values": ["GUsNqEYQX6tmJw"]
             }
           ],
           "id": "ZqSNCDbgSjgU9E",
@@ -260,9 +208,7 @@
           "replaces_adjustment_id": null,
           "usage_discount": 200
         },
-        "applies_to_price_interval_ids": [
-          "4WmjgMj74UXLVj"
-        ],
+        "applies_to_price_interval_ids": ["4WmjgMj74UXLVj"],
         "end_date": null,
         "id": "jxZKPugvRsEMZd",
         "start_date": "2025-07-24T00:00:00+00:00"
@@ -314,189 +260,135 @@
     "default_invoice_memo": "For Singapore: GST is applied\nFor other countries: Prices are Net\nSingapore GST No: 202005760H",
     "discount_intervals": [
       {
-        "applies_to_price_ids": [
-          "XvRPabigmXHQ3G"
-        ],
-        "applies_to_price_interval_ids": [
-          "YE3vRoCeJvijpp"
-        ],
+        "applies_to_price_ids": ["XvRPabigmXHQ3G"],
+        "applies_to_price_interval_ids": ["YE3vRoCeJvijpp"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "XvRPabigmXHQ3G"
-            ]
+            "values": ["XvRPabigmXHQ3G"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 50000
       },
       {
-        "applies_to_price_ids": [
-          "65KLrKSJmSydFW"
-        ],
-        "applies_to_price_interval_ids": [
-          "X4XHReAwXsgAdG"
-        ],
+        "applies_to_price_ids": ["65KLrKSJmSydFW"],
+        "applies_to_price_interval_ids": ["X4XHReAwXsgAdG"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "65KLrKSJmSydFW"
-            ]
+            "values": ["65KLrKSJmSydFW"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 2000000
       },
       {
-        "applies_to_price_ids": [
-          "aBtakp6YzJRH2v"
-        ],
-        "applies_to_price_interval_ids": [
-          "n7cvvHxzugXZpM"
-        ],
+        "applies_to_price_ids": ["aBtakp6YzJRH2v"],
+        "applies_to_price_interval_ids": ["n7cvvHxzugXZpM"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "aBtakp6YzJRH2v"
-            ]
+            "values": ["aBtakp6YzJRH2v"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 50000
       },
       {
-        "applies_to_price_ids": [
-          "ch9yfzzn8obWrx"
-        ],
-        "applies_to_price_interval_ids": [
-          "GfDniw2g3junXn"
-        ],
+        "applies_to_price_ids": ["ch9yfzzn8obWrx"],
+        "applies_to_price_interval_ids": ["GfDniw2g3junXn"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "ch9yfzzn8obWrx"
-            ]
+            "values": ["ch9yfzzn8obWrx"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 744
       },
       {
-        "applies_to_price_ids": [
-          "dxz4ERVhLqShd9"
-        ],
-        "applies_to_price_interval_ids": [
-          "GxuDkZVCYFEsvi"
-        ],
+        "applies_to_price_ids": ["dxz4ERVhLqShd9"],
+        "applies_to_price_interval_ids": ["GxuDkZVCYFEsvi"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "dxz4ERVhLqShd9"
-            ]
+            "values": ["dxz4ERVhLqShd9"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 10000000
       },
       {
-        "applies_to_price_ids": [
-          "ghuJgcr3MPcZrn"
-        ],
-        "applies_to_price_interval_ids": [
-          "mpTCdNnXQYwXV3"
-        ],
+        "applies_to_price_ids": ["ghuJgcr3MPcZrn"],
+        "applies_to_price_interval_ids": ["mpTCdNnXQYwXV3"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "ghuJgcr3MPcZrn"
-            ]
+            "values": ["ghuJgcr3MPcZrn"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 200
       },
       {
-        "applies_to_price_ids": [
-          "8d2Hw2y3rr6q3g"
-        ],
-        "applies_to_price_interval_ids": [
-          "BiF6EcoDLVNJPh"
-        ],
+        "applies_to_price_ids": ["8d2Hw2y3rr6q3g"],
+        "applies_to_price_interval_ids": ["BiF6EcoDLVNJPh"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "8d2Hw2y3rr6q3g"
-            ]
+            "values": ["8d2Hw2y3rr6q3g"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 500000
       },
       {
-        "applies_to_price_ids": [
-          "SrVP8BKcuTXFbU"
-        ],
-        "applies_to_price_interval_ids": [
-          "EK4FN3uciBPCJX"
-        ],
+        "applies_to_price_ids": ["SrVP8BKcuTXFbU"],
+        "applies_to_price_interval_ids": ["EK4FN3uciBPCJX"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "SrVP8BKcuTXFbU"
-            ]
+            "values": ["SrVP8BKcuTXFbU"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
         "usage_discount": 5
       },
       {
-        "applies_to_price_ids": [
-          "GUsNqEYQX6tmJw"
-        ],
-        "applies_to_price_interval_ids": [
-          "4WmjgMj74UXLVj"
-        ],
+        "applies_to_price_ids": ["GUsNqEYQX6tmJw"],
+        "applies_to_price_interval_ids": ["4WmjgMj74UXLVj"],
         "discount_type": "usage",
         "end_date": null,
         "filters": [
           {
             "field": "price_id",
             "operator": "includes",
-            "values": [
-              "GUsNqEYQX6tmJw"
-            ]
+            "values": ["GUsNqEYQX6tmJw"]
           }
         ],
         "start_date": "2025-07-24T00:00:00+00:00",
@@ -526,16 +418,12 @@
       "adjustments": [
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "aBtakp6YzJRH2v"
-          ],
+          "applies_to_price_ids": ["aBtakp6YzJRH2v"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "aBtakp6YzJRH2v"
-              ]
+              "values": ["aBtakp6YzJRH2v"]
             }
           ],
           "id": "CjZ5nJQ9AeASsK",
@@ -547,16 +435,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "8d2Hw2y3rr6q3g"
-          ],
+          "applies_to_price_ids": ["8d2Hw2y3rr6q3g"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "8d2Hw2y3rr6q3g"
-              ]
+              "values": ["8d2Hw2y3rr6q3g"]
             }
           ],
           "id": "KPFumchSQnTFMK",
@@ -568,16 +452,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "SrVP8BKcuTXFbU"
-          ],
+          "applies_to_price_ids": ["SrVP8BKcuTXFbU"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "SrVP8BKcuTXFbU"
-              ]
+              "values": ["SrVP8BKcuTXFbU"]
             }
           ],
           "id": "PvkAhVVzsT3WLT",
@@ -589,16 +469,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "GUsNqEYQX6tmJw"
-          ],
+          "applies_to_price_ids": ["GUsNqEYQX6tmJw"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "GUsNqEYQX6tmJw"
-              ]
+              "values": ["GUsNqEYQX6tmJw"]
             }
           ],
           "id": "ZqSNCDbgSjgU9E",
@@ -610,16 +486,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "XvRPabigmXHQ3G"
-          ],
+          "applies_to_price_ids": ["XvRPabigmXHQ3G"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "XvRPabigmXHQ3G"
-              ]
+              "values": ["XvRPabigmXHQ3G"]
             }
           ],
           "id": "aVmJ3fb6UiL6f7",
@@ -631,16 +503,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "65KLrKSJmSydFW"
-          ],
+          "applies_to_price_ids": ["65KLrKSJmSydFW"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "65KLrKSJmSydFW"
-              ]
+              "values": ["65KLrKSJmSydFW"]
             }
           ],
           "id": "b9Zu3RnTtLYium",
@@ -652,16 +520,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "ch9yfzzn8obWrx"
-          ],
+          "applies_to_price_ids": ["ch9yfzzn8obWrx"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "ch9yfzzn8obWrx"
-              ]
+              "values": ["ch9yfzzn8obWrx"]
             }
           ],
           "id": "fg2ayGaLAi7vRZ",
@@ -673,16 +537,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "dxz4ERVhLqShd9"
-          ],
+          "applies_to_price_ids": ["dxz4ERVhLqShd9"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "dxz4ERVhLqShd9"
-              ]
+              "values": ["dxz4ERVhLqShd9"]
             }
           ],
           "id": "gpwA9sWRwUXMWW",
@@ -694,16 +554,12 @@
         },
         {
           "adjustment_type": "usage_discount",
-          "applies_to_price_ids": [
-            "ghuJgcr3MPcZrn"
-          ],
+          "applies_to_price_ids": ["ghuJgcr3MPcZrn"],
           "filters": [
             {
               "field": "price_id",
               "operator": "includes",
-              "values": [
-                "ghuJgcr3MPcZrn"
-              ]
+              "values": ["ghuJgcr3MPcZrn"]
             }
           ],
           "id": "kcqVctdcedHZ3M",
@@ -789,17 +645,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "65KLrKSJmSydFW"
-            ],
+            "applies_to_price_ids": ["65KLrKSJmSydFW"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "65KLrKSJmSydFW"
-                ]
+                "values": ["65KLrKSJmSydFW"]
               }
             ],
             "reason": null,
@@ -844,17 +696,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "8d2Hw2y3rr6q3g"
-            ],
+            "applies_to_price_ids": ["8d2Hw2y3rr6q3g"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "8d2Hw2y3rr6q3g"
-                ]
+                "values": ["8d2Hw2y3rr6q3g"]
               }
             ],
             "reason": null,
@@ -899,17 +747,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "GUsNqEYQX6tmJw"
-            ],
+            "applies_to_price_ids": ["GUsNqEYQX6tmJw"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "GUsNqEYQX6tmJw"
-                ]
+                "values": ["GUsNqEYQX6tmJw"]
               }
             ],
             "reason": null,
@@ -954,17 +798,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "SrVP8BKcuTXFbU"
-            ],
+            "applies_to_price_ids": ["SrVP8BKcuTXFbU"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "SrVP8BKcuTXFbU"
-                ]
+                "values": ["SrVP8BKcuTXFbU"]
               }
             ],
             "reason": null,
@@ -1009,17 +849,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "XvRPabigmXHQ3G"
-            ],
+            "applies_to_price_ids": ["XvRPabigmXHQ3G"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "XvRPabigmXHQ3G"
-                ]
+                "values": ["XvRPabigmXHQ3G"]
               }
             ],
             "reason": null,
@@ -1064,17 +900,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "aBtakp6YzJRH2v"
-            ],
+            "applies_to_price_ids": ["aBtakp6YzJRH2v"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "aBtakp6YzJRH2v"
-                ]
+                "values": ["aBtakp6YzJRH2v"]
               }
             ],
             "reason": null,
@@ -1119,17 +951,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "ch9yfzzn8obWrx"
-            ],
+            "applies_to_price_ids": ["ch9yfzzn8obWrx"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "ch9yfzzn8obWrx"
-                ]
+                "values": ["ch9yfzzn8obWrx"]
               }
             ],
             "reason": null,
@@ -1174,17 +1002,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "dxz4ERVhLqShd9"
-            ],
+            "applies_to_price_ids": ["dxz4ERVhLqShd9"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "dxz4ERVhLqShd9"
-                ]
+                "values": ["dxz4ERVhLqShd9"]
               }
             ],
             "reason": null,
@@ -1229,17 +1053,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "ghuJgcr3MPcZrn"
-            ],
+            "applies_to_price_ids": ["ghuJgcr3MPcZrn"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "ghuJgcr3MPcZrn"
-                ]
+                "values": ["ghuJgcr3MPcZrn"]
               }
             ],
             "reason": null,
@@ -1306,17 +1126,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "GUsNqEYQX6tmJw"
-            ],
+            "applies_to_price_ids": ["GUsNqEYQX6tmJw"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "GUsNqEYQX6tmJw"
-                ]
+                "values": ["GUsNqEYQX6tmJw"]
               }
             ],
             "reason": null,
@@ -1372,17 +1188,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "SrVP8BKcuTXFbU"
-            ],
+            "applies_to_price_ids": ["SrVP8BKcuTXFbU"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "SrVP8BKcuTXFbU"
-                ]
+                "values": ["SrVP8BKcuTXFbU"]
               }
             ],
             "reason": null,
@@ -1486,17 +1298,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "dxz4ERVhLqShd9"
-            ],
+            "applies_to_price_ids": ["dxz4ERVhLqShd9"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "dxz4ERVhLqShd9"
-                ]
+                "values": ["dxz4ERVhLqShd9"]
               }
             ],
             "reason": null,
@@ -1552,17 +1360,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "8d2Hw2y3rr6q3g"
-            ],
+            "applies_to_price_ids": ["8d2Hw2y3rr6q3g"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "8d2Hw2y3rr6q3g"
-                ]
+                "values": ["8d2Hw2y3rr6q3g"]
               }
             ],
             "reason": null,
@@ -1618,17 +1422,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "XvRPabigmXHQ3G"
-            ],
+            "applies_to_price_ids": ["XvRPabigmXHQ3G"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "XvRPabigmXHQ3G"
-                ]
+                "values": ["XvRPabigmXHQ3G"]
               }
             ],
             "reason": null,
@@ -1684,17 +1484,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "aBtakp6YzJRH2v"
-            ],
+            "applies_to_price_ids": ["aBtakp6YzJRH2v"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "aBtakp6YzJRH2v"
-                ]
+                "values": ["aBtakp6YzJRH2v"]
               }
             ],
             "reason": null,
@@ -1750,17 +1546,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "65KLrKSJmSydFW"
-            ],
+            "applies_to_price_ids": ["65KLrKSJmSydFW"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "65KLrKSJmSydFW"
-                ]
+                "values": ["65KLrKSJmSydFW"]
               }
             ],
             "reason": null,
@@ -1816,17 +1608,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "ghuJgcr3MPcZrn"
-            ],
+            "applies_to_price_ids": ["ghuJgcr3MPcZrn"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "ghuJgcr3MPcZrn"
-                ]
+                "values": ["ghuJgcr3MPcZrn"]
               }
             ],
             "reason": null,
@@ -1882,17 +1670,13 @@
           "currency": "USD",
           "dimensional_price_configuration": null,
           "discount": {
-            "applies_to_price_ids": [
-              "ch9yfzzn8obWrx"
-            ],
+            "applies_to_price_ids": ["ch9yfzzn8obWrx"],
             "discount_type": "usage",
             "filters": [
               {
                 "field": "price_id",
                 "operator": "includes",
-                "values": [
-                  "ch9yfzzn8obWrx"
-                ]
+                "values": ["ch9yfzzn8obWrx"]
               }
             ],
             "reason": null,

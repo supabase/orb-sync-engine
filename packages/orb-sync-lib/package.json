@@ -16,12 +16,12 @@
   "author": "Supabase",
   "license": "Apache-2.0",
   "dependencies": {
-    "orb-billing": "^5.0.0",
-    "pg": "^8.15.5",
+    "orb-billing": "^5.44.0",
+    "pg": "^8.18.0",
     "yesql": "^7.0.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.11.14",
+    "@types/pg": "^8.16.0",
     "@types/yesql": "^4.1.4"
   }
 }
