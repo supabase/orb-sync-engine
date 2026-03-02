@@ -1,13 +1,15 @@
 // Needs to be imported here at the very beginning so that auto-instrumentation works for the imported modules
 import './instrument';
 
-import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
+import fastify, { FastifyInstance, FastifyServerOptions, type FastifyError } from 'fastify';
+import fastifyMetrics from 'fastify-metrics';
 import autoload from '@fastify/autoload';
 import path from 'node:path';
 import { OrbSync } from 'orb-sync-lib';
 import { getConfig } from './utils/config';
 import * as Sentry from '@sentry/node';
 import pino from 'pino';
+import prometheus from './prometheus';
 
 export async function createApp(
   opts: FastifyServerOptions = {},
@@ -43,6 +45,25 @@ export async function createApp(
     }
   });
 
+  // Ensure errors get logged
+  app.setErrorHandler((error, _request, reply) => {
+    const err = error as FastifyError;
+
+    const statusCode = err.statusCode || 500;
+
+    // Only log server errors
+    if (statusCode >= 500) {
+      app.log.error(error);
+      if (config.PROMETHEUS_METRICS_ENABLED) {
+        prometheus.metrics.internalServerErrorsCounter.inc();
+      }
+    }
+
+    reply.status(statusCode).send({
+      error: statusCode >= 500 ? 'Internal Server Error' : err.message,
+    });
+  });
+
   /**
    * Expose all routes in './routes'
    * Use compiled routes in test environment
@@ -54,6 +75,22 @@ export async function createApp(
     dir: routesDir,
   });
 
+  if (config.PROMETHEUS_METRICS_ENABLED) {
+    logger.info('Prometheus metrics enabled, registering /metrics endpoint');
+    await app.register(fastifyMetrics, {
+      endpoint: '/metrics',
+      defaultMetrics: {
+        enabled: true,
+      },
+      routeMetrics: {
+        registeredRoutesOnly: false,
+        // if we don't set this group, every single unknown route will get multiple metrics, possibly overflowing our metrics store
+        invalidRouteGroup: 'invalidRoute',
+      },
+      promClient: prometheus.client,
+    });
+  }
+
   const orbSync =
     orbSyncInstance ||
     new OrbSync({
@@ -64,6 +101,20 @@ export async function createApp(
       verifyWebhookSignature: config.VERIFY_WEBHOOK_SIGNATURE,
       logger,
     });
+
+  // Capture pg pool stats every few seconds
+  if (config.PROMETHEUS_METRICS_ENABLED) {
+    setInterval(() => {
+      const pool = orbSync.postgresClient.pool;
+      const total = pool.totalCount;
+      const idle = pool.idleCount;
+      const waiting = pool.waitingCount;
+
+      prometheus.metrics.pgPoolTotalGauge.set(total);
+      prometheus.metrics.pgPoolIdleGauge.set(idle);
+      prometheus.metrics.pgPoolWaitingGauge.set(waiting);
+    }, 5_000);
+  }
 
   app.decorate('orbSync', orbSync);
 

@@ -31,6 +31,8 @@ type configType = {
 
   /** When specified, Sentry-supported tag 'Environment' is set. Defaults to 'development' */
   SENTRY_ENVIRONMENT?: string;
+
+  PROMETHEUS_METRICS_ENABLED?: boolean;
 };
 
 function getConfigFromEnv(key: string, defaultValue?: string): string {
@@ -56,6 +58,7 @@ export function getConfig(): configType {
     VERIFY_WEBHOOK_SIGNATURE: getConfigFromEnv('VERIFY_WEBHOOK_SIGNATURE', 'true') === 'true',
     SENTRY_DSN: getConfigFromEnv('SENTRY_DSN'),
     SENTRY_ENVIRONMENT: getConfigFromEnv('SENTRY_ENVIRONMENT', 'development'),
+    PROMETHEUS_METRICS_ENABLED: getConfigFromEnv('PROMETHEUS_METRICS_ENABLED', 'true') === 'true',
   };
 
   assert(!Number.isNaN(config.PORT), 'PORT must be a number');

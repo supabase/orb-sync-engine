@@ -99,6 +99,8 @@ export class OrbSync {
       this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecret);
     }
 
+    const now = new Date().getTime();
+
     const parsedData = JSON.parse(payload) as OrbWebhook;
     switch (parsedData.type) {
       // Test event, just ignore it
@@ -273,6 +275,12 @@ export class OrbSync {
         }
       }
     }
+
+    return {
+      eventType: parsedData.type,
+      // Helps track webhook delays, use a timestamp pre-processing as we dont want to include processing time in the delay metric
+      timeSinceEventCreatedMs: now - new Date(parsedData.created_at).getTime(),
+    };
   }
 
   async syncSingleEntity(

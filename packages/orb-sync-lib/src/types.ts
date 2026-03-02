@@ -45,8 +45,7 @@ export type OrbWebhookType =
   | 'subscription.started'
   | 'subscription.usage_exceeded'
   | 'transaction.accounting_sync_succeeded'
-  | 'transaction.accounting_sync_failed'
-  ;
+  | 'transaction.accounting_sync_failed';
 
 export type OrbWebhook = {
   // Unique to this WebhookEvent resource, and can be used for idempotency (process-once) purposes
