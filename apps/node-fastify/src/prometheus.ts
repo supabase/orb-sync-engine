@@ -48,8 +48,6 @@ const pgPoolWaitingGauge = getOrCreateGauge({
   help: 'Number of waiting requests for a client from the Postgres pool',
 });
 
-
-
 export default {
   client,
   metrics: {

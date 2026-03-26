@@ -6,14 +6,14 @@ export const verifyApiKey = (request: FastifyRequest, reply: FastifyReply, done:
   const config = getConfig();
 
   if (!request.headers || !request.headers.authorization) {
-     reply.code(401).send('Unauthorized');
-     return
+    reply.code(401).send('Unauthorized');
+    return;
   }
   const { authorization } = request.headers;
 
   if (!apiKeyMatches(authorization, config.API_KEY_SYNC) && !apiKeyMatches(authorization, config.API_KEY_SYNC_ALT)) {
     reply.code(401).send('Unauthorized');
-    return 
+    return;
   }
 
   done();

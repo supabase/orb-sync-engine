@@ -20,9 +20,9 @@
   "dependencies": {
     "@fastify/autoload": "^6.3.1",
     "@fastify/type-provider-typebox": "^6.1.0",
-    "@sentry/node": "^10.42.0",
+    "@sentry/node": "^10.46.0",
     "dotenv": "^17.3.1",
-    "fastify": "^5.8.3",
+    "fastify": "^5.8.4",
     "orb-sync-lib": "*",
     "fastify-metrics": "^12.1.0"
   },
