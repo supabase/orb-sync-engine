@@ -16,7 +16,7 @@
   "author": "Supabase",
   "license": "Apache-2.0",
   "dependencies": {
-    "orb-billing": "^5.47.0",
+    "orb-billing": "^5.48.0",
     "pg": "^8.20.0",
     "yesql": "^7.0.0"
   },

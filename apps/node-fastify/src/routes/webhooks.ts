@@ -8,6 +8,10 @@ export default async function routes(fastify: FastifyInstance) {
       const headers = request.headers;
       const body: { raw: Buffer } = request.body as { raw: Buffer };
 
+      if (!body?.raw) {
+        return reply.status(400).send({ error: 'Missing body' });
+      }
+
       const { eventType, timeSinceEventCreatedMs } = await fastify.orbSync.processWebhook(body.raw.toString(), headers);
 
       prometheus.metrics.webhooksProcessedCounter.inc({ event: eventType });
