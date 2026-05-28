@@ -30,7 +30,7 @@
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^4.0.0-alpha.13",
-    "turbo": "^2.9.12",
+    "turbo": "^2.9.14",
     "typescript": "^6.0.3"
   },
   "repository": {
