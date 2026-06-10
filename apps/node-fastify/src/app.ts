@@ -96,6 +96,7 @@ export async function createApp(
     new OrbSync({
       databaseUrl: config.DATABASE_URL,
       orbWebhookSecret: config.ORB_WEBHOOK_SECRET,
+      orbWebhookSecretAlt: config.ORB_WEBHOOK_SECRET_ALT,
       databaseSchema: config.DATABASE_SCHEMA,
       orbApiKey: config.ORB_API_KEY,
       verifyWebhookSignature: config.VERIFY_WEBHOOK_SIGNATURE,

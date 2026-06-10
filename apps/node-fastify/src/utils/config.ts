@@ -17,6 +17,9 @@ type configType = {
   /** Secret to validate signatures of Orb webhooks */
   ORB_WEBHOOK_SECRET: string;
 
+  /** Alternative webhook secret for easier rotation */
+  ORB_WEBHOOK_SECRET_ALT?: string;
+
   /** Defaults to Orb */
   DATABASE_SCHEMA: string;
 
@@ -54,6 +57,7 @@ export function getConfig(): configType {
     DATABASE_SCHEMA: getConfigFromEnv('DATABASE_SCHEMA', 'orb'),
     DATABASE_URL: getConfigFromEnv('DATABASE_URL'),
     ORB_WEBHOOK_SECRET: getConfigFromEnv('ORB_WEBHOOK_SECRET'),
+    ORB_WEBHOOK_SECRET_ALT: getConfigFromEnv('ORB_WEBHOOK_SECRET_ALT'),
     PORT: Number(getConfigFromEnv('PORT', '8080')),
     VERIFY_WEBHOOK_SIGNATURE: getConfigFromEnv('VERIFY_WEBHOOK_SIGNATURE', 'true') === 'true',
     SENTRY_DSN: getConfigFromEnv('SENTRY_DSN'),
