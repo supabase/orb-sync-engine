@@ -26,6 +26,23 @@ const webhookDelayMsHistogram = getOrCreateHistogram({
   name: 'orb_sync_webhook_delay_ms',
   help: 'Delay between when an event is emitted and when it is processed by the API in milliseconds',
   labelNames: ['event'],
+  // default buckets are way too small for our use case
+  buckets: [
+    // 1s
+    1000,
+    // 5s
+    5 * 1000,
+    // 10s
+    10 * 1000,
+    // 30s
+    30 * 1000,
+    // 1m
+    60 * 1000,
+    // 5m
+    5 * 60 * 1000,
+    // 30m
+    30 * 60 * 1000,
+  ],
 });
 
 const internalServerErrorsCounter = getOrCreateCounter({
