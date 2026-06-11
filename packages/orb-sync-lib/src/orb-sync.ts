@@ -44,6 +44,11 @@ export type OrbSyncConfig = {
   /** Needed to verify the signature of a webhook */
   orbWebhookSecret: string;
 
+  /** Alternative webhook secret for zero-downtime rotation. When set, webhook
+   *  signature verification will try the primary secret first and fall back to
+   *  this one before rejecting the request. */
+  orbWebhookSecretAlt?: string;
+
   /** Control whether webhook signatures should be verified. Defaults to true */
   verifyWebhookSignature?: boolean;
 
@@ -96,7 +101,15 @@ export class OrbSync {
 
   async processWebhook(payload: string, headers: HeadersLike | undefined) {
     if (this.config.verifyWebhookSignature ?? true) {
-      this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecret);
+      try {
+        this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecret);
+      } catch (e) {
+        if (this.config.orbWebhookSecretAlt) {
+          this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecretAlt);
+        } else {
+          throw e;
+        }
+      }
     }
 
     const now = new Date().getTime();
