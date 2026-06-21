@@ -18,6 +18,7 @@ import type {
 import { PostgresClient } from './database/postgres';
 import { fetchAndSyncCustomer, fetchAndSyncCustomers, syncCustomers } from './sync/customers';
 import {
+  checkIfCurrentBillingCycleIsOutdated,
   fetchAndSyncSubscription,
   fetchAndSyncSubscriptions,
   syncSubscriptions,
@@ -226,19 +227,22 @@ export class OrbSync {
         await syncInvoices(this.postgresClient, [invoice], webhook.created_at);
 
         const billingCycle = getBillingCycleFromInvoice(invoice);
-        if (billingCycle && invoice.subscription) {
-          if (billingCycle.inArrears) {
-            // When a plan is configured with an in-arrears fixed fee, we cannot directly determine the billing cycle start and end dates
-            // when the invoice is issued, as the plan line item will contain the past and not the new billing cycle
-            // In order to not run into stale data, we resync the subscription
+        if (billingCycle && invoice.subscription && !billingCycle.inArrears) {
+          await updateBillingCycle(this.postgresClient, {
+            subscriptionId: invoice.subscription.id,
+            billingCycleStart: billingCycle.start,
+            billingCycleEnd: billingCycle.end,
+          });
+        } else if ((billingCycle?.inArrears || !billingCycle) && invoice.subscription) {
+          // In case no plan item is present, we still want to do a check to see if there is an outdated billing cycle and potentially trigger an update
+          const isOutdated = await checkIfCurrentBillingCycleIsOutdated(this.postgresClient, invoice.subscription.id);
+
+          if (isOutdated) {
+            this.config.logger?.info(
+              `Billing cycle of subscription ${invoice.subscription.id} is outdated, fetching latest subscription data from Orb API to update it`
+            );
             const subscription = await this.orb.subscriptions.fetch(invoice.subscription.id);
             await syncSubscriptions(this.postgresClient, [subscription], webhook.created_at);
-          } else {
-            await updateBillingCycle(this.postgresClient, {
-              subscriptionId: invoice.subscription.id,
-              billingCycleStart: billingCycle.start,
-              billingCycleEnd: billingCycle.end,
-            });
           }
         }
 

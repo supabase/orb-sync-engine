@@ -176,7 +176,7 @@ describe('POST /webhooks', () => {
     );
   });
 
-  it('should handle invoice.issued webhook and resync subscription if in-arrears fixed fee', async () => {
+  it('should handle invoice.issued webhook and resync subscription if billing cycle outdated', async () => {
     let payload = loadWebhookPayload('invoice');
 
     // Parse the payload and update billing cycle dates to sensible values
@@ -192,44 +192,49 @@ describe('POST /webhooks', () => {
     webhookData.type = 'invoice.issued';
 
     const now = new Date();
-    const startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 1 day ago
-    const endDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 1 day ago
+    const thirtyOneDaysAgo = new Date(now.getTime() - 31 * 24 * 60 * 60 * 1000); // 31 days ago
+    const thirtyDaysInFuture = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days in future
 
-    // Find and update the plan line item dates
+    // Find and update the plan and change to in_arrear
     const planLineItem = webhookData.invoice.line_items.find(
       (item: Invoice.LineItem) =>
         item.price?.price_type === 'fixed_price' && item.price.billable_metric === null && item.name.endsWith('Plan')
     );
     planLineItem.price.billing_mode = 'in_arrear';
 
-    planLineItem.start_date = startDate.toISOString();
-    planLineItem.end_date = endDate.toISOString();
-
     // Update the payload with the modified data
     payload = JSON.stringify(webhookData);
 
-    const subscriptionStartDate = new Date('2025-03-01T00:00:00.000Z');
-
-    // For an in-arrears fixed fee, the webhook handler resyncs the subscription from the Orb API
+    // For an outdated billing cycle, the webhook handler resyncs the subscription from the Orb API
     // to get the new billing cycle. We mock that fetch to return the subscription with the
     // updated billing period dates.
     const testSubscription = {
       id: subscriptionId,
       customer: { id: customerId },
       status: 'active',
-      created_at: subscriptionStartDate.toISOString(),
-      start_date: subscriptionStartDate.toISOString(),
-      current_billing_period_start_date: startDate.toISOString(),
-      current_billing_period_end_date: endDate.toISOString(),
+      current_billing_period_start_date: thirtyOneDaysAgo.toISOString(),
+      // Billing cycle end date in past
+      current_billing_period_end_date: oneDayAgo.toISOString(),
       billing_cycle_day: 8,
       net_terms: 0,
       metadata: {},
+      created_at: new Date().toISOString(),
+      start_date: new Date().toISOString(),
     } as Subscription;
+
+    syncSubscriptions(orbSync.postgresClient, [testSubscription]);
 
     // Mock the Orb SDK call that fetches the subscription during the in-arrears resync
     const orb = (orbSync as unknown as { orb: { subscriptions: { fetch: (id: string) => Promise<Subscription> } } })
       .orb;
-    const fetchSpy = vi.spyOn(orb.subscriptions, 'fetch').mockResolvedValue(testSubscription);
+
+    const latestSubscription = {
+      ...testSubscription,
+      current_billing_period_start_date: oneDayAgo.toISOString(),
+      current_billing_period_end_date: thirtyDaysInFuture.toISOString(),
+    };
+    const fetchSpy = vi.spyOn(orb.subscriptions, 'fetch').mockResolvedValue(latestSubscription);
 
     const response = await sendWebhookRequest(payload);
     expect(fetchSpy).toHaveBeenCalledWith(subscriptionId);
@@ -247,8 +252,8 @@ describe('POST /webhooks', () => {
     // The billing cycle should reflect the resynced subscription's billing period (startDate/endDate),
     // proving the in-arrears branch fetched the subscription from the Orb API rather than deriving the
     // cycle from the invoice line item.
-    expect(new Date(billingCycle.current_billing_period_start_date).toISOString()).toBe(startDate.toISOString());
-    expect(new Date(billingCycle.current_billing_period_end_date).toISOString()).toBe(endDate.toISOString());
+    expect(new Date(billingCycle.current_billing_period_start_date).toISOString()).toBe(oneDayAgo.toISOString());
+    expect(new Date(billingCycle.current_billing_period_end_date).toISOString()).toBe(thirtyDaysInFuture.toISOString());
   });
 
   it.each([

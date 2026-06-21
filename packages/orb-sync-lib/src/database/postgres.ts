@@ -178,6 +178,22 @@ export class PostgresClient {
     return result.rows;
   }
 
+  async getBillingCycleEndDate(subscriptionId: string): Promise<string | null> {
+    const query = `
+      select  current_billing_period_end_date
+      from "${this.config.schema}"."subscriptions"
+      where id = $1 and status = 'active'
+    `;
+
+    const result = await this.pool.query(query, [subscriptionId]);
+
+    if (!result.rows.length) {
+      return null;
+    }
+
+    return result.rows[0].current_billing_period_end_date;
+  }
+
   async query(text: string, params?: string[]): Promise<QueryResult> {
     return this.pool.query(text, params);
   }
