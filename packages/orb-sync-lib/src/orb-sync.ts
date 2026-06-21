@@ -227,11 +227,19 @@ export class OrbSync {
 
         const billingCycle = getBillingCycleFromInvoice(invoice);
         if (billingCycle && invoice.subscription) {
-          await updateBillingCycle(this.postgresClient, {
-            subscriptionId: invoice.subscription.id,
-            billingCycleStart: billingCycle.start,
-            billingCycleEnd: billingCycle.end,
-          });
+          if (billingCycle.inArrears) {
+            // When a plan is configured with an in-arrears fixed fee, we cannot directly determine the billing cycle start and end dates
+            // when the invoice is issued, as the plan line item will contain the past and not the new billing cycle
+            // In order to not run into stale data, we resync the subscription
+            const subscription = await this.orb.subscriptions.fetch(invoice.subscription.id);
+            await syncSubscriptions(this.postgresClient, [subscription], webhook.created_at);
+          } else {
+            await updateBillingCycle(this.postgresClient, {
+              subscriptionId: invoice.subscription.id,
+              billingCycleStart: billingCycle.start,
+              billingCycleEnd: billingCycle.end,
+            });
+          }
         }
 
         break;

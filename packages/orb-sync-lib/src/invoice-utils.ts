@@ -6,7 +6,9 @@ const PLAN_LINE_ITEM_NAME_ENDS_IN = 'Plan';
  * Returns the billing cycle the given invoice's plan line item applies to.
  * If no plan line item is present, null is returned.
  */
-export function getBillingCycleFromInvoice(invoice: Invoice): { start: string; end: string } | null {
+export function getBillingCycleFromInvoice(
+  invoice: Invoice
+): { start: string; end: string; inArrears: boolean } | null {
   const planLineItem = findPlanLineItem(invoice.line_items);
 
   // No plan line item found.
@@ -19,6 +21,7 @@ export function getBillingCycleFromInvoice(invoice: Invoice): { start: string; e
   return {
     start: planLineItem.start_date,
     end: planLineItem.end_date,
+    inArrears: planLineItem.price?.billing_mode === 'in_arrear',
   };
 }
 
