@@ -242,7 +242,7 @@ export class OrbSync {
               `Billing cycle of subscription ${invoice.subscription.id} is outdated, fetching latest subscription data from Orb API to update it`
             );
             const subscription = await this.orb.subscriptions.fetch(invoice.subscription.id);
-            await syncSubscriptions(this.postgresClient, [subscription], webhook.created_at);
+            await syncSubscriptions(this.postgresClient, [subscription]);
           }
         }
 
