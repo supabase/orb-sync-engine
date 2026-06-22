@@ -95,7 +95,5 @@ export async function checkIfCurrentBillingCycleIsOutdated(
     return false;
   }
 
-  const isEndDateInPast = new Date(billingCycleEndDate) < new Date();
-
-  return isEndDateInPast;
+  return new Date(billingCycleEndDate).getTime() < new Date().getTime();
 }
