@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi, afterEach } from 'vitest';
 import { FastifyInstance } from 'fastify';
 import path from 'node:path';
 import pino from 'pino';
@@ -18,6 +18,7 @@ describe('POST /webhooks', () => {
   let orbSync: OrbSync;
 
   beforeAll(async () => {
+    process.env.TZ = 'UTC'; // Ensure consistent timezone for tests
     const logger = pino({ level: 'silent' });
 
     // Create a OrbSync instance for integration testing
@@ -43,6 +44,10 @@ describe('POST /webhooks', () => {
     if (app) {
       await app.close();
     }
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   function loadWebhookPayload(eventName: string): string {
@@ -169,6 +174,86 @@ describe('POST /webhooks', () => {
     expect(new Date(billingCycle.current_billing_period_start_date).getTime()).toBeLessThan(
       new Date(billingCycle.current_billing_period_end_date).getTime()
     );
+  });
+
+  it('should handle invoice.issued webhook and resync subscription if billing cycle outdated', async () => {
+    let payload = loadWebhookPayload('invoice');
+
+    // Parse the payload and update billing cycle dates to sensible values
+    const webhookData = JSON.parse(payload);
+    const invoiceId = webhookData.invoice.id;
+    const subscriptionId = webhookData.invoice.subscription?.id;
+    const customerId = webhookData.invoice.customer.id;
+
+    // As preparation, we delete the existing invoice and subscription if they exist
+    await deleteTestData(orbSync.postgresClient, 'invoices', [invoiceId]);
+    await deleteTestData(orbSync.postgresClient, 'subscriptions', [subscriptionId]);
+
+    webhookData.type = 'invoice.issued';
+
+    const now = new Date();
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 1 day ago
+    const thirtyOneDaysAgo = new Date(now.getTime() - 31 * 24 * 60 * 60 * 1000); // 31 days ago
+    const thirtyDaysInFuture = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days in future
+
+    // Find and update the plan and change to in_arrear
+    const planLineItem = webhookData.invoice.line_items.find(
+      (item: Invoice.LineItem) =>
+        item.price?.price_type === 'fixed_price' && item.price.billable_metric === null && item.name.endsWith('Plan')
+    );
+    planLineItem.price.billing_mode = 'in_arrear';
+
+    // Update the payload with the modified data
+    payload = JSON.stringify(webhookData);
+
+    // For an outdated billing cycle, the webhook handler resyncs the subscription from the Orb API
+    // to get the new billing cycle. We mock that fetch to return the subscription with the
+    // updated billing period dates.
+    const testSubscription = {
+      id: subscriptionId,
+      customer: { id: customerId },
+      status: 'active',
+      current_billing_period_start_date: thirtyOneDaysAgo.toISOString(),
+      // Billing cycle end date in past
+      current_billing_period_end_date: oneDayAgo.toISOString(),
+      billing_cycle_day: 8,
+      net_terms: 0,
+      metadata: {},
+      created_at: new Date().toISOString(),
+      start_date: new Date().toISOString(),
+    } as Subscription;
+
+    syncSubscriptions(orbSync.postgresClient, [testSubscription]);
+
+    // Mock the Orb SDK call that fetches the subscription during the in-arrears resync
+    const orb = (orbSync as unknown as { orb: { subscriptions: { fetch: (id: string) => Promise<Subscription> } } })
+      .orb;
+
+    const latestSubscription = {
+      ...testSubscription,
+      current_billing_period_start_date: oneDayAgo.toISOString(),
+      current_billing_period_end_date: thirtyDaysInFuture.toISOString(),
+    };
+    const fetchSpy = vi.spyOn(orb.subscriptions, 'fetch').mockResolvedValue(latestSubscription);
+
+    const response = await sendWebhookRequest(payload);
+    expect(fetchSpy).toHaveBeenCalledWith(subscriptionId);
+    expect(response.statusCode).toBe(200);
+
+    // Verify that the invoice was created in the database
+    const [invoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
+    expect(invoice).toBeDefined();
+
+    // Verify that billing cycle was updated if subscription exists and has a plan line item
+    const billingCycles = await fetchBillingCyclesFromDatabase(orbSync.postgresClient, subscriptionId);
+    expect(billingCycles).toHaveLength(1);
+    const billingCycle = billingCycles[0];
+
+    // The billing cycle should reflect the resynced subscription's billing period (startDate/endDate),
+    // proving the in-arrears branch fetched the subscription from the Orb API rather than deriving the
+    // cycle from the invoice line item.
+    expect(new Date(billingCycle.current_billing_period_start_date).toISOString()).toBe(oneDayAgo.toISOString());
+    expect(new Date(billingCycle.current_billing_period_end_date).toISOString()).toBe(thirtyDaysInFuture.toISOString());
   });
 
   it.each([

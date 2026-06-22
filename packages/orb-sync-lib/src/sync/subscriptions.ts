@@ -83,3 +83,17 @@ export async function updateBillingCycle(
 
   return postgresClient.updateSubscriptionBillingCycle({ subscriptionId, billingCycleStart, billingCycleEnd });
 }
+
+export async function checkIfCurrentBillingCycleIsOutdated(
+  postgresClient: PostgresClient,
+  subscriptionId: string
+): Promise<boolean> {
+  const billingCycleEndDate = await postgresClient.getBillingCycleEndDate(subscriptionId);
+
+  if (!billingCycleEndDate) {
+    // If none is found, no need to update it, perhaps already deleted sub
+    return false;
+  }
+
+  return new Date(billingCycleEndDate).getTime() < new Date().getTime();
+}
