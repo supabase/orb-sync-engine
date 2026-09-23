@@ -30,6 +30,7 @@ import { getBillingCycleFromInvoice } from './invoice-utils';
 import { syncSubscriptionUsageExceeded } from './sync/subscription_usage_exceeded';
 import { syncSubscriptionCostExceeded } from './sync/subscription_cost_exceeded';
 import { fetchAndSyncBillableMetric, fetchAndSyncBillableMetrics } from './sync/billable_metrics';
+import { fetchAndSyncPrice, fetchAndSyncPrices } from './sync/prices';
 import pino from 'pino';
 
 export type OrbSyncConfig = {
@@ -68,7 +69,7 @@ export class OrbSync {
   }
 
   async sync(
-    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans' | 'billable_metrics',
+    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans' | 'billable_metrics' | 'prices',
     params:
       | InvoicesFetchParams
       | CustomersFetchParams
@@ -95,6 +96,9 @@ export class OrbSync {
       }
       case 'billable_metrics': {
         return fetchAndSyncBillableMetrics(this.postgresClient, this.orb, params as BillableMetricsFetchParams);
+      }
+      case 'prices': {
+        return fetchAndSyncPrices(this.postgresClient, this.orb);
       }
     }
   }
@@ -289,6 +293,14 @@ export class OrbSync {
         break;
       }
 
+      case 'price.edited': {
+        this.config.logger?.info(`Received webhook ${parsedData.id}: ${parsedData.type} for price`);
+
+        // The price webhook does not contain the ID, so we do a full refresh of all prices
+        await fetchAndSyncPrices(this.postgresClient, this.orb);
+        break;
+      }
+
       default: {
         const unknownType = parsedData.type as string;
 
@@ -308,7 +320,7 @@ export class OrbSync {
   }
 
   async syncSingleEntity(
-    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans' | 'billable_metrics',
+    entity: 'invoices' | 'customers' | 'credit_notes' | 'subscriptions' | 'plans' | 'billable_metrics' | 'prices',
     id: string
   ) {
     switch (entity) {
@@ -339,6 +351,11 @@ export class OrbSync {
 
       case 'billable_metrics': {
         await fetchAndSyncBillableMetric(this.postgresClient, this.orb, id);
+        break;
+      }
+
+      case 'prices': {
+        await fetchAndSyncPrice(this.postgresClient, this.orb, id);
         break;
       }
     }

@@ -30,6 +30,7 @@ export type OrbWebhookType =
   | 'invoice.sync_failed'
   | 'invoice.sync_succeded'
   | 'invoice.undo_mark_as_paid'
+  | 'price.edited'
   | 'resource_event.test'
   | 'subscription.cancellation_scheduled'
   | 'subscription.cancellation_unscheduled'

@@ -1,0 +1,48 @@
+{
+  "id": "wh_price_edited_evt",
+  "created_at": "2025-01-15T10:30:00.000Z",
+  "type": "price.edited",
+  "properties": {},
+  "price": {
+    "billable_metric": null,
+    "billing_cycle_configuration": {
+      "duration": 1,
+      "duration_unit": "month"
+    },
+    "billing_mode": "in_arrear",
+    "cadence": "monthly",
+    "composite_price_filters": null,
+    "conversion_rate": null,
+    "conversion_rate_config": null,
+    "created_at": "2026-05-28T10:49:00+00:00",
+    "credit_allocation": null,
+    "currency": "USD",
+    "dimensional_price_configuration": null,
+    "discount": null,
+    "external_price_id": "addon_security_hipaa_arrears",
+    "fixed_price_quantity": 1.0,
+    "id": "nopt8u4nffGiFn2D",
+    "invoice_grouping_key": null,
+    "invoicing_cycle_configuration": null,
+    "item": {
+      "id": "b5sCJQGfkm8aRvVK",
+      "name": "HIPAA"
+    },
+    "license_type": null,
+    "maximum": null,
+    "maximum_amount": null,
+    "metadata": {},
+    "minimum": null,
+    "minimum_amount": null,
+    "model_type": "unit",
+    "name": "HIPAA",
+    "plan_phase_order": null,
+    "price_type": "fixed_price",
+    "replaces_price_id": null,
+    "unit_config": {
+      "prorated": true,
+      "scaling_factor": null,
+      "unit_amount": "350.00"
+    }
+  }
+}

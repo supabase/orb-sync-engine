@@ -10,8 +10,9 @@ import {
   fetchBillingCyclesFromDatabase,
   deleteTestData,
   fetchSubscriptionsFromDatabase,
+  fetchPricesFromDatabase,
 } from './test-utils';
-import type { Invoice, Subscription } from 'orb-billing/resources';
+import type { Invoice, Price, Subscription } from 'orb-billing/resources';
 
 describe('POST /webhooks', () => {
   let app: FastifyInstance;
@@ -527,5 +528,66 @@ describe('POST /webhooks', () => {
     expect(updatedInvoice1.total).toBe('1500');
     expect(updatedInvoice1.status).toBe('paid');
     expect(new Date(updatedInvoice1.last_synced_at).toISOString()).toBe(invoice1Timestamp);
+  });
+
+  it('should handle price.edited webhook and refresh all prices', async () => {
+    const payload = loadWebhookPayload('price');
+
+    const priceId = '8zXUyWiKyhaGQAKa';
+    await deleteTestData(orbSync.postgresClient, 'prices', [priceId]);
+
+    const priceFixture = {
+      id: priceId,
+      name: 'Priority Plus Support',
+      model_type: 'unit',
+      price_type: 'fixed_price',
+      cadence: 'monthly',
+      billing_mode: 'in_arrear',
+      currency: 'USD',
+      external_price_id: 'addon_support_priorityplus_arrears',
+      item: { id: 'LHEyrh4KbW7Tnsgf', name: 'Priority Plus Support' },
+      billable_metric: null,
+      billing_cycle_configuration: { duration: 1, duration_unit: 'month' },
+      invoicing_cycle_configuration: null,
+      conversion_rate: null,
+      conversion_rate_config: null,
+      credit_allocation: null,
+      discount: null,
+      fixed_price_quantity: 1.0,
+      invoice_grouping_key: null,
+      maximum: null,
+      maximum_amount: null,
+      minimum: null,
+      minimum_amount: null,
+      metadata: {},
+      plan_phase_order: null,
+      replaces_price_id: null,
+      dimensional_price_configuration: null,
+      composite_price_filters: null,
+      unit_config: { prorated: true, scaling_factor: null, unit_amount: '4000.00' },
+      created_at: '2026-05-28T11:10:48+00:00',
+    } as unknown as Price;
+
+    // price.edited does not carry the price payload, so the handler does a full refresh via
+    // orb.prices.list(). That's an async-iterable page (not a plain Promise), so we mock it as such.
+    const orb = (orbSync as unknown as { orb: { prices: { list: () => AsyncIterable<Price> } } }).orb;
+    const listSpy = vi.spyOn(orb.prices, 'list').mockReturnValue({
+      [Symbol.asyncIterator]: async function* () {
+        yield priceFixture;
+      },
+    } as unknown as ReturnType<typeof orb.prices.list>);
+
+    const response = await sendWebhookRequest(payload);
+    expect(response.statusCode).toBe(200);
+    expect(listSpy).toHaveBeenCalled();
+
+    const [price] = await fetchPricesFromDatabase(orbSync.postgresClient, [priceId]);
+    expect(price).toBeDefined();
+    expect(price.name).toBe('Priority Plus Support');
+    expect(price.model_type).toBe('unit');
+    expect(price.item_id).toBe('LHEyrh4KbW7Tnsgf');
+    expect(price.currency).toBe('USD');
+    expect(price.model_config).toEqual({ prorated: true, scaling_factor: null, unit_amount: '4000.00' });
+    expect(price.last_synced_at).toBeDefined();
   });
 });
