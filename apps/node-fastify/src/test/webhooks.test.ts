@@ -3,7 +3,7 @@ import { FastifyInstance } from 'fastify';
 import path from 'node:path';
 import pino from 'pino';
 import fs from 'node:fs';
-import { OrbSync, syncInvoices, syncSubscriptions } from 'orb-sync-lib';
+import { OrbSync, syncInvoices, syncPrices, syncSubscriptions } from 'orb-sync-lib';
 import { createApp } from '../app';
 import {
   fetchInvoicesFromDatabase,
@@ -12,7 +12,7 @@ import {
   fetchSubscriptionsFromDatabase,
   fetchPricesFromDatabase,
 } from './test-utils';
-import type { Invoice, Price, Subscription } from 'orb-billing/resources';
+import type { Invoice, Subscription } from 'orb-billing/resources';
 
 describe('POST /webhooks', () => {
   let app: FastifyInstance;
@@ -530,64 +530,60 @@ describe('POST /webhooks', () => {
     expect(new Date(updatedInvoice1.last_synced_at).toISOString()).toBe(invoice1Timestamp);
   });
 
-  it('should handle price.edited webhook and refresh all prices', async () => {
-    const payload = loadWebhookPayload('price');
+  it('should handle price.edited webhook and upsert the price from the payload', async () => {
+    let payload = loadWebhookPayload('price');
+    const webhookData = JSON.parse(payload);
+    const priceId = webhookData.price.id;
 
-    const priceId = '8zXUyWiKyhaGQAKa';
     await deleteTestData(orbSync.postgresClient, 'prices', [priceId]);
 
-    const priceFixture = {
-      id: priceId,
-      name: 'Priority Plus Support',
-      model_type: 'unit',
-      price_type: 'fixed_price',
-      cadence: 'monthly',
-      billing_mode: 'in_arrear',
-      currency: 'USD',
-      external_price_id: 'addon_support_priorityplus_arrears',
-      item: { id: 'LHEyrh4KbW7Tnsgf', name: 'Priority Plus Support' },
-      billable_metric: null,
-      billing_cycle_configuration: { duration: 1, duration_unit: 'month' },
-      invoicing_cycle_configuration: null,
-      conversion_rate: null,
-      conversion_rate_config: null,
-      credit_allocation: null,
-      discount: null,
-      fixed_price_quantity: 1.0,
-      invoice_grouping_key: null,
-      maximum: null,
-      maximum_amount: null,
-      minimum: null,
-      minimum_amount: null,
-      metadata: {},
-      plan_phase_order: null,
-      replaces_price_id: null,
-      dimensional_price_configuration: null,
-      composite_price_filters: null,
-      unit_config: { prorated: true, scaling_factor: null, unit_amount: '4000.00' },
-      created_at: '2026-05-28T11:10:48+00:00',
-    } as unknown as Price;
-
-    // price.edited does not carry the price payload, so the handler does a full refresh via
-    // orb.prices.list(). That's an async-iterable page (not a plain Promise), so we mock it as such.
-    const orb = (orbSync as unknown as { orb: { prices: { list: () => AsyncIterable<Price> } } }).orb;
-    const listSpy = vi.spyOn(orb.prices, 'list').mockReturnValue({
-      [Symbol.asyncIterator]: async function* () {
-        yield priceFixture;
-      },
-    } as unknown as ReturnType<typeof orb.prices.list>);
+    const webhookTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    webhookData.created_at = webhookTimestamp;
+    payload = JSON.stringify(webhookData);
 
     const response = await sendWebhookRequest(payload);
     expect(response.statusCode).toBe(200);
-    expect(listSpy).toHaveBeenCalled();
 
+    // Verify that the price was created in the database with fields derived from the price payload
     const [price] = await fetchPricesFromDatabase(orbSync.postgresClient, [priceId]);
     expect(price).toBeDefined();
-    expect(price.name).toBe('Priority Plus Support');
-    expect(price.model_type).toBe('unit');
-    expect(price.item_id).toBe('LHEyrh4KbW7Tnsgf');
-    expect(price.currency).toBe('USD');
-    expect(price.model_config).toEqual({ prorated: true, scaling_factor: null, unit_amount: '4000.00' });
+    expect(price.name).toBe(webhookData.price.name);
+    expect(price.model_type).toBe(webhookData.price.model_type);
+    expect(price.item_id).toBe(webhookData.price.item.id);
+    expect(price.currency).toBe(webhookData.price.currency);
+    expect(price.model_config).toEqual(webhookData.price.unit_config);
+
+    // Verify that last_synced_at gets set to the webhook timestamp for new prices
     expect(price.last_synced_at).toBeDefined();
+    expect(new Date(price.last_synced_at).toISOString()).toBe(webhookTimestamp);
+  });
+
+  it('should NOT update price when webhook timestamp is older than last_synced_at', async () => {
+    let payload = loadWebhookPayload('price');
+    const webhookData = JSON.parse(payload);
+    const priceId = webhookData.price.id;
+
+    await deleteTestData(orbSync.postgresClient, 'prices', [priceId]);
+
+    const newTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    await syncPrices(orbSync.postgresClient, [webhookData.price], newTimestamp);
+
+    const [initialPrice] = await fetchPricesFromDatabase(orbSync.postgresClient, [priceId]);
+    expect(initialPrice).toBeDefined();
+    expect(new Date(initialPrice.last_synced_at).toISOString()).toBe(newTimestamp);
+
+    // Send an outdated webhook with a different name for the same price
+    webhookData.price.name = 'Outdated Name';
+    const oldWebhookTimestamp = new Date('2025-01-10T10:00:00.000Z').toISOString();
+    webhookData.created_at = oldWebhookTimestamp;
+    payload = JSON.stringify(webhookData);
+
+    const response = await sendWebhookRequest(payload);
+    expect(response.statusCode).toBe(200);
+
+    // Verify that the price was NOT updated because the webhook timestamp is older
+    const [afterWebhookPrice] = await fetchPricesFromDatabase(orbSync.postgresClient, [priceId]);
+    expect(afterWebhookPrice.name).not.toBe('Outdated Name');
+    expect(new Date(afterWebhookPrice.last_synced_at).toISOString()).toBe(newTimestamp);
   });
 });

@@ -1,4 +1,4 @@
-import type { CreditNote, Customer, Invoice, Subscription } from 'orb-billing/resources';
+import type { CreditNote, Customer, Invoice, Price, Subscription } from 'orb-billing/resources';
 
 export type OrbWebhookType =
   | 'billable_metric.edited'
@@ -73,6 +73,10 @@ export type SubscriptionWebhook = {
 
 export type CreditNoteWebhook = {
   credit_note: CreditNote;
+} & OrbWebhook;
+
+export type PriceWebhook = {
+  price: Price;
 } & OrbWebhook;
 
 export type SubscriptionsFetchParams = {

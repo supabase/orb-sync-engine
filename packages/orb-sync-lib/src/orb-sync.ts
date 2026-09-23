@@ -9,6 +9,7 @@ import type {
   InvoiceWebhook,
   OrbWebhook,
   PlansFetchParams,
+  PriceWebhook,
   SubscriptionCostExceededWebhook,
   SubscriptionsFetchParams,
   SubscriptionUsageExceededWebhook,
@@ -30,7 +31,7 @@ import { getBillingCycleFromInvoice } from './invoice-utils';
 import { syncSubscriptionUsageExceeded } from './sync/subscription_usage_exceeded';
 import { syncSubscriptionCostExceeded } from './sync/subscription_cost_exceeded';
 import { fetchAndSyncBillableMetric, fetchAndSyncBillableMetrics } from './sync/billable_metrics';
-import { fetchAndSyncPrice, fetchAndSyncPrices } from './sync/prices';
+import { fetchAndSyncPrice, fetchAndSyncPrices, syncPrices } from './sync/prices';
 import pino from 'pino';
 
 export type OrbSyncConfig = {
@@ -294,10 +295,11 @@ export class OrbSync {
       }
 
       case 'price.edited': {
-        this.config.logger?.info(`Received webhook ${parsedData.id}: ${parsedData.type} for price`);
+        const webhook = parsedData as PriceWebhook;
 
-        // The price webhook does not contain the ID, so we do a full refresh of all prices
-        await fetchAndSyncPrices(this.postgresClient, this.orb);
+        this.config.logger?.info(`Received webhook ${webhook.id}: ${webhook.type} for price ${webhook.price.id}`);
+
+        await syncPrices(this.postgresClient, [webhook.price], webhook.created_at);
         break;
       }
 
