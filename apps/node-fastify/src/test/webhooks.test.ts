@@ -3,7 +3,7 @@ import { FastifyInstance } from 'fastify';
 import path from 'node:path';
 import pino from 'pino';
 import fs from 'node:fs';
-import { OrbSync, syncInvoices, syncSubscriptions } from 'orb-sync-lib';
+import { OrbSync, PostgresClient, syncInvoices, syncPrices, syncSubscriptions } from 'orb-sync-lib';
 import { createApp } from '../app';
 import {
   fetchInvoicesFromDatabase,
@@ -528,4 +528,72 @@ describe('POST /webhooks', () => {
     expect(updatedInvoice1.status).toBe('paid');
     expect(new Date(updatedInvoice1.last_synced_at).toISOString()).toBe(invoice1Timestamp);
   });
+
+  it('should handle price.edited webhook and upsert the price from the payload', async () => {
+    let payload = loadWebhookPayload('price');
+    const webhookData = JSON.parse(payload);
+    const priceId = webhookData.price.id;
+
+    await deleteTestData(orbSync.postgresClient, 'prices', [priceId]);
+
+    const webhookTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    webhookData.created_at = webhookTimestamp;
+    payload = JSON.stringify(webhookData);
+
+    const response = await sendWebhookRequest(payload);
+    expect(response.statusCode).toBe(200);
+
+    // Verify that the price was created in the database with fields derived from the price payload
+    const [price] = await fetchPricesFromDatabase(orbSync.postgresClient, [priceId]);
+    expect(price).toBeDefined();
+    expect(price.name).toBe(webhookData.price.name);
+    expect(price.model_type).toBe(webhookData.price.model_type);
+    expect(price.item_id).toBe(webhookData.price.item.id);
+    expect(price.currency).toBe(webhookData.price.currency);
+    expect(price.model_config).toEqual(webhookData.price.unit_config);
+
+    // Verify that last_synced_at gets set to the webhook timestamp for new prices
+    expect(price.last_synced_at).toBeDefined();
+    expect(new Date(price.last_synced_at).toISOString()).toBe(webhookTimestamp);
+  });
+
+  it('should NOT update price when webhook timestamp is older than last_synced_at', async () => {
+    let payload = loadWebhookPayload('price');
+    const webhookData = JSON.parse(payload);
+    const priceId = webhookData.price.id;
+
+    await deleteTestData(orbSync.postgresClient, 'prices', [priceId]);
+
+    const newTimestamp = new Date('2025-01-15T10:30:00.000Z').toISOString();
+    await syncPrices(orbSync.postgresClient, [webhookData.price], newTimestamp);
+
+    const [initialPrice] = await fetchPricesFromDatabase(orbSync.postgresClient, [priceId]);
+    expect(initialPrice).toBeDefined();
+    expect(new Date(initialPrice.last_synced_at).toISOString()).toBe(newTimestamp);
+
+    // Send an outdated webhook with a different name for the same price
+    webhookData.price.name = 'Outdated Name';
+    const oldWebhookTimestamp = new Date('2025-01-10T10:00:00.000Z').toISOString();
+    webhookData.created_at = oldWebhookTimestamp;
+    payload = JSON.stringify(webhookData);
+
+    const response = await sendWebhookRequest(payload);
+    expect(response.statusCode).toBe(200);
+
+    // Verify that the price was NOT updated because the webhook timestamp is older
+    const [afterWebhookPrice] = await fetchPricesFromDatabase(orbSync.postgresClient, [priceId]);
+    expect(afterWebhookPrice.name).not.toBe('Outdated Name');
+    expect(new Date(afterWebhookPrice.last_synced_at).toISOString()).toBe(newTimestamp);
+  });
 });
+
+async function fetchPricesFromDatabase(postgresClient: PostgresClient, priceIds: string[]) {
+  if (priceIds.length === 0) return [];
+
+  const placeholders = priceIds.map((_, index) => `$${index + 1}`).join(',');
+  const result = await postgresClient.query(
+    `SELECT id, name, model_type, item_id, currency, model_config, last_synced_at FROM orb.prices WHERE id IN (${placeholders})`,
+    priceIds
+  );
+  return result.rows;
+}

@@ -348,4 +348,29 @@ export default async function routes(fastify: FastifyInstance) {
       return reply.status(204).send();
     },
   });
+
+  fastify.post('/sync/prices', {
+    preHandler: [verifyApiKey],
+    handler: async (_request, reply) => {
+      const count = await fastify.orbSync.sync('prices', {});
+
+      return reply.send({ count });
+    },
+  });
+
+  fastify.post<{
+    Params: { id: string };
+  }>('/sync/prices/:id', {
+    preHandler: [verifyApiKey],
+    schema: {
+      params: Type.Object({
+        id: Type.String(),
+      }),
+    },
+    handler: async (request, reply) => {
+      await fastify.orbSync.syncSingleEntity('prices', request.params.id);
+
+      return reply.status(204).send();
+    },
+  });
 }
