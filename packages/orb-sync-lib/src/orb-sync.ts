@@ -1,5 +1,4 @@
 import Orb from 'orb-billing';
-import type { HeadersLike } from 'orb-billing/core';
 import type {
   BillableMetricsFetchParams,
   CreditNotesFetchParams,
@@ -100,7 +99,7 @@ export class OrbSync {
     }
   }
 
-  async processWebhook(payload: string, headers: HeadersLike | undefined) {
+  async processWebhook(payload: string, headers: Record<string, string | string[] | undefined> | undefined) {
     if (this.config.verifyWebhookSignature ?? true) {
       try {
         this.orb.webhooks.verifySignature(payload, headers || {}, this.config.orbWebhookSecret);

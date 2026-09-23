@@ -1,14 +1,19 @@
-import client from 'prom-client';
+import client from '@prometheus-io/client';
 
 // Avoid duplicate metric registration across test runs or multiple app instances
-function getOrCreateCounter(config: { name: string; help: string; labelNames?: string[] }) {
+function getOrCreateCounter<T extends string = string>(config: { name: string; help: string; labelNames?: T[] }): client.Counter<T> {
   const existing = client.register.getSingleMetric(config.name);
-  return (existing as client.Counter) ?? new client.Counter(config);
+  return (existing as client.Counter<T>) ?? new client.Counter<T>(config);
 }
 
-function getOrCreateHistogram(config: { name: string; help: string; labelNames?: string[]; buckets?: number[] }) {
+function getOrCreateHistogram<T extends string = string>(config: {
+  name: string;
+  help: string;
+  labelNames?: T[];
+  buckets?: number[];
+}): client.Histogram<T> {
   const existing = client.register.getSingleMetric(config.name);
-  return (existing as client.Histogram) ?? new client.Histogram(config);
+  return (existing as client.Histogram<T>) ?? new client.Histogram<T>(config);
 }
 
 function getOrCreateGauge(config: { name: string; help: string; labelNames?: string[] }) {
