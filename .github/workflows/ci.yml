@@ -36,7 +36,7 @@ jobs:
         run: |
           npm run format:check
 
-      - name: ESLint checks
+      - name: Oxlint checks
         run: |
           npm run lint:check
 
