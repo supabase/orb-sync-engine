@@ -23,7 +23,7 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 
 - This will not do an initial load of existing Orb data. You should use CSV loads for this. We might implement this in the future.
 - Backfill of data
-- Entities that are not supported through webhooks like plans, billable metrics, and prices
+- Entities that are not supported through webhooks like plans
 - `orb-sync-lib` is not yet published as standalone npm package (could be used in serverless functions or anywhere else)
 - Database migration not handled automatically, need to run migrations from `db/migrations` manually for now
 
@@ -36,8 +36,8 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 - [x] customer.credit_balance_depleted
 - [x] customer.credit_balance_dropped
 - [x] customer.edited
-- [x] data_exports.transfer_success (ignored) 
-- [x] data_exports.transfer_error (ignored) 
+- [x] data_exports.transfer_success (ignored)
+- [x] data_exports.transfer_error (ignored)
 - [x] subscription.created
 - [x] subscription.started
 - [x] subscription.fixed_fee_quantity_updated

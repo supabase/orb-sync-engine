@@ -3,14 +3,13 @@ import { FastifyInstance } from 'fastify';
 import path from 'node:path';
 import pino from 'pino';
 import fs from 'node:fs';
-import { OrbSync, syncInvoices, syncPrices, syncSubscriptions } from 'orb-sync-lib';
+import { OrbSync, PostgresClient, syncInvoices, syncPrices, syncSubscriptions } from 'orb-sync-lib';
 import { createApp } from '../app';
 import {
   fetchInvoicesFromDatabase,
   fetchBillingCyclesFromDatabase,
   deleteTestData,
   fetchSubscriptionsFromDatabase,
-  fetchPricesFromDatabase,
 } from './test-utils';
 import type { Invoice, Subscription } from 'orb-billing/resources';
 
@@ -587,3 +586,14 @@ describe('POST /webhooks', () => {
     expect(new Date(afterWebhookPrice.last_synced_at).toISOString()).toBe(newTimestamp);
   });
 });
+
+async function fetchPricesFromDatabase(postgresClient: PostgresClient, priceIds: string[]) {
+  if (priceIds.length === 0) return [];
+
+  const placeholders = priceIds.map((_, index) => `$${index + 1}`).join(',');
+  const result = await postgresClient.query(
+    `SELECT id, name, model_type, item_id, currency, model_config, last_synced_at FROM orb.prices WHERE id IN (${placeholders})`,
+    priceIds
+  );
+  return result.rows;
+}

@@ -35,14 +35,3 @@ export async function fetchBillingCyclesFromDatabase(postgresClient: PostgresCli
   );
   return result.rows;
 }
-
-export async function fetchPricesFromDatabase(postgresClient: PostgresClient, priceIds: string[]) {
-  if (priceIds.length === 0) return [];
-
-  const placeholders = priceIds.map((_, index) => `$${index + 1}`).join(',');
-  const result = await postgresClient.query(
-    `SELECT id, name, model_type, item_id, currency, model_config, last_synced_at FROM orb.prices WHERE id IN (${placeholders})`,
-    priceIds
-  );
-  return result.rows;
-}
