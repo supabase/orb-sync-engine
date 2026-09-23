@@ -29,6 +29,6 @@ create table
         license_type jsonb,
         composite_price_filters jsonb,
         model_config jsonb,
-        created_at timestamp not null,
+        created_at timestamptz not null,
         last_synced_at timestamptz
     );
