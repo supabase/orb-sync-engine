@@ -336,6 +336,48 @@ describe('POST /webhooks', () => {
     expect(new Date(subscription.last_synced_at).toISOString()).toBe(webhookTimestamp);
   });
 
+  it.each(['credit_note.issued', 'credit_note.marked_as_void'])(
+    'should handle %s webhook and resync the credit note invoice from the Orb API',
+    async (webhookType) => {
+      const invoiceWebhook = JSON.parse(loadWebhookPayload('invoice'));
+      const invoiceId = invoiceWebhook.invoice.id;
+      await deleteTestData(orbSync.postgresClient, 'invoices', [invoiceId]);
+
+      // Stale invoice already stored in the database
+      await syncInvoices(
+        orbSync.postgresClient,
+        [{ ...invoiceWebhook.invoice, status: 'issued' }],
+        new Date('2025-01-10T10:00:00.000Z').toISOString()
+      );
+
+      const creditNoteWebhook = JSON.parse(loadWebhookPayload('credit_note'));
+      creditNoteWebhook.type = webhookType;
+      creditNoteWebhook.credit_note.invoice_id = invoiceId;
+      const creditNoteId = creditNoteWebhook.credit_note.id;
+
+      await deleteTestData(orbSync.postgresClient, 'credit_notes', [creditNoteId]);
+
+      const orb = (orbSync as unknown as { orb: { invoices: { fetch: (id: string) => Promise<Invoice> } } }).orb;
+      const fetchSpy = vi
+        .spyOn(orb.invoices, 'fetch')
+        .mockResolvedValue({ ...invoiceWebhook.invoice, status: 'void' } as Invoice);
+
+      const payload = JSON.stringify(creditNoteWebhook);
+
+      const response = await sendWebhookRequest(payload);
+      expect(response.statusCode).toBe(200);
+      expect(fetchSpy).toHaveBeenCalledWith(invoiceId);
+
+      const creditNotes = await orbSync.postgresClient.query('SELECT id FROM orb.credit_notes WHERE id = $1', [
+        creditNoteId,
+      ]);
+      expect(creditNotes.rows).toHaveLength(1);
+
+      const [invoice] = await fetchInvoicesFromDatabase(orbSync.postgresClient, [invoiceId]);
+      expect(invoice.status).toBe('void');
+    }
+  );
+
   it('should update an existing invoice when webhook arrives', async () => {
     let payload = loadWebhookPayload('invoice');
     const postgresClient = orbSync.postgresClient;

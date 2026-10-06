@@ -283,6 +283,12 @@ export class OrbSync {
         );
 
         await syncCreditNotes(this.postgresClient, [webhook.credit_note], webhook.created_at);
+
+        // Orb does not emit an invoice event when a credit note is issued/voided, so the stored invoice would
+        // go stale. Fetch the latest invoice from the Orb API to keep it in sync.
+        if (webhook.credit_note.invoice_id) {
+          await fetchAndSyncInvoice(this.postgresClient, this.orb, webhook.credit_note.invoice_id);
+        }
         break;
       }
 

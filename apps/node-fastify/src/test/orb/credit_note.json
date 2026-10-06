@@ -1,0 +1,40 @@
+{
+  "id": "webhook_id",
+  "created_at": "2026-10-01T01:40:16+00:00",
+  "type": "credit_note.issued",
+  "properties": {},
+  "credit_note": {
+    "created_at": "2026-10-01T01:40:16+00:00",
+    "credit_note_number": "ABCDEF-00001-CN-1",
+    "credit_note_pdf": null,
+    "customer": {
+      "external_customer_id": "external_customer_id",
+      "id": "customer_id"
+    },
+    "discounts": [],
+    "id": "credit_note_id",
+    "invoice_id": "invoice_id",
+    "line_items": [
+      {
+        "amount": "17.50",
+        "discounts": [],
+        "end_time_exclusive": "2026-10-22T00:00:00+00:00",
+        "id": "line_item_id",
+        "item_id": "item_id",
+        "name": "Pro Plan",
+        "quantity": null,
+        "start_time_inclusive": "2026-10-01T01:40:16+00:00",
+        "subtotal": "17.50",
+        "tax_amounts": []
+      }
+    ],
+    "maximum_amount_adjustment": null,
+    "memo": null,
+    "minimum_amount_refunded": null,
+    "reason": "Order change",
+    "subtotal": "17.50",
+    "total": "17.50",
+    "type": "adjustment",
+    "voided_at": null
+  }
+}
