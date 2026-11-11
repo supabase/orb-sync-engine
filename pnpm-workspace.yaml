@@ -1,0 +1,6 @@
+packages:
+  - packages/*
+  - apps/*
+minimumReleaseAge: 4320 # 3 days
+allowBuilds:
+  esbuild: true
