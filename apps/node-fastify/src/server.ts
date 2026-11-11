@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import type { FastifyInstance } from 'fastify';
+import { LogController, type FastifyInstance } from 'fastify';
 import type { IncomingMessage, Server, ServerResponse } from 'node:http';
 import { createApp } from './app';
 import pino from 'pino';
@@ -19,8 +19,8 @@ const main = async () => {
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = await createApp(
     {
       loggerInstance: logger,
-      disableRequestLogging: true,
       requestIdHeader: 'Request-Id',
+      logController: new LogController({ disableRequestLogging: true })
     },
     logger
   );
