@@ -1,17 +1,17 @@
 # Build step
 FROM node:26-alpine
 WORKDIR /app
+RUN npm install -g corepack && corepack enable
 COPY . .
-RUN npm ci 
-RUN npm run build
-RUN npm prune --production
+RUN pnpm install --frozen-lockfile
+RUN pnpm run build
+# --legacy: non-legacy deploy requires injectWorkspacePackages, which would break live linking of orb-sync-lib in dev
+RUN pnpm --filter orb-sync-node-fastify deploy --legacy --prod /prod
 
 ## Build step complete, copy to working image
 FROM node:26-alpine
 WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=0 /app/apps/node-fastify .
-COPY --from=0 /app/node_modules/ ./node_modules
-COPY --from=0 /app/packages/orb-sync-lib/dist ./node_modules/orb-sync-lib
+COPY --from=0 /prod .
 
-CMD ["npm", "start"]
+CMD ["node", "dist/server.js"]

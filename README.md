@@ -69,14 +69,14 @@ This server synchronizes your [Orb](https://www.withorb.com/) account to a Postg
 
 - Start a Postgres instance using `cd docker && docker-compose up`
 - `mv .env.sample .env` and adjust values as necessary
-- `npm run dev:node-fastify` to start the local server
-- `npm run test` to run tests across the repo
+- `pnpm install` to install dependencies
+- `pnpm run dev:node-fastify` to start the local server
+- `pnpm run test` to run tests across the repo
 
 **Building Docker**
 
 ```bash
-cd apps/node-fastify
-docker build -t orb-sync-engine .
+docker build -f docker/Dockerfile.node-fastify -t orb-sync-engine .
 # Ensure env vars are set
 docker run -p 8080:8080 orb-sync-engine
 ```

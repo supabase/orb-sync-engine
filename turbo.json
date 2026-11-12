@@ -12,6 +12,9 @@
       "dependsOn": ["build"],
       "inputs": ["src/**/*.ts", "test/**/*.ts"]
     },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
     "lint": {},
     "lint:check": {},
     "format": {},
