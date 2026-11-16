@@ -200,8 +200,8 @@ importers:
         specifier: ^5.12.5
         version: 5.12.8
       fastify-metrics:
-        specifier: ^14.1.0
-        version: 14.2.0(fastify@5.12.8)
+        specifier: ^15.0.0
+        version: 15.0.1(fastify@5.12.8)
       orb-sync-lib:
         specifier: workspace:*
         version: link:../../packages/orb-sync-lib
@@ -1134,8 +1134,8 @@ packages:
   fast-uri@4.2.3:
     resolution: {integrity: sha512-I1PXwP5eAhlNlcdpjt9CgB59op2ZvZfxw+BkqGFVIUOgNpCVTcTqp3HhTX7brxj5vsip+nSY4nTvff+eIA76hg==}
 
-  fastify-metrics@14.2.0:
-    resolution: {integrity: sha512-1yQEMNl4U6//7A8Muy0w6qBQtQGUV1rWBi08UY4+vKXEeJnRVIPFSBh6+liAwGqLF2kBlsde4oZj2Vyf1PLXaQ==}
+  fastify-metrics@15.0.1:
+    resolution: {integrity: sha512-qPqvuF5DyKVz8JgDujZDAjiNDk8ZgDXK8xFtcbg+wDqpmMbWPDo8OwRAgtAhN8/XLuVMLdakP8Ru36IHM0eWOQ==}
     engines: {node: '>=22.19.0', pnpm: '>=12'}
     peerDependencies:
       '@platformatic/prom-client': ^1.0.0
@@ -2200,7 +2200,7 @@ snapshots:
 
   fast-uri@4.2.3: {}
 
-  fastify-metrics@14.2.0(fastify@5.12.8):
+  fastify-metrics@15.0.1(fastify@5.12.8):
     dependencies:
       '@prometheus-io/client': 0.16.1
       fastify: 5.12.8
