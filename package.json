@@ -31,5 +31,5 @@
     "billing",
     "supabase"
   ],
-  "packageManager": "pnpm@12.18.0"
+  "packageManager": "pnpm@12.23.0"
 }
